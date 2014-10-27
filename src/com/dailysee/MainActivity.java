@@ -33,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 	private void addTab(String key, String title, Class fragment) {
 		Bundle b = new Bundle();
 		b.putString("key", "callme");
-		mTabHost.addTab(mTabHost.newTabSpec("callme").setIndicator("ºô½ÐÌìÌì"), CallMeFragment.class, b);
+		mTabHost.addTab(mTabHost.newTabSpec(key).setIndicator(title), fragment, b);
 	}
 
 	@Override
