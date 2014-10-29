@@ -20,6 +20,8 @@ This is example shows how to code in android.
     
 定位文档：
 http://developer.baidu.com/map/index.php?title=android-locsdk/guide/v4-2
+云推送：
+http://developer.baidu.com/wiki/index.php?title=docs/cplat/push/guide
 
   
 
