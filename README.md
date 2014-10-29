@@ -16,7 +16,7 @@ This is example shows how to code in android.
 11. 选择赠送物品，商务顾问 GridView
 12. 留言 Dialog
 13. 推送 极光推送，自己写。
-14. 上传
+14. 上传 (Android-upload-service)
     
     Most of the developers are  facing this  problem, I finally got the solution after i spent a few hours on it.It would be helpful to face 
 this who r trying to make iphone like tabs(Bottom Tabs Feature ).
