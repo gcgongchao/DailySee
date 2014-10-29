@@ -18,8 +18,8 @@ This is example shows how to code in android.
 13. 推送 极光推送，自己写。
 14. 上传 (Android-upload-service)
     
-    Most of the developers are  facing this  problem, I finally got the solution after i spent a few hours on it.It would be helpful to face 
-this who r trying to make iphone like tabs(Bottom Tabs Feature ).
+定位文档：
+http://developer.baidu.com/map/index.php?title=android-locsdk/guide/v4-2
 
   
 
