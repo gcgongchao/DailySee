@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TabHost.TabSpec;
 
 import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
@@ -43,10 +47,10 @@ public class MainActivity extends FragmentActivity {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-		addTab("home", "首页", HomeFragment.class);
-		addTab("message", "天天讯息", MessageFragment.class);
-		addTab("user", "个人中心", UserFragment.class);
-		addTab("callme", "呼叫天天", CallMeFragment.class);
+		addTab("home", "首页", HomeFragment.class, R.drawable.item_tab_1_selector);
+		addTab("message", "天天讯息", MessageFragment.class, R.drawable.item_tab_2_selector);
+		addTab("callme", "呼叫天天", CallMeFragment.class, R.drawable.item_tab_3_selector);
+		addTab("user", "个人中心", UserFragment.class, R.drawable.item_tab_4_selector);
 
 		UmengUpdateAgent.update(this);
 		MobclickAgent.updateOnlineConfig(this);
@@ -92,10 +96,10 @@ public class MainActivity extends FragmentActivity {
 		mLocationClient.setLocOption(option);
 	}
 
-	private void addTab(String key, String title, Class fragment) {
+	private void addTab(String key, String title, Class fragment, int resId) {
 		Bundle b = new Bundle();
 		b.putString("key", "callme");
-		mTabHost.addTab(mTabHost.newTabSpec(key).setIndicator(title), fragment, b);
+		mTabHost.addTab(setIndicator(mTabHost.newTabSpec(key), resId), fragment, b);
 	}
 
 	@Override
@@ -105,14 +109,14 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 
-	// public TabSpec setIndicator(TabSpec spec, int resid) {
-	// View v = LayoutInflater.from(this).inflate(R.layout.tabs_text, null);
-	// v.setBackgroundResource(resid);
-	// TextView text = (TextView) v.findViewById(R.id.tab_title);
-	//
-	// text.setText(spec.getTag());
-	// return spec.setIndicator(v);
-	// }
+	 public TabSpec setIndicator(TabSpec spec, int resId) {
+		 View v = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
+		 
+		 ImageView ivTab = (ImageView) v.findViewById(R.id.iv_tab);
+		 ivTab.setImageResource(resId);
+		 
+		 return spec.setIndicator(v);
+	 }
 
 	public class MyLocationListener implements BDLocationListener {
 		private final String TAG = MyLocationListener.class.getSimpleName();

@@ -3,9 +3,6 @@ package com.dailysee.ui;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -15,13 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.dailysee.AppController;
 import com.dailysee.R;
@@ -30,7 +26,7 @@ import com.dailysee.util.Md5Utils;
 public class HomeFragment extends Fragment {
 
 	protected static final String TAG = HomeFragment.class.getSimpleName();
-	private TextView text;
+	private ImageView ivMerchant;
 
 	public HomeFragment() {
 
@@ -43,18 +39,9 @@ public class HomeFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = LayoutInflater.from(getActivity()).inflate(R.layout.layout, null);
-		text = (TextView) v.findViewById(R.id.text);
-		if (getArguments() != null) {
-			//
-			try {
-				String value = getArguments().getString("key");
-				text.setText("Current Tab is: " + value);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		text.setOnClickListener(new OnClickListener() {
+		View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
+		ivMerchant = (ImageView) v.findViewById(R.id.iv_merchant);
+		ivMerchant.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
