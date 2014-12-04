@@ -5,6 +5,8 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,8 @@ public class MainActivity extends BaseActivity {
 
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
+	
+	private DelayHandler mHander;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +82,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public void onInit() {
+		mHander = new DelayHandler();
 		
 	}
 
@@ -132,6 +137,8 @@ public class MainActivity extends BaseActivity {
 		} else {
 			Log.d("LocSDK4", "locClient is null or not started");
 		}
+		
+		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_STOP_LOCATION, 15 * 1000);
 	}
 	 
 	 @Override
@@ -215,6 +222,7 @@ public class MainActivity extends BaseActivity {
 			if (mLocationClient != null) {
 				mLocationClient.stop();
 			}
+			mHander.removeMessages(DelayHandler.DELAY_STOP_LOCATION);
 
 			StringBuffer sb = new StringBuffer(256);
 			sb.append("time : ");
@@ -238,7 +246,26 @@ public class MainActivity extends BaseActivity {
 			}
 
 			Log.d(TAG, sb.toString());
-			// Toast.makeText(this, sb, )
+		}
+	}
+	
+	private class DelayHandler extends Handler {
+		public static final int DELAY_AUTO_REFRESH = 10001;
+		public static final int DELAY_STOP_LOCATION = 10002;
+		
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case DELAY_STOP_LOCATION:
+				if (mLocationClient != null) {
+					mLocationClient.stop();
+				}
+				break;
+			default:
+				break;
+			}
+			
 		}
 	}
 

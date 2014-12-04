@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include layout="@layout/item_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_list_selector"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/activity_margin"
+                android:paddingRight="@dimen/activity_margin"
+                android:paddingTop="10dp" >
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_image" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="去登录"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title" />
+
+                    <TextView
+                        android:id="@+id/tv_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="普通会员"
+                        android:textColor="@color/deep_gray"
+                        android:textSize="@dimen/body" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:id="@+id/ll_all_order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_list_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="全部订单"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:id="@+id/tv_all_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:src="@drawable/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:id="@+id/ll_shopping_cart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_list_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="预定订单"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:id="@+id/tv_shopping_cart"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:src="@drawable/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:id="@+id/ll_uncomment_order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_list_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="待评价订单"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:id="@+id/tv_uncomment_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:src="@drawable/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:id="@+id/ll_about"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_list_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="关于"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:id="@+id/tv_about"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:src="@drawable/ic_arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/line" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
