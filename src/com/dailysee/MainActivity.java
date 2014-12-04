@@ -1,31 +1,34 @@
 package com.dailysee;
 
-import android.app.Notification;
-import android.content.res.Resources;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.baidu.android.pushservice.PushSettings;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.dailysee.bean.Member;
+import com.dailysee.net.BaseResponse;
+import com.dailysee.net.Callback;
+import com.dailysee.net.NetRequest;
 import com.dailysee.ui.CallMeFragment;
 import com.dailysee.ui.HomeFragment;
 import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
+import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
+import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -33,9 +36,11 @@ import com.umeng.update.UmengUpdateAgent;
  * @author Administrator
  * 
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
 
 	private FragmentTabHost mTabHost;
+	
+	private boolean mLoadDataRequired = true;
 
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
@@ -44,69 +49,62 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-		addTab("home", "首页", HomeFragment.class, R.drawable.item_tab_1_selector);
-		addTab("message", "天天讯息", MessageFragment.class, R.drawable.item_tab_2_selector);
-		addTab("callme", "呼叫天天", CallMeFragment.class, R.drawable.item_tab_3_selector);
-		addTab("user", "个人中心", UserFragment.class, R.drawable.item_tab_4_selector);
 
 		UmengUpdateAgent.update(this);
 		MobclickAgent.updateOnlineConfig(this);
 
-		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
-		mLocationClient.registerLocationListener(myListener); // 注册监听函数
-		initLocation();
-		mLocationClient.start();
-		if (mLocationClient != null && mLocationClient.isStarted())
-			mLocationClient.requestLocation();
-		else
-			Log.d("LocSDK4", "locClient is null or not started");
-
 		Utils.logStringCache = Utils.getLogText(getApplicationContext());
 
-		Resources resource = this.getResources();
-		String pkgName = this.getPackageName();
-
-		PushSettings.enableDebugMode(this, true);
-		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
-		// Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
-		// PushManager.enableLbs(getApplicationContext());
-
-		// Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
-		// 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
-		// 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
-		CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(getApplicationContext(),
-				resource.getIdentifier("notification_custom_builder", "layout", pkgName), resource.getIdentifier("notification_icon", "id", pkgName), resource.getIdentifier(
-						"notification_title", "id", pkgName), resource.getIdentifier("notification_text", "id", pkgName));
-		cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
-		cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
-		cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
-		cBuilder.setLayoutDrawable(resource.getIdentifier("simple_notification_icon", "drawable", pkgName));
-		PushManager.setNotificationBuilder(this, 1, cBuilder);
+//		Resources resource = this.getResources();
+//		String pkgName = this.getPackageName();
+//
+//		PushSettings.enableDebugMode(this, true);
+//		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
+//		// Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
+//		// PushManager.enableLbs(getApplicationContext());
+//
+//		// Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
+//		// 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
+//		// 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
+//		CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(getApplicationContext(),
+//				resource.getIdentifier("notification_custom_builder", "layout", pkgName), resource.getIdentifier("notification_icon", "id", pkgName), resource.getIdentifier(
+//						"notification_title", "id", pkgName), resource.getIdentifier("notification_text", "id", pkgName));
+//		cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
+//		cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+//		cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
+//		cBuilder.setLayoutDrawable(resource.getIdentifier("simple_notification_icon", "drawable", pkgName));
+//		PushManager.setNotificationBuilder(this, 1, cBuilder);
 	}
 
-	private void initLocation() {
-		LocationClientOption option = new LocationClientOption();
-		option.setLocationMode(LocationMode.Hight_Accuracy);// 设置定位模式
-		option.setCoorType("gcj02");// 返回的定位结果是百度经纬度，默认值gcj02
-		option.setScanSpan(5000);// 设置发起定位请求的间隔时间为5000ms
-		option.setIsNeedAddress(true);
-		mLocationClient.setLocOption(option);
+	@Override
+	public void onInit() {
+		
+	}
+
+	@Override
+	public void onFindViews() {
+		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
+	}
+
+	@Override
+	public void onInitViewData() {
+		addTab("home", "首页", HomeFragment.class, R.drawable.item_tab_1_selector);
+		addTab("message", "天天讯息", MessageFragment.class, R.drawable.item_tab_2_selector);
+		addTab("callme", "呼叫天天", CallMeFragment.class, R.drawable.item_tab_3_selector);
+		addTab("user", "个人中心", UserFragment.class, R.drawable.item_tab_4_selector);
+	}
+
+	@Override
+	public void onBindListener() {
+		
 	}
 
 	private void addTab(String key, String title, Class fragment, int resId) {
 		Bundle b = new Bundle();
-		b.putString("key", "callme");
+		b.putString(key, title);
 		mTabHost.addTab(setIndicator(mTabHost.newTabSpec(key), resId), fragment, b);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
 	}
 
 	 public TabSpec setIndicator(TabSpec spec, int resId) {
@@ -118,6 +116,95 @@ public class MainActivity extends FragmentActivity {
 		 return spec.setIndicator(v);
 	 }
 
+	private void initLocation() {
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);// 设置定位模式
+		option.setCoorType("gcj02");// 返回的定位结果是百度经纬度，默认值gcj02
+		option.setScanSpan(5000);// 设置发起定位请求的间隔时间为5000ms
+		option.setIsNeedAddress(true);
+
+		mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener); // 注册监听函数
+		mLocationClient.setLocOption(option);
+		mLocationClient.start();
+		if (mLocationClient != null && mLocationClient.isStarted()) {
+			mLocationClient.requestLocation();
+		} else {
+			Log.d("LocSDK4", "locClient is null or not started");
+		}
+	}
+	 
+	 @Override
+	protected void onResume() {
+		super.onResume();
+			onLoadData();
+	}
+
+	private void onLoadData() {
+		if (mLoadDataRequired) {
+			onLoadMyInfo();
+		}
+	}
+
+	private void onLoadMyInfo() {
+		if (!mSpUtil.isLogin()) {
+			return ;
+		}
+		
+		final long belongObjId = mSpUtil.getBelongObjId();
+
+		// Tag used to cancel the request
+		String tag = "tag_request_get_member_detail";
+		NetRequest.getInstance(this).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				Member member = (Member) response.getResponse(new TypeToken<Member>() {});
+				if (member != null) {
+//					SpUtil sp = SpUtil.getInstance(MainActivity.this);
+//					sp.setMember(member);
+					
+					Intent intent = new Intent(Constants.REFRESH_MEMBER_DETAIL);
+					sendBroadcast(intent);
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+			}
+
+			@Override
+			public void onFinished() {
+			}
+
+			@Override
+			public void onFailed(String msg) {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
+				params.put("belongObjId", Long.toString(belongObjId));
+				return params;
+			}
+		}, tag);
+	}
+	
+	@Override 
+	 protected void onActivityResult(int requestCode, int resultCode, Intent data) { 
+		super.onActivityResult(requestCode, resultCode, data); 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mLocationClient != null) {
+			mLocationClient.stop();
+		}
+	}
+
 	public class MyLocationListener implements BDLocationListener {
 		private final String TAG = MyLocationListener.class.getSimpleName();
 
@@ -125,6 +212,10 @@ public class MainActivity extends FragmentActivity {
 		public void onReceiveLocation(BDLocation location) {
 			if (location == null)
 				return;
+			if (mLocationClient != null) {
+				mLocationClient.stop();
+			}
+
 			StringBuffer sb = new StringBuffer(256);
 			sb.append("time : ");
 			sb.append(location.getTime());
@@ -149,12 +240,6 @@ public class MainActivity extends FragmentActivity {
 			Log.d(TAG, sb.toString());
 			// Toast.makeText(this, sb, )
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mLocationClient.stop();
 	}
 
 }

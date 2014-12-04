@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+
+    <!--
+         Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html
+    -->
+    <dimen name="navigation_drawer_width">300dp</dimen>
+    
+    <!-- Material Design Style-Typography http://www.ui.cn/project.php?id=18877 -->
+    <dimen name="display_4">112sp</dimen>
+    <dimen name="display_3">56sp</dimen>
+    <dimen name="display_2">45sp</dimen>
+    <dimen name="display_1">36sp</dimen>
+    
+    <dimen name="headline">24sp</dimen>
+    <dimen name="title">20sp</dimen>
+    <dimen name="subhead">16sp</dimen>
+    <dimen name="body">14sp</dimen>
+    <dimen name="caption">12sp</dimen>
+    <dimen name="menu">14sp</dimen>
+    <dimen name="button">16sp</dimen>
+    
+    <dimen name="space">8dp</dimen>
+    <dimen name="height_line">3px</dimen>
+    <dimen name="height_header">56dp</dimen>
+    <dimen name="height_list_item">72dp</dimen>
+    <dimen name="height_item">72dp</dimen>
+    <dimen name="height_subtitle">48dp</dimen>
+    <dimen name="height_notification_bar">24dp</dimen>
+    
+    <dimen name="height_image">48dp</dimen>
+    <dimen name="height_avater">40dp</dimen>
+    <dimen name="height_icon">24dp</dimen>
+    
+    <dimen name="edittext_width">480dp</dimen>
+    <dimen name="edittext_height">48dp</dimen>
+    
+    <dimen name="text_input">16sp</dimen>
+
+    <dimen name="header_height">60dp</dimen>
+    <dimen name="footer_height">90dp</dimen>
+    <dimen name="footer_padding">10dp</dimen>
+
+</resources>

@@ -32,7 +32,7 @@ public class MessageFragment extends Fragment {
 			//
 			try {
 				String value = getArguments().getString("key");
-				text.setText("Current Tab is: " + value);
+				text.setText("天天讯息");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
