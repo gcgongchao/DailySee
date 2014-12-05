@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dailysee.R;
@@ -60,6 +61,27 @@ public abstract class BaseActivity extends FragmentActivity {
 			finish();
 		}
 	};
+	
+	public void setUp() {
+		View up = findViewById(R.id.iv_up);
+		if (up != null) {
+			up.setVisibility(View.VISIBLE);
+			up.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
+		}
+	}
+	
+	public void setTitle(String title) {
+		TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+		if (tvTitle != null) {
+			tvTitle.setText(title);
+		}
+	}
 
 	/**
 	 * 初始化 优先顺序：<br/>

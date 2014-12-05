@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
 	public void onFindViews() {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
+//		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
 	}
 
 	@Override

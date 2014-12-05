@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.ConfirmDialog;
@@ -18,6 +19,8 @@ import com.dailysee.widget.ConfirmDialog;
 public class UserFragment extends BaseFragment implements OnClickListener {
 
 	protected static final String TAG = UserFragment.class.getSimpleName();
+
+	private static final int REQUEST_LOGIN = 1000;
 
 	private ImageView ivImage;
 
@@ -80,6 +83,14 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		dialog.show();
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (!mSpUtil.isLogin()) {
+			Intent intent = new Intent(mContext, LoginActivity.class);
+			startActivityForResult(intent, REQUEST_LOGIN);
+		}
+	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

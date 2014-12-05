@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dailysee.R;
@@ -101,6 +102,13 @@ public abstract class BaseFragment extends Fragment {
 	 * <font color=red>onBindListener();</font><br/>
 	 */
 	public abstract void onBindListener();
+	
+	public void setTitle(String title) {
+		TextView tvTitle = (TextView) getView().findViewById(R.id.tv_title);
+		if (tvTitle != null) {
+			tvTitle.setText(title);
+		}
+	}
 
 	/**
 	 * 打开滑动退出此Activity的功能 <功能详细描述>

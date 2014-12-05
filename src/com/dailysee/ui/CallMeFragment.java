@@ -43,9 +43,7 @@ public class CallMeFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public void onFindViews() {
 		View v = getView();
-
-		TextView tvTitle = (TextView) v.findViewById(R.id.tv_title);
-		tvTitle.setText("呼叫天天");
+		setTitle("呼叫天天");
 		
 		ivImage = (ImageView) v.findViewById(R.id.iv_image);
 	}

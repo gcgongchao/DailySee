@@ -26,13 +26,11 @@ import com.dailysee.util.Utils;
 public class NetRequest {
 
 	public static final String SERVER_URL = "http://120.24.77.231/ebp/cgi/gateway.htm";
-	public static final String SECRET_KEY = "rewref343fwq";
-	public static final String APP = "MERCHANT";
+	public static final String SECRET_KEY = "fdsa2324323d";
+	public static final String APP = "MEMBER";
 	
 	public static final int PAGE_SIZE = 20;
-	public static final String PAGE_SIZE_S = "20";
 	public static final int PAGE_LARGE_SIZE = 100;
-	public static final String PAGE_LARGE_SIZE_S = "100";
 
 	private static final String TAG = NetRequest.class.getSimpleName();
 

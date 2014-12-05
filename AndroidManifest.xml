@@ -59,6 +59,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.base.LoginActivity" />
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
@@ -130,7 +131,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="54492129fd98c58ea5007598" >
+            android:value="54818244fd98c56ba40008e4" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"

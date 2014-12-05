@@ -68,9 +68,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	@Override
 	public void onFindViews() {
 		View v = getView();
-
-		TextView tvTitle = (TextView) v.findViewById(R.id.tv_title);
-		tvTitle.setText("天天讯息");
+		setTitle("天天讯息");
 		
 		LinearLayout emptyView = (LinearLayout) v.findViewById(R.id.ll_no_data);
 
