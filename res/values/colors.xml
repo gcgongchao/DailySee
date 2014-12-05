@@ -30,4 +30,8 @@
     <color name="green">#8eb32c</color>
     <color name="app_gray">#EFEFED</color>
     
+    
+    <color name="app_black">#353535</color>
+    <color name="bg_search">#e8e8e8</color>
+    
 </resources>

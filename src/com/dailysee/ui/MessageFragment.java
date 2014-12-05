@@ -3,8 +3,6 @@ package com.dailysee.ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.net.BaseResponse;
@@ -23,7 +20,6 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.util.SpUtil;
-import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
