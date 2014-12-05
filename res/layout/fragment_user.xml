@@ -12,7 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none" >
+        android:scrollbars="none" 
+        android:background="@color/app_gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:id="@+id/ll_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingLeft="@dimen/activity_margin"
@@ -87,7 +88,7 @@
                 android:id="@+id/ll_unlogin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -140,7 +141,7 @@
                 android:id="@+id/ll_all_order"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -188,10 +189,10 @@
                 android:background="@color/line" />
 
             <LinearLayout
-                android:id="@+id/ll_shopping_cart"
+                android:id="@+id/ll_book_order"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -204,13 +205,13 @@
                     android:paddingRight="@dimen/space"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="预定订单"
+                    android:text="预订订单"
                     android:textColor="@color/black"
                     android:textColorHint="@color/login_hint"
                     android:textSize="@dimen/text_input" />
 
                 <TextView
-                    android:id="@+id/tv_shopping_cart"
+                    android:id="@+id/tv_book_order"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -242,7 +243,7 @@
                 android:id="@+id/ll_uncomment_order"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -293,7 +294,7 @@
                 android:id="@+id/ll_about"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/item_list_selector"
+                android:background="@drawable/item_selector"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -334,12 +335,12 @@
                     android:layout_marginRight="@dimen/activity_margin"
                     android:src="@drawable/ic_arrow_right" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/line" />
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/line" />
 
 </LinearLayout>

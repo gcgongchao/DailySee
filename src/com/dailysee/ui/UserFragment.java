@@ -31,6 +31,12 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 	private TextView tvName;
 
+	private LinearLayout llAllOrder;
+
+	private LinearLayout llBookOrder;
+
+	private LinearLayout llUncommentOrder;
+
 	public UserFragment() {
 
 	}
@@ -60,6 +66,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		tvName = (TextView) v.findViewById(R.id.tv_name);
 
 		llUnlogin = (LinearLayout) v.findViewById(R.id.ll_unlogin);
+
+		llAllOrder = (LinearLayout) v.findViewById(R.id.ll_all_order);
+		llBookOrder = (LinearLayout) v.findViewById(R.id.ll_book_order);
+		llUncommentOrder = (LinearLayout) v.findViewById(R.id.ll_uncomment_order);
 	}
 
 	@Override
@@ -85,6 +95,12 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	public void onBindListener() {
 		llUserInfo.setOnClickListener(this);
 		ivImage.setOnClickListener(this);
+		
+		llUnlogin.setOnClickListener(this);
+		
+		llAllOrder.setOnClickListener(this);
+		llBookOrder.setOnClickListener(this);
+		llUncommentOrder.setOnClickListener(this);
 	}
 
 	@Override
@@ -99,8 +115,28 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			String avatar = mSpUtil.getAvatar();
 			UiHelper.toBrowseImage(mContext, avatar);
 			break;
+		case R.id.ll_all_order:
+			if (!mSpUtil.isLogin()) {
+				toLogin();
+			} else {
+				
+			}
+			break;
+		case R.id.ll_book_order:
+			if (!mSpUtil.isLogin()) {
+				toLogin();
+			} else {
+				
+			}
+			break;
+		case R.id.ll_uncomment_order:
+			if (!mSpUtil.isLogin()) {
+				toLogin();
+			} else {
+				
+			}
+			break;
 		}
-		
 	}
 
 	private void toLogin() {
