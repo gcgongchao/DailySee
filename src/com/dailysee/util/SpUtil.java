@@ -1,6 +1,5 @@
 package com.dailysee.util;
 
-import java.lang.reflect.Member;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
 
+import com.dailysee.bean.Member;
 import com.google.gson.Gson;
 
 public class SpUtil {
@@ -174,21 +174,21 @@ public class SpUtil {
 		return "online".equalsIgnoreCase(workType);
 	}
 
-//	public void setMember(Member member) {
-//		String json = null;
-//		if (member == null) {
-//			json = "{}";
-//		} else {
-//			setName(member.name);
-//			setAvatar(member.logoUrl);
-//			setMobile(member.mobile);
+	public void setMember(Member member) {
+		String json = null;
+		if (member == null) {
+			json = "{}";
+		} else {
+			setName(member.name);
+			setAvatar("");
+			setMobile(member.mobile);
 //			setStatus(member.status);
 //			setWorkType(member.workType);
-//			
-//			json = new Gson().toJson(member);
-//		}
-//		getEdit().putString("member", json).commit();
-//	}
+			
+			json = new Gson().toJson(member);
+		}
+		getEdit().putString("member", json).commit();
+	}
 	
 	public Member getMember() {
 		String json = getSp().getString("member", "");

@@ -29,7 +29,6 @@ import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
-import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -56,34 +55,13 @@ public class MainActivity extends BaseActivity {
 
 		UmengUpdateAgent.update(this);
 		MobclickAgent.updateOnlineConfig(this);
-
-		Utils.logStringCache = Utils.getLogText(getApplicationContext());
-
-//		Resources resource = this.getResources();
-//		String pkgName = this.getPackageName();
-//
-//		PushSettings.enableDebugMode(this, true);
-//		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
-//		// Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
-//		// PushManager.enableLbs(getApplicationContext());
-//
-//		// Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
-//		// 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
-//		// 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
-//		CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(getApplicationContext(),
-//				resource.getIdentifier("notification_custom_builder", "layout", pkgName), resource.getIdentifier("notification_icon", "id", pkgName), resource.getIdentifier(
-//						"notification_title", "id", pkgName), resource.getIdentifier("notification_text", "id", pkgName));
-//		cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
-//		cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
-//		cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
-//		cBuilder.setLayoutDrawable(resource.getIdentifier("simple_notification_icon", "drawable", pkgName));
-//		PushManager.setNotificationBuilder(this, 1, cBuilder);
 	}
 
 	@Override
 	public void onInit() {
 		mHander = new DelayHandler();
 		
+		initLocation();
 	}
 
 	@Override
@@ -158,8 +136,6 @@ public class MainActivity extends BaseActivity {
 			return ;
 		}
 		
-		final long belongObjId = mSpUtil.getBelongObjId();
-
 		// Tag used to cancel the request
 		String tag = "tag_request_get_member_detail";
 		NetRequest.getInstance(this).post(new Callback() {
@@ -168,8 +144,7 @@ public class MainActivity extends BaseActivity {
 			public void onSuccess(BaseResponse response) {
 				Member member = (Member) response.getResponse(new TypeToken<Member>() {});
 				if (member != null) {
-//					SpUtil sp = SpUtil.getInstance(MainActivity.this);
-//					sp.setMember(member);
+					mSpUtil.setMember(member);
 					
 					Intent intent = new Intent(Constants.REFRESH_MEMBER_DETAIL);
 					sendBroadcast(intent);
@@ -193,7 +168,7 @@ public class MainActivity extends BaseActivity {
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
-				params.put("belongObjId", Long.toString(belongObjId));
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				return params;
 			}
 		}, tag);
@@ -250,8 +225,7 @@ public class MainActivity extends BaseActivity {
 	}
 	
 	private class DelayHandler extends Handler {
-		public static final int DELAY_AUTO_REFRESH = 10001;
-		public static final int DELAY_STOP_LOCATION = 10002;
+		public static final int DELAY_STOP_LOCATION = 10001;
 		
 		@Override
 		public void handleMessage(Message msg) {

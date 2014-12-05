@@ -1,44 +1,18 @@
 package com.dailysee.bean;
 
 import java.io.Serializable;
-
-import android.text.TextUtils;
+import java.util.List;
 
 public class Member implements Serializable {
-	public long merchantId;
+	public long informationId;
 	public String name;
-	public String prov;
-	public String city;
-	public String area;
-	public String landmark;
+	public int age;
+	public int sex;
+	public String birthday;
+	public String email;
 	public String workType;
-	public double jd;
-	public double wd;
-	public String redu;
 	public String addr;
-	public double feeRate;
-	public String contact;
 	public String mobile;
 	public String introduction;
-	public String status;
-	public String adjustRemark;
-	public String yyUrl;
-	public String sfUrl;
-	public String scUrl;
-	public String logoUrl;
-//	public List<String> imgs;// （证件类图片）
-	
-	public String getRegion() {
-		String region = null;
-		if (!TextUtils.isEmpty(prov)) {
-			region = prov;
-			if (!TextUtils.isEmpty(city)) {
-				region += city;
-				if (!TextUtils.isEmpty(area)) {
-					region += area;
-				}
-			}
-		}
-		return region;
-	}
+	public List<Image> imgs;// （证件类图片）
 }
