@@ -62,7 +62,6 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	@Override
 	public void onInit() {
 		mHander = new DelayHandler();
-		
 	}
 
 	@Override
@@ -116,7 +115,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	}
 
 	private String getTime() {
-		return mSpUtil.getHomeRefreshTime();
+		return mSpUtil.getMessageRefreshTime();
 	}
 
 	@Override
@@ -127,18 +126,14 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 
 	public void onLoad() {
 		// Tag used to cancel the request
-		String tag = "tag_request_home";
+		String tag = "tag_request_message";
 		NetRequest.getInstance(getActivity()).get(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
 				mRefreshDataRequired = false;
-				
-				JSONObject data = response.getParent();
-				Gson gson = new Gson();
-				
 				if (mIndex == 1) {
-					SpUtil.getInstance(mContext).setHomeRefreshTime();
+					SpUtil.getInstance(mContext).setMessageRefreshTime();
 				}
 				
 			}
@@ -162,12 +157,10 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("method", "HomeServlet");
-				params.put("code", "1");
-				params.put("page", Integer.toString(mIndex));
-				params.put("hardware", "1");
-//				params.put("cityId", mCityCode);
-				params.put("cityId", "137");
+				params.put("mtd", "com.guocui.tty.api.web.PreferentialController.getRecPerferentials");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("pageNo", Integer.toString(mIndex));
+				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
 			}
 

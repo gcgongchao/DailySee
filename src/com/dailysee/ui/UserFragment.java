@@ -7,14 +7,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.dailysee.AppController;
 import com.dailysee.R;
+import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.base.LoginActivity;
-import com.dailysee.util.Constants;
-import com.dailysee.util.Utils;
-import com.dailysee.widget.ConfirmDialog;
+import com.dailysee.util.UiHelper;
 
 public class UserFragment extends BaseFragment implements OnClickListener {
 
@@ -22,7 +24,12 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 	private static final int REQUEST_LOGIN = 1000;
 
+	private LinearLayout llUserInfo;
 	private ImageView ivImage;
+	
+	private LinearLayout llUnlogin;
+
+	private TextView tvName;
 
 	public UserFragment() {
 
@@ -46,50 +53,65 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public void onFindViews() {
 		View v = getView();
-
-		TextView tvTitle = (TextView) v.findViewById(R.id.tv_title);
-		tvTitle.setText("个人中心");
+		setTitle("个人中心");
 		
+		llUserInfo = (LinearLayout) v.findViewById(R.id.ll_user_info);
 		ivImage = (ImageView) v.findViewById(R.id.iv_image);
+		tvName = (TextView) v.findViewById(R.id.tv_name);
+
+		llUnlogin = (LinearLayout) v.findViewById(R.id.ll_unlogin);
 	}
 
 	@Override
 	public void onInitViewData() {
+		if (!mSpUtil.isLogin()) {
+			llUnlogin.setVisibility(View.VISIBLE);
+			llUserInfo.setVisibility(View.GONE);
+		} else {
+			llUnlogin.setVisibility(View.GONE);
+			llUserInfo.setVisibility(View.VISIBLE);
+			
+			Member member = mSpUtil.getMember();
+			if (member != null) {
+				tvName.setText(member.name);
+				
+				String avatar = mSpUtil.getAvatar();
+				AppController.getInstance().getImageLoader().get(avatar, ImageLoader.getImageListener(ivImage, R.drawable.ic_image, R.drawable.ic_image));
+			}
+		}
 	}
 
 	@Override
 	public void onBindListener() {
+		llUserInfo.setOnClickListener(this);
 		ivImage.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.ll_unlogin:
+			toLogin();
+			break;
+		case R.id.ll_user_info:
+			break;
 		case R.id.iv_image:
-			showCallDialog();
+			String avatar = mSpUtil.getAvatar();
+			UiHelper.toBrowseImage(mContext, avatar);
 			break;
 		}
 		
 	}
 
-	private void showCallDialog() {
-		ConfirmDialog dialog = new ConfirmDialog(getActivity(), "拨打天天客服电话", "取消", "拨打", new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Utils.call(mContext, Constants.CUSTOMER_SERVICES_PHONE);
-			}
-		});
-		dialog.show();
+	private void toLogin() {
+		Intent intent = new Intent();
+		intent.setClass(mContext, LoginActivity.class);
+		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!mSpUtil.isLogin()) {
-			Intent intent = new Intent(mContext, LoginActivity.class);
-			startActivityForResult(intent, REQUEST_LOGIN);
-		}
 	}
 	
 	@Override

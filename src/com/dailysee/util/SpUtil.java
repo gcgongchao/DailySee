@@ -206,5 +206,16 @@ public class SpUtil {
 		String time = sdf.format(date);
 		getEdit().putString("home_refresh_time", time).commit();
 	}
+
+	public String getMessageRefreshTime() {
+		return getSp().getString("message_refresh_time", "从未更新");
+	}
+	
+	public void setMessageRefreshTime() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = sdf.format(date);
+		getEdit().putString("message_refresh_time", time).commit();
+	}
 	
 }

@@ -9,6 +9,7 @@
     
     <color name="backgroud">#f5f5f5</color>
     <color name="item_list_pressed">#efefef</color>
+    <color name="bg_image">#e8ebec</color>
     
     <color name="login_btn">#f77f6c</color>
     <color name="login_forget_password">#888888</color>

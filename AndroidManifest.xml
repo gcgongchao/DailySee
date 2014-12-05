@@ -60,6 +60,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.base.LoginActivity" />
+        <activity android:name=".ui.image.BrowseImageActivity" />
 
         <service
             android:name="com.umeng.update.net.DownloadingService"

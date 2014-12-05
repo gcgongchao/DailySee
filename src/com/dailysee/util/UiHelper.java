@@ -1,16 +1,22 @@
 package com.dailysee.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.dailysee.R;
+import com.dailysee.bean.Image;
+import com.dailysee.ui.image.BrowseImageActivity;
 
 public class UiHelper {
 	
@@ -52,5 +58,36 @@ public class UiHelper {
     public static boolean isSoldOut(String status) {
     	return !"ENABLE".equalsIgnoreCase(status);
     }
+    
+
+    
+    public static void toBrowseImage(Context context, String imageUrl) {
+    	if (!TextUtils.isEmpty(imageUrl)) {
+	    	ArrayList<String> images = new ArrayList<String>();
+			images.add(imageUrl);
+			
+			toBrowseImage(context, images, 0);
+    	}
+	}
+	
+	public static void toBrowseImageList(Context context, List<Image> imgs, int position) {
+		if (imgs != null && imgs.size() > 0) {
+			ArrayList<String> images = new ArrayList<String>();
+			for (Image image : imgs) {
+				if (image != null) {
+					images.add(image.url);
+				}
+			}
+			toBrowseImage(context, images, position);
+		}
+	}
+
+	public static void toBrowseImage(Context context, ArrayList<String> images, int position) {
+		Intent intent = new Intent();
+		intent.setClass(context, BrowseImageActivity.class);
+		intent.putStringArrayListExtra(BrowseImageActivity.EXTRA_IMAGW_ARRAY, images);
+		intent.putExtra(BrowseImageActivity.EXTRA_IMAGW_INDEX, position);
+		context.startActivity(intent);
+	}
 
 }
