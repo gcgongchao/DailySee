@@ -180,7 +180,7 @@ public class SpUtil {
 			json = "{}";
 		} else {
 			setName(member.name);
-			setAvatar("");
+			setAvatar(member.logoUrl);
 			setMobile(member.mobile);
 //			setStatus(member.status);
 //			setWorkType(member.workType);

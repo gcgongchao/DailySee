@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -29,6 +30,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore.MediaColumns;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -71,6 +73,62 @@ public class Utils {
 
 		}
 		return apiKey;
+	}
+	
+	/**
+	 * 获取当前app包信息对象.
+	 * 
+	 * @param context
+	 * @return
+	 * @throws NameNotFoundException
+	 */
+	private static PackageInfo getCurrentAppPackageInfo(Context context) {
+		try {
+			PackageManager manager = context.getPackageManager();
+			String packageName = context.getPackageName();
+			PackageInfo info = manager.getPackageInfo(packageName, 0);
+			return info;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 获取当前app的版本号.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static int getCurrentAppVersionCode(Context context) {
+		PackageInfo info = getCurrentAppPackageInfo(context);
+		int versionCode = info.versionCode;
+		return versionCode;
+	}
+
+	/**
+	 * 获取当前app的版本名字.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getCurrentAppVersionName(Context context) {
+		PackageInfo info = getCurrentAppPackageInfo(context);
+		String version = info.versionName;
+		return version;
+	}
+
+	/**
+	 * 获取手机的imei.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getDeviceId(Context context) {
+		TelephonyManager telephonyManager = (TelephonyManager) context
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		String imei = telephonyManager.getDeviceId();
+		return imei;
 	}
 
 	// 用share preference来实现是否绑定的开关。在ionBind且成功时设置true，unBind且成功时设置false

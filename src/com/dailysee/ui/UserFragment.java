@@ -1,7 +1,11 @@
 package com.dailysee.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +20,7 @@ import com.dailysee.R;
 import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.base.LoginActivity;
+import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 
 public class UserFragment extends BaseFragment implements OnClickListener {
@@ -26,16 +31,17 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 	private LinearLayout llUserInfo;
 	private ImageView ivImage;
+	private TextView tvName;
 	
 	private LinearLayout llUnlogin;
 
-	private TextView tvName;
-
 	private LinearLayout llAllOrder;
-
 	private LinearLayout llBookOrder;
-
 	private LinearLayout llUncommentOrder;
+	
+	private LinearLayout llAbout;
+	
+	private UserReceiver mUserReceiver;
 
 	public UserFragment() {
 
@@ -70,25 +76,17 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llAllOrder = (LinearLayout) v.findViewById(R.id.ll_all_order);
 		llBookOrder = (LinearLayout) v.findViewById(R.id.ll_book_order);
 		llUncommentOrder = (LinearLayout) v.findViewById(R.id.ll_uncomment_order);
+		
+		llAbout = (LinearLayout) v.findViewById(R.id.ll_about);
 	}
 
 	@Override
 	public void onInitViewData() {
-		if (!mSpUtil.isLogin()) {
-			llUnlogin.setVisibility(View.VISIBLE);
-			llUserInfo.setVisibility(View.GONE);
-		} else {
-			llUnlogin.setVisibility(View.GONE);
-			llUserInfo.setVisibility(View.VISIBLE);
-			
-			Member member = mSpUtil.getMember();
-			if (member != null) {
-				tvName.setText(member.name);
-				
-				String avatar = mSpUtil.getAvatar();
-				AppController.getInstance().getImageLoader().get(avatar, ImageLoader.getImageListener(ivImage, R.drawable.ic_image, R.drawable.ic_image));
-			}
-		}
+		mUserReceiver = new UserReceiver();
+		
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constants.REFRESH_MEMBER_DETAIL);
+		mContext.registerReceiver(mUserReceiver, filter);
 	}
 
 	@Override
@@ -101,6 +99,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llAllOrder.setOnClickListener(this);
 		llBookOrder.setOnClickListener(this);
 		llUncommentOrder.setOnClickListener(this);
+		
+		llAbout.setOnClickListener(this);
 	}
 
 	@Override
@@ -136,6 +136,9 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				
 			}
 			break;
+		case R.id.ll_about:
+			startActivity(new Intent(mContext, AboutActivity.class));
+			break;
 		}
 	}
 
@@ -148,6 +151,29 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
+		onRefreshUserInfo();
+	}
+	
+	public void onRefreshUserInfo() {
+		if (!mSpUtil.isLogin()) {
+			llUnlogin.setVisibility(View.VISIBLE);
+			llUserInfo.setVisibility(View.GONE);
+		} else {
+			llUnlogin.setVisibility(View.GONE);
+			llUserInfo.setVisibility(View.VISIBLE);
+			
+			Member member = mSpUtil.getMember();
+			if (member != null) {
+				String name = member.name;
+				if (TextUtils.isEmpty(name)) {
+					name = mSpUtil.getLoginId();
+				}
+				tvName.setText(name);
+				
+				String avatar = mSpUtil.getAvatar();
+				AppController.getInstance().getImageLoader().get(avatar, ImageLoader.getImageListener(ivImage, R.drawable.ic_image, R.drawable.ic_image));
+			}
+		}
 	}
 	
 	@Override
@@ -157,7 +183,23 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	
 	@Override
 	public void onDestroy() {
+		if (mUserReceiver != null) {
+			mContext.unregisterReceiver(mUserReceiver);
+		}
 		super.onDestroy();
+	}
+	
+	private class UserReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent != null) {
+				String action = intent.getAction();
+				if (Constants.REFRESH_MEMBER_DETAIL.equals(action)) {
+					onRefreshUserInfo();
+				}
+			}
+		}
 	}
 
 }

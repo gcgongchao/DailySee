@@ -14,5 +14,6 @@ public class Member implements Serializable {
 	public String addr;
 	public String mobile;
 	public String introduction;
+	public String logoUrl;
 	public List<Image> imgs;// （证件类图片）
 }

@@ -107,7 +107,6 @@
                     android:textSize="@dimen/text_input" />
 
                 <TextView
-                    android:id="@+id/tv_all_order"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

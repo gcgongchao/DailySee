@@ -62,6 +62,7 @@
         <activity android:name=".ui.base.LoginActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />
         <activity android:name=".ui.MerchantActivity" />
+        <activity android:name=".ui.AboutActivity" />
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
