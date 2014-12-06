@@ -41,4 +41,12 @@ public class Merchant implements Serializable {
 		}
 		return region;
 	}
+	
+	public float getHot() {
+		float hot = 0f;
+		if (!TextUtils.isEmpty(redu)) {
+			hot = Float.parseFloat(redu);
+		}
+		return hot;
+	}
 }

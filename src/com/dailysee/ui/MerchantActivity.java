@@ -20,6 +20,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.MerchantResponse;
 import com.dailysee.ui.adapter.MerchantAdapter;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -43,11 +44,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	private int mIndex = 1;
 	private List<Merchant> merchantList = new ArrayList<Merchant>();
 	private MerchantAdapter mAdatper;
+	
+	private int filter = Constants.Filter.RECOMMEND;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant);
+		
+		onLoad(true);
 	}
 
 	@Override
@@ -100,10 +105,18 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		case R.id.ll_recommend:
 			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			if (filter != Constants.Filter.RECOMMEND) {
+				filter = Constants.Filter.RECOMMEND;
+				mPullRefreshListView.setRefreshing(false);
+			}
 			break;
 		case R.id.ll_nearby:
 			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
 			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			if (filter != Constants.Filter.NEARBY) {
+				filter = Constants.Filter.NEARBY;
+				mPullRefreshListView.setRefreshing(false);
+			}
 			break;
 		}
 	}
@@ -111,19 +124,19 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 		mIndex = 1;
-		onLoad();
+		onLoad(false);
 	}
 
 	@Override
 	public void onLastItemVisible() {
 		mIndex++;
-		onLoad();
+		onLoad(false);
 	}
 
-	public void onLoad() {
+	public void onLoad(final boolean showProgress) {
 		// Tag used to cancel the request
-		String tag = "tag_request_message";
-		NetRequest.getInstance(getActivity()).get(new Callback() {
+		String tag = "tag_request_get_merchant";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
@@ -141,7 +154,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				if (showProgress) {
+					toShowProgressMsg("正在加载...");
+				}
 			}
 
 			@Override
@@ -158,7 +173,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMerchant");
+				if (filter == Constants.Filter.RECOMMEND) {
+					params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getRecMerchant");
+				} else {
+					params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMerchant");
+					params.put("jd", mSpUtil.getLng());
+					params.put("wd", mSpUtil.getLat());
+				}
+				params.put("prov", mSpUtil.getProvince());
+				params.put("city", mSpUtil.getCity());
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;

@@ -415,5 +415,10 @@ public class Utils {
 		intent.setData(Uri.parse("tel:" + phone));
 		context.startActivity(intent);
 	}
+	
+	public static String formatTime(long time) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		return format.format(new Date(time));
+	}
 
 }

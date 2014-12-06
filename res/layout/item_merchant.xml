@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:text="如家快捷酒店"
                 android:textColor="@color/black"
-                android:textSize="@dimen/subtitle" />
+                android:textSize="@dimen/subhead" />
 
             <ImageView
                 android:id="@+id/iv_hot"
@@ -67,10 +67,9 @@
             android:textSize="@dimen/body" />
 
         <TextView
-            android:id="@+id/tv_opening_hours"
+            android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:text="营业时间: 9:00-18:00"
             android:textColor="@color/body"
             android:textSize="@dimen/body" />

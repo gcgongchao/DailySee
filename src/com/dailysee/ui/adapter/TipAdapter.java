@@ -16,28 +16,29 @@ import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Merchant;
+import com.dailysee.bean.Tip;
 
-public class MerchantAdapter extends BaseAdapter {
+public class TipAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<Merchant> merchantList;
+	private List<Tip> list;
 	private LayoutInflater mInflater;
 
-	public MerchantAdapter(Context context, List<Merchant> merchantList) {
+	public TipAdapter(Context context, List<Tip> tipList) {
 		this.context = context;
-		this.merchantList = merchantList;
+		this.list = tipList;
 		
 		mInflater = LayoutInflater.from(context);
 	}
 
 	@Override
 	public int getCount() {
-		return merchantList.size();
+		return list.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return merchantList.get(position);
+		return list.get(position);
 	}
 
 	@Override
@@ -49,39 +50,31 @@ public class MerchantAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.item_merchant, null);
+			convertView = mInflater.inflate(R.layout.item_tip, null);
 			holder = new ViewHolder(convertView);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		Merchant merchant = merchantList.get(position);
+		Tip entity = list.get(position);
 		
-		if (!TextUtils.isEmpty(merchant.logoUrl)) {
-			AppController.getInstance().getImageLoader().get(merchant.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_image_merchant, R.drawable.ic_image_merchant));
-		}
-		holder.rbHot.setRating(merchant.getHot());
-		holder.tvName.setText(merchant.name);
-		holder.tvAddress.setText(merchant.addr);
-		holder.tvDesc.setText(merchant.introduction);
+		holder.tvName.setText(entity.title);
+		holder.tvFrom.setText("来自" + entity.companyName);
+		holder.tvTime.setText(entity.createDate);
 		
 		return convertView;
 	}
 	
 	private static class ViewHolder {
 		
-		private ImageView ivImage;
-		private RatingBar rbHot;
 		private TextView tvName;
-		private TextView tvAddress;
-		private TextView tvDesc;
+		private TextView tvTime;
+		private TextView tvFrom;
 
 		public ViewHolder(View convertView) {
-			ivImage = (ImageView) convertView.findViewById(R.id.iv_image);
-			rbHot = (RatingBar) convertView.findViewById(R.id.rb_hot);
 			tvName = (TextView) convertView.findViewById(R.id.tv_name);
-			tvAddress = (TextView) convertView.findViewById(R.id.tv_address);
-			tvDesc = (TextView) convertView.findViewById(R.id.tv_desc);
+			tvTime = (TextView) convertView.findViewById(R.id.tv_time);
+			tvFrom = (TextView) convertView.findViewById(R.id.tv_from);
 			convertView.setTag(this);
 		}
 		

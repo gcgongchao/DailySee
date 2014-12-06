@@ -1,8 +1,10 @@
 package com.dailysee.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,11 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.dailysee.R;
+import com.dailysee.bean.Tip;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
+import com.dailysee.net.response.TipResponse;
+import com.dailysee.ui.adapter.TipAdapter;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.util.SpUtil;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -29,8 +35,11 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
+	private TipAdapter mAdapter;
 	
 	private int mIndex = 1;
+	private ArrayList<Tip> tipList = new ArrayList<Tip>();
+	
 	private boolean mRefreshDataRequired = true;
 	private DelayHandler mHander;
 
@@ -79,7 +88,8 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 
 	@Override
 	public void onInitViewData() {
-		
+		mAdapter = new TipAdapter(mContext, tipList);
+		mListView.setAdapter(mAdapter);
 	}
 
 	@Override
@@ -97,7 +107,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		super.onResume();
 		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_AUTO_REFRESH, 1000);
 	}
-
+	
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 		// Update the LastUpdatedLabel
@@ -107,7 +117,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		}
 		
 		mIndex = 1;
-		onLoad();
+		onLoad(false);
 	}
 
 	private String getTime() {
@@ -117,31 +127,39 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	@Override
 	public void onLastItemVisible() {
 		mIndex++;
-		onLoad();
+		onLoad(false);
 	}
 
-	public void onLoad() {
+	public void onLoad(final boolean showProgress) {
 		// Tag used to cancel the request
 		String tag = "tag_request_message";
-		NetRequest.getInstance(getActivity()).get(new Callback() {
+		NetRequest.getInstance(getActivity()).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
 				mRefreshDataRequired = false;
 				if (mIndex == 1) {
 					SpUtil.getInstance(mContext).setMessageRefreshTime();
+					tipList.clear();
 				}
 				
+				TipResponse tipResponse =(TipResponse) response.getResponse(new TypeToken<TipResponse>(){});
+				if (tipResponse != null && tipResponse.rows != null && tipResponse.rows.size() > 0) {
+					tipList.addAll(tipResponse.rows);
+				}
+				mAdapter.notifyDataSetChanged();
 			}
 
 			@Override
 			public void onPreExecute() {
-//				toShowProgressMsg("正在加载...");
+				if (showProgress) {
+					toShowProgressMsg("正在加载...");
+				}
 			}
 
 			@Override
 			public void onFinished() {
-//				toCloseProgressMsg();
+				toCloseProgressMsg();
 				mPullRefreshListView.onRefreshComplete();
 			}
 
@@ -153,8 +171,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.PreferentialController.getRecPerferentials");
-				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("mtd", "com.guocui.tty.api.web.TipController.getTips");
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
@@ -172,10 +189,13 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case DELAY_AUTO_REFRESH:
-				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
-//					mPullRefreshListView.demo();
-					mPullRefreshListView.setRefreshing(false);
+				if (mRefreshDataRequired) {
+					onLoad(true);
 				}
+//				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
+////					mPullRefreshListView.demo();
+//					mPullRefreshListView.setRefreshing(false);
+//				}
 				break;
 			}
 			

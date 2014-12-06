@@ -111,6 +111,11 @@ public class NetRequest {
 			return url;
 		}
 		
+		params.put("app", APP);
+		
+		String newSign = genSign(params);
+		params.put("sign", newSign);
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append(url).append("?");
 		

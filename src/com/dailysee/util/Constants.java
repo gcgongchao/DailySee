@@ -9,6 +9,13 @@ public class Constants {
 	public static final String CUSTOMER_SERVICES_PHONE = "0755 8888 8888";
 
 	public static final int ADD_PICTURE = 10001;
+
+	public static final int DEFAULT_CITY = 440300;// 深圳
+
+	public interface Filter {
+		public static final int RECOMMEND = 10001;
+		public static final int NEARBY = 10002;
+	}
 	
 	public interface Status {
 		public static final String UNCHECK = "UNCHECK";

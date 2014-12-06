@@ -217,5 +217,63 @@ public class SpUtil {
 		String time = sdf.format(date);
 		getEdit().putString("message_refresh_time", time).commit();
 	}
+
+	public void setLat(double lat) {
+		getEdit().putString("lat", Double.toString(lat)).commit();
+	}
+	
+	public String getLat() {
+		return getSp().getString("lat", "0");
+	}
+	
+	public double getLatD() {
+		String lat = getLat();
+		return Double.parseDouble(lat);
+	}
+
+	public void setLng(double lng) {
+		getEdit().putString("lng", Double.toString(lng)).commit();
+	}
+	
+	public String getLng() {
+		return getSp().getString("lng", "0");
+	}
+	
+	public double getLngD() {
+		String lng = getLng();
+		return Double.parseDouble(lng);
+	}
+
+	public void setProvince(String province) {
+		getEdit().putString("province", province).commit();
+	}
+
+	public String getProvince() {
+		return getSp().getString("province", "广东省");
+	}
+
+	public void setCity(String city) {
+		getEdit().putString("city", city).commit();
+	}
+
+	public String getCity() {
+		return getSp().getString("city", "深圳市");
+	}
+
+	public void setArea(String area) {
+		getEdit().putString("area", area).commit();
+	}
+
+	public String getArea() {
+		return getSp().getString("area", "");
+	}
+
+	public void setCityId(int cityId) {
+		getEdit().putInt("cityId", cityId).commit();
+	}
+	
+	public int getCityId() {
+		return getSp().getInt("area", Constants.DEFAULT_CITY);
+	}
 	
 }
