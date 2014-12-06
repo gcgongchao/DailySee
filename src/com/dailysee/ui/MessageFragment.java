@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.bean.Tip;
@@ -24,6 +25,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.TipResponse;
 import com.dailysee.ui.adapter.TipAdapter;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -39,9 +41,19 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	
 	private int mIndex = 1;
 	private ArrayList<Tip> tipList = new ArrayList<Tip>();
+
+	private LinearLayout llUnread;
+	private TextView tvUnread;
+
+	private LinearLayout llRead;
+	private TextView tvRead;
+
+	private LinearLayout llAll;
+	private TextView tvAll;
 	
 	private boolean mRefreshDataRequired = true;
 	private DelayHandler mHander;
+	private int filter;
 
 	public MessageFragment() {
 
@@ -74,6 +86,15 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		View v = getView();
 		setTitle("天天讯息");
 		
+		llUnread = (LinearLayout) v.findViewById(R.id.ll_unread);
+		tvUnread = (TextView) v.findViewById(R.id.tv_unread);
+
+		llRead = (LinearLayout) v.findViewById(R.id.ll_read);
+		tvRead = (TextView) v.findViewById(R.id.tv_read);
+
+		llAll = (LinearLayout) v.findViewById(R.id.ll_all);
+		tvAll = (TextView) v.findViewById(R.id.tv_all);
+		
 		LinearLayout emptyView = (LinearLayout) v.findViewById(R.id.ll_no_data);
 
 		mPullRefreshListView = (PullToRefreshListView) v.findViewById(R.id.pull_refresh_list);
@@ -94,13 +115,33 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 
 	@Override
 	public void onBindListener() {
-		
+		llUnread.setOnClickListener(this);
+		llRead.setOnClickListener(this);
+		llAll.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+		tvUnread.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+		tvRead.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+		tvAll.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+		switch (v.getId()) {
+		case R.id.ll_unread:
+			tvUnread.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			filter = 0;
+			break;
+		case R.id.ll_read:
+			tvUnread.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			filter = 1;
+			break;
+		case R.id.ll_all:
+			tvAll.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			filter = 2;
+			break;
+		}
+		mPullRefreshListView.setRefreshing(false);
 	}
+
 	
 	@Override
 	public void onResume() {

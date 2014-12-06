@@ -7,6 +7,90 @@
 
     <include layout="@layout/item_header" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/app_black"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+           	android:id="@+id/ll_unread"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/app_black"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+            	android:id="@+id/tv_unread"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_circle_on"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:text="未读信息"
+            	android:textSize="@dimen/subhead"
+                android:textColor="@color/light_gray" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/ll_read"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/app_black"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_read"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_circle_off"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:text="已读信息"
+            	android:textSize="@dimen/subhead"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/ll_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/app_black"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_circle_off"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:text="全部信息"
+            	android:textSize="@dimen/subhead"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="fill_parent"
