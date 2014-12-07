@@ -117,8 +117,8 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void toChangePhone() {
-//		Intent intent = new Intent(this, ChangePhoneActivity.class);
-//		startActivityForResult(intent, REQUEST_CHANGE_PHONE);
+		Intent intent = new Intent(this, ChangePhoneActivity.class);
+		startActivityForResult(intent, REQUEST_CHANGE_PHONE);
 	}
 
 	private void toEditProfile() {

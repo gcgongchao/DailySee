@@ -86,6 +86,11 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 	@Override
 	public void onInitViewData() {
+		tvFilter.setFocusable(true);
+		tvFilter.setFocusableInTouchMode(true);
+		tvFilter.requestFocus();
+		tvFilter.requestFocusFromTouch();
+		
 		mAdatper = new MerchantAdapter(getActivity(), merchantList);
 		mListView.setAdapter(mAdatper);
 	}

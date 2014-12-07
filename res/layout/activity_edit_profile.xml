@@ -141,7 +141,6 @@
                     android:textSize="@dimen/text_input" />
 
                 <LinearLayout
-	                android:id="@+id/ll_birthday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -263,7 +262,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical|right"
                     android:hint="请输入邮箱"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:paddingBottom="5dp"
                     android:paddingRight="@dimen/activity_margin"
                     android:paddingTop="5dp"

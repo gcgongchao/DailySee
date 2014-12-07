@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include layout="@layout/item_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/btn_gray_frame"
+                android:gravity="center_vertical"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/login_hint"
+                android:textSize="@dimen/text_input" >
+                <requestFocus/>
+           	</EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/btn_gray_frame"
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="请输入验证码"
+                    android:minWidth="@dimen/edittext_width"
+	                android:paddingTop="5dp"
+	                android:paddingLeft="2dp"
+	                android:paddingRight="10dp"
+	                android:paddingBottom="5dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/btn_get_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="10dp"
+                    android:text="获取验证码"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/text_input"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/btn_orange_selector"
+                android:minWidth="@dimen/edittext_width"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

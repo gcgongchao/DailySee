@@ -1,6 +1,7 @@
 package com.dailysee.ui.base;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -112,9 +115,12 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 			onRefreshSex();
 
 			etEmail.setText(member.email);
+			
+			tvBirthday.setText(member.birthday);
 
-			if (!TextUtils.isEmpty(member.logoUrl)) {
-				AppController.getInstance().getImageLoader().get(member.logoUrl, ImageLoader.getImageListener(ivAvatar, R.drawable.ic_image, R.drawable.ic_image));
+			mAvatarUploadUrl = member.logoUrl;
+			if (!TextUtils.isEmpty(mAvatarUploadUrl)) {
+				AppController.getInstance().getImageLoader().get(mAvatarUploadUrl, ImageLoader.getImageListener(ivAvatar, R.drawable.ic_image, R.drawable.ic_image));
 			}
 		}
 	}
@@ -195,20 +201,50 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 			onRefreshSex();
 			break;
 		case R.id.ll_birthday:
-//			showSelectBirthdayDialog();
+			showSelectBirthdayDialog();
 			break;
 		case R.id.btn_commit:
 			if (checkAvatar() && checkName() && checkEmail()) {
-				requestRegister();
+				requestUpdateProfile();
 			}
 			break;
 		}
 	}
 
+	private void showSelectBirthdayDialog() {
+		String birthday = getBirthday();
+		
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+		if (!TextUtils.isEmpty(birthday)) {
+			String[] b = birthday.split("-");
+			if (b != null && b.length >= 3) {
+				year = Integer.parseInt(b[0]);
+				month = Integer.parseInt(b[1]);
+				dayOfMonth = Integer.parseInt(b[2]);
+			}
+		}
+		
+		DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
+                        tvBirthday.setText(year + "-" + (month+1) + "-" + dayOfMonth);
+                    }
+                }, 
+                year, // 传入年份
+                month, // 传入月份
+                dayOfMonth // 传入天数
+            );
+		dialog.show();
+	}
+
 	private boolean checkAvatar() {
 		boolean check = false;
 		if (TextUtils.isEmpty(mAvatarUploadUrl)) {
-			showToast("请上传营业执照");
+			showToast("请上传头像");
 		} else {
 			check = true;
 		}
@@ -266,7 +302,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 		return sex;
 	}
 
-	private void requestRegister() {
+	private void requestUpdateProfile() {
 		final String name = getName();
 		final String sex = getSex();
 		final String birthday = getBirthday();

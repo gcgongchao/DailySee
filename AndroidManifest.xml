@@ -61,6 +61,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.base.LoginActivity" />
+        <activity android:name=".ui.base.ChangePhoneActivity" />
         <activity android:name=".ui.base.ProfileActivity" />
         <activity android:name=".ui.base.EditProfileActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />

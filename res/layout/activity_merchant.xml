@@ -13,7 +13,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-           	android:id="@+id/ll_filter"
+            android:id="@+id/ll_filter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -22,15 +22,17 @@
             android:orientation="horizontal" >
 
             <TextView
-            	android:id="@+id/tv_filter"
+                android:id="@+id/tv_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ic_filter"
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:text="选择区域"
-            	android:textSize="@dimen/subhead"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/subhead" 
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
         </LinearLayout>
 
         <View
@@ -57,8 +59,8 @@
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:text="推荐商家"
-            	android:textSize="@dimen/subhead"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/subhead" />
         </LinearLayout>
 
         <View
@@ -85,8 +87,8 @@
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:text="附近商家"
-            	android:textSize="@dimen/subhead"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/subhead" />
         </LinearLayout>
     </LinearLayout>
 
@@ -106,8 +108,8 @@
             android:hint="请输入搜索商家的信息"
             android:paddingLeft="16dp"
             android:text=""
-            android:textSize="@dimen/subtitle"
-            android:textColorHint="@color/light_gray" />
+            android:textColorHint="@color/light_gray"
+            android:textSize="@dimen/subtitle" />
 
         <ImageView
             android:id="@+id/iv_search"
@@ -117,6 +119,11 @@
             android:paddingRight="16dp"
             android:src="@drawable/ic_search" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list"
