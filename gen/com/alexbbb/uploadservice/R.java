@@ -8,7 +8,7 @@ package com.alexbbb.uploadservice;
 
 public final class R {
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f020023;
+		public static final int ic_launcher = 0x7f020024;
 	}
 	public static final class layout {
 		public static final int layout = 0x7f030019;

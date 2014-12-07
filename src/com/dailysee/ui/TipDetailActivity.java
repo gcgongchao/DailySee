@@ -1,60 +1,35 @@
 package com.dailysee.ui;
 
-import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alexbbb.uploadservice.AbstractUploadServiceReceiver;
-import com.alexbbb.uploadservice.ContentType;
-import com.alexbbb.uploadservice.UploadRequest;
-import com.alexbbb.uploadservice.UploadService;
 import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
-import com.dailysee.bean.Member;
 import com.dailysee.bean.Tip;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
-import com.dailysee.ui.base.LoginActivity;
-import com.dailysee.util.Constants;
-import com.dailysee.util.Md5Utils;
-import com.dailysee.util.SpUtil;
+import com.dailysee.util.TipSpUtil;
 import com.dailysee.util.UiHelper;
-import com.dailysee.util.Utils;
-import com.dailysee.widget.ConfirmDialog;
-import com.dailysee.widget.InputTextDialog;
-import com.dailysee.widget.SelectPicDialog;
 import com.google.gson.reflect.TypeToken;
 
 public class TipDetailActivity extends BaseActivity implements OnClickListener {
 
 	protected static final String TAG = TipDetailActivity.class.getSimpleName();
+
+	private Button btnShare;
 	
 	private TextView tvName;
 	private TextView tvFrom;
@@ -70,6 +45,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tip_detail);
 		
 		requestTipDetail();
 	}
@@ -83,6 +59,8 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 		
 		if (mTip == null) {
 			finish();
+		} else {
+			TipSpUtil.getInstance(getActivity()).setRead(mTip.tipId);
 		}
 		
 		setTitle("讯息详情");
@@ -91,6 +69,8 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onFindViews() {
+		btnShare = (Button) findViewById(R.id.btn_action);
+		
 		tvName = (TextView) findViewById(R.id.tv_name);
 		tvFrom = (TextView) findViewById(R.id.tv_from);
 		tvTime = (TextView) findViewById(R.id.tv_time);
@@ -103,6 +83,9 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onInitViewData() {
+		btnShare.setText("分享");
+		btnShare.setVisibility(View.VISIBLE);
+		
 		tvName.setText(mTip.title);
 		tvFrom.setText("来自" + mTip.companyName);
 		tvTime.setText(mTip.createDate);
@@ -119,6 +102,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onBindListener() {
+		btnShare.setOnClickListener(this);
 		ivImage.setOnClickListener(this);
 		btnEnterMerchant.setOnClickListener(this);
 	}
@@ -127,22 +111,42 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.btn_action:
+			toShare();
+			break;
 		case R.id.iv_image:
 			UiHelper.toBrowseImage(getActivity(), mTip.logoUrl);
 			break;
 		case R.id.btn_enter_merchant:
-			Intent intent = new Intent();
+//			Intent intent = new Intent();
 //			intent.setClass(getActivity(), MerchantDetailActivity.class);
-			intent.putExtra("merchantId", mTip.merchantId);
-			startActivity(intent);
+//			intent.putExtra("merchantId", mTip.merchantId);
+//			startActivity(intent);
 			break;
 		}
 		
 	}
 
+	private void toShare() {
+		Intent intent = new Intent(Intent.ACTION_SEND);  
+		if (TextUtils.isEmpty(mTip.logoUrl)) {
+			intent.setType("text/plain"); 
+		} else {
+			intent.setType("image/*");  
+	        intent.putExtra(Intent.EXTRA_STREAM, URI.create(mTip.logoUrl));  
+		}
+        intent.putExtra(Intent.EXTRA_SUBJECT, mTip.title);  
+        intent.putExtra(Intent.EXTRA_TEXT, mTip.content);  
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
+        startActivity(Intent.createChooser(intent, "分享讯息"));
+	}
+
 	private void onLoadImage(String imageUrl) {
 		if (!TextUtils.isEmpty(imageUrl)) {
-			AppController.getInstance().getImageLoader().get(imageUrl, ImageLoader.getImageListener(ivImage, R.drawable.ic_merchant, R.drawable.ic_merchant));
+			ivImage.setVisibility(View.VISIBLE);
+			AppController.getInstance().getImageLoader().get(imageUrl, ImageLoader.getImageListener(ivImage, R.drawable.ic_image_tip, R.drawable.ic_image_tip));
+		} else {
+			ivImage.setVisibility(View.GONE);
 		}
 	}
 	

@@ -20,12 +20,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dailysee.R;
+import com.dailysee.adapter.TipAdapter;
 import com.dailysee.bean.Tip;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.TipResponse;
-import com.dailysee.ui.adapter.TipAdapter;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
@@ -105,7 +105,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		mPullRefreshListView.setOnLastItemVisibleListener(this);
 		
 		mListView = mPullRefreshListView.getRefreshableView();
-		mListView.setEmptyView(emptyView);
+//		mListView.setEmptyView(emptyView);
 	}
 
 	@Override

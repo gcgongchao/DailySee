@@ -13,12 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dailysee.R;
+import com.dailysee.adapter.MerchantAdapter;
 import com.dailysee.bean.Merchant;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.MerchantResponse;
-import com.dailysee.ui.adapter.MerchantAdapter;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;

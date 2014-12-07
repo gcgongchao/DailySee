@@ -3,32 +3,29 @@ package com.dailysee.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.dailysee.AppController;
 import com.dailysee.R;
-import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Tip;
+import com.dailysee.util.TipSpUtil;
 
 public class TipAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Tip> list;
 	private LayoutInflater mInflater;
+	private TipSpUtil mTipSpUtil;
 
 	public TipAdapter(Context context, List<Tip> tipList) {
 		this.context = context;
 		this.list = tipList;
 		
 		mInflater = LayoutInflater.from(context);
+		mTipSpUtil = TipSpUtil.getInstance(context);
 	}
 
 	@Override
@@ -58,6 +55,11 @@ public class TipAdapter extends BaseAdapter {
 		
 		Tip entity = list.get(position);
 		
+		if (!mTipSpUtil.isRead(entity.tipId)) {
+			holder.tvName.setTextColor(context.getResources().getColor(R.color.black));
+		} else {
+			holder.tvName.setTextColor(context.getResources().getColor(R.color.gray));
+		}
 		holder.tvName.setText(entity.title);
 		holder.tvFrom.setText("来自" + entity.companyName);
 		holder.tvTime.setText(entity.createDate);

@@ -68,7 +68,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginRight="@dimen/activity_margin"
                 android:background="@color/gray" />
@@ -77,11 +76,12 @@
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginRight="@dimen/activity_margin"
                 android:background="@color/light_gray"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_merchant" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_content"
