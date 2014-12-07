@@ -3,6 +3,8 @@ package com.dailysee.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import com.dailysee.util.Constants;
+
 public class Member implements Serializable {
 	public long informationId;
 	public String name;
@@ -16,4 +18,14 @@ public class Member implements Serializable {
 	public String introduction;
 	public String logoUrl;
 	public List<Image> imgs;// （证件类图片）
+	
+	public String getSex() {
+		String sexStr = "";
+		if (Constants.Sex.MEN.equals(sex)) {
+			sexStr = "男";
+		} else if (Constants.Sex.WOMEN.equals(sex)) {
+			sexStr = "女";
+		}
+		return sexStr;
+	}
 }

@@ -1,8 +1,9 @@
 package com.dailysee.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Tip {
+public class Tip implements Serializable {
 	public long tipId;//			讯息记录ID	
 	public String title;//			主题	
 	public String content;//			内容	
@@ -10,6 +11,8 @@ public class Tip {
 	public String companyName;
 	public String statusName;//			状态名	转义后的状态名称：已过期，未生效，已生效
 	public String status;//			状态	
+	public String tipType;
+	public String tipTypeName;
 	public String beginDate;//			生效日期	
 	public int validDays;//			生效天数	
 	public long createUser	;//		创建者	

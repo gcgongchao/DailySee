@@ -13,6 +13,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Member;
+import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.widget.ConfirmDialog;
 
@@ -90,7 +91,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 			}
 
 			tvName.setText(member.name);
-			tvSex.setText(member.sex);
+			tvSex.setText(member.getSex());
 			tvBirthday.setText(member.birthday);
 			tvEmail.setText(member.email);
 		}
@@ -134,6 +135,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 				mSpUtil.logout();
 				
 				Intent intent = new Intent();
+				intent.putExtra("from", Constants.LOGOUT);
 				intent.setClass(getActivity(), LoginActivity.class);
 				startActivity(intent);
 				

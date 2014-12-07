@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +27,6 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.TipResponse;
 import com.dailysee.ui.adapter.TipAdapter;
 import com.dailysee.ui.base.BaseFragment;
-import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -33,7 +34,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleLis
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MessageFragment extends BaseFragment implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener {
+public class MessageFragment extends BaseFragment implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnItemClickListener {
 
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
@@ -118,6 +119,8 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		llUnread.setOnClickListener(this);
 		llRead.setOnClickListener(this);
 		llAll.setOnClickListener(this);
+		
+		mListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -240,6 +243,17 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 				break;
 			}
 			
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+		Tip tip = (Tip) parent.getAdapter().getItem(position);
+		if (tip != null) {
+			Intent intent = new Intent();
+			intent.setClass(mContext, TipDetailActivity.class);
+			intent.putExtra("tip", tip);
+			startActivity(intent);
 		}
 	}
 

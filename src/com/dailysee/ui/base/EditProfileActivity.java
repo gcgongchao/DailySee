@@ -126,10 +126,10 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void onRefreshSex() {
-		if (Constants.Sex.BOY.equals(sex)) {
+		if (Constants.Sex.MEN.equals(sex)) {
 			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-		} else if (Constants.Sex.GIRL.equals(sex)) {
+		} else if (Constants.Sex.WOMEN.equals(sex)) {
 			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
 			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 		} else {
@@ -193,11 +193,11 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 			showSelectPicDialog();
 			break;
 		case R.id.tv_sex_boy:
-			sex = Constants.Sex.BOY;
+			sex = Constants.Sex.MEN;
 			onRefreshSex();
 			break;
 		case R.id.tv_sex_girl:
-			sex = Constants.Sex.GIRL;
+			sex = Constants.Sex.WOMEN;
 			onRefreshSex();
 			break;
 		case R.id.ll_birthday:

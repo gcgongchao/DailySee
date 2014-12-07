@@ -3,10 +3,8 @@ package com.dailysee.ui.base;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,13 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dailysee.R;
-import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
-import com.dailysee.util.Constants;
-import com.dailysee.util.SpUtil;
-import com.google.gson.reflect.TypeToken;
 
 public class ChangePhoneActivity extends BaseActivity implements OnClickListener {
 
@@ -209,7 +203,8 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
+				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.modifyLoginId");
+				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("loginId", phone);
 				params.put(mCheckKey, code);
 				return params;

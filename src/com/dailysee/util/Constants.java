@@ -12,6 +12,8 @@ public class Constants {
 
 	public static final int DEFAULT_CITY = 440300;// 深圳
 
+	public static final String LOGOUT = "logout";
+
 	public interface Filter {
 		public static final int RECOMMEND = 10001;
 		public static final int NEARBY = 10002;
@@ -30,8 +32,14 @@ public class Constants {
 	}
 	
 	public interface Sex {
-		public static final String BOY = "男";
-		public static final String GIRL = "女";
+		public static final String MEN = "MAN";
+		public static final String WOMEN = "WOMEN";
+	}
+	
+	public interface TipType {
+		public static final String MERCHANT = "MERCHANT";//商户类信息, 
+		public static final String GOVERNMENT = "GOVERNMENT";//政府公告, 
+		public static final String ACTIVITY = "ACKTIVITY";//优惠活动
 	}
 	
 }

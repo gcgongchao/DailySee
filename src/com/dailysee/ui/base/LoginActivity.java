@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dailysee.MainActivity;
 import com.dailysee.R;
+import com.dailysee.SplashActivity;
 import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
@@ -37,6 +39,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	protected String mCheckCode;
 	protected String mCheckKey;
 	private ImageView mIvUp;
+	private String from;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onInit() {
+		Intent intent = getIntent();
+		if (intent != null) {
+			from = intent.getStringExtra("from");
+		}
+		
 		setTitle("登录");
 		setUp();
 	}
@@ -251,15 +259,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					
 					sendBroadcast(new Intent(Constants.REFRESH_MEMBER_DETAIL));
 					
-					if (TextUtils.isEmpty(member.name) && TextUtils.isEmpty(member.logoUrl)) {
-						Intent intent = new Intent();
-						intent.setClass(getActivity(), EditProfileActivity.class);
-						startActivity(intent);
-					} else {
-						setResult(RESULT_OK);
-						finish();
-					}
+					dispatchResult();
 				}
+			}
+
+			private void dispatchResult() {
+				if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), EditProfileActivity.class);
+					startActivity(intent);
+				} else if (Constants.LOGOUT.equals(from)) {
+					Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+					startActivity(mainIntent);
+				} else {
+					setResult(RESULT_OK);
+				}
+				finish();
 			}
 
 			@Override
@@ -272,8 +287,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onFailed(String msg) {
-				setResult(RESULT_OK);
-				finish();
+				dispatchResult();
 			}
 
 			@Override

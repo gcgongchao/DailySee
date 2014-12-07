@@ -195,16 +195,28 @@ public class MainActivity extends BaseActivity {
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) { 
 		super.onActivityResult(requestCode, resultCode, data); 
 		
+		UserFragment userFragment = getUserFragment();
+		if (userFragment != null) {
+			userFragment.onActivityResult(requestCode, resultCode, data); 
+		}
+	}
+	
+	private UserFragment getUserFragment() {
 		Bundle b = new Bundle();
 		b.putString("user", "个人中心");
 		Fragment userFragment = getSupportFragmentManager().findFragmentByTag("user");
 		if (userFragment != null && userFragment instanceof UserFragment) {
-			userFragment.onActivityResult(requestCode, resultCode, data); 
+			return (UserFragment) userFragment;
 		}
+		return null;
 	}
 
 	@Override
 	protected void onDestroy() {
+		UserFragment userFragment = getUserFragment();
+		if (userFragment != null) {
+			userFragment.onDestroy();
+		}
 		super.onDestroy();
 		stopLocation();
 	}
