@@ -1,5 +1,6 @@
 package com.dailysee.ui;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +20,9 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.ui.base.EditProfileActivity;
 import com.dailysee.ui.base.LoginActivity;
+import com.dailysee.ui.base.ProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 
@@ -28,6 +31,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	protected static final String TAG = UserFragment.class.getSimpleName();
 
 	private static final int REQUEST_LOGIN = 1000;
+	private static final int REQUEST_PROFILE = 1001;
 
 	private LinearLayout llUserInfo;
 	private ImageView ivImage;
@@ -110,6 +114,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			toLogin();
 			break;
 		case R.id.ll_user_info:
+			toProfile();
 			break;
 		case R.id.iv_image:
 			String avatar = mSpUtil.getAvatar();
@@ -142,6 +147,18 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		}
 	}
 
+	private void toProfile() {
+		if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), EditProfileActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent();
+			intent.setClass(mContext, ProfileActivity.class);
+			startActivityForResult(intent, REQUEST_PROFILE);
+		}
+	}
+
 	private void toLogin() {
 		Intent intent = new Intent();
 		intent.setClass(mContext, LoginActivity.class);
@@ -171,7 +188,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				tvName.setText(name);
 				
 				String avatar = mSpUtil.getAvatar();
-				AppController.getInstance().getImageLoader().get(avatar, ImageLoader.getImageListener(ivImage, R.drawable.ic_image, R.drawable.ic_image));
+				AppController.getInstance().getImageLoader().get(avatar, ImageLoader.getImageListener(ivImage, R.drawable.ic_avatar, R.drawable.ic_avatar));
 			}
 		}
 	}
@@ -179,6 +196,13 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == REQUEST_PROFILE && data != null) {
+				if (data.getBooleanExtra("logout", false)) {
+					getActivity().finish();
+				}
+			}
+		}
 	}
 	
 	@Override

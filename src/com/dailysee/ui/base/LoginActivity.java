@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dailysee.R;
+import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
+import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
+import com.google.gson.reflect.TypeToken;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -200,8 +204,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					sp.setFirstLogin(isFirstLogin);
 					
 					showToast("登录成功");
-					setResult(RESULT_OK);
-					finish();
+					
+					onLoadMyInfo();
 				} catch (JSONException e) {
 					e.printStackTrace();
 					showToast("服务器错误");
@@ -229,6 +233,54 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
 				params.put(mCheckKey, code);
+				return params;
+			}
+		}, tag);
+	}
+	
+	private void onLoadMyInfo() {
+		// Tag used to cancel the request
+		String tag = "tag_request_get_member_detail";
+		NetRequest.getInstance(this).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				Member member = (Member) response.getResponse(new TypeToken<Member>() {});
+				if (member != null) {
+					mSpUtil.setMember(member);
+					
+					sendBroadcast(new Intent(Constants.REFRESH_MEMBER_DETAIL));
+					
+					if (TextUtils.isEmpty(member.name) && TextUtils.isEmpty(member.logoUrl)) {
+						Intent intent = new Intent();
+						intent.setClass(getActivity(), EditProfileActivity.class);
+						startActivity(intent);
+					} else {
+						setResult(RESULT_OK);
+						finish();
+					}
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+			}
+
+			@Override
+			public void onFinished() {
+			}
+
+			@Override
+			public void onFailed(String msg) {
+				setResult(RESULT_OK);
+				finish();
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				return params;
 			}
 		}, tag);

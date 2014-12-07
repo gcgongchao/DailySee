@@ -74,7 +74,7 @@ public class Utils {
 		}
 		return apiKey;
 	}
-	
+
 	/**
 	 * 获取当前app包信息对象.
 	 * 
@@ -125,8 +125,7 @@ public class Utils {
 	 * @return
 	 */
 	public static String getDeviceId(Context context) {
-		TelephonyManager telephonyManager = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String imei = telephonyManager.getDeviceId();
 		return imei;
 	}
@@ -234,7 +233,7 @@ public class Utils {
 		}
 		return false;
 	}
-	
+
 	public static File getOutputFile(Context context) {
 		File file = null;
 		if (isExternalStorageWritable()) {
@@ -261,7 +260,7 @@ public class Utils {
 			close(openFileOutput);
 		}
 	}
-	
+
 	public static void close(Closeable closeable) {
 		if (closeable != null) {
 			try {
@@ -325,8 +324,8 @@ public class Utils {
 	 * @return 图片的真实路径
 	 */
 	public static String getPath(Activity activity, Uri uri) {
-		String path=uri.getPath();
-		try{
+		String path = uri.getPath();
+		try {
 			String[] proj = { MediaColumns.DATA };
 			// 好像是android多媒体数据库的封装接口，具体的看Android文档
 			Cursor cursor = activity.managedQuery(uri, proj, null, null, null);
@@ -336,8 +335,8 @@ public class Utils {
 			cursor.moveToFirst();
 			// 最后根据索引值获取图片路径
 			path = cursor.getString(columnIndex);
-		}catch(Exception e){
-			//Uri是一个文件类型而不是一个多媒体类型，也就是说已file结尾而不是content结尾
+		} catch (Exception e) {
+			// Uri是一个文件类型而不是一个多媒体类型，也就是说已file结尾而不是content结尾
 		}
 		return path;
 	}
@@ -348,8 +347,7 @@ public class Utils {
 	 * @param activity
 	 * @param runnable
 	 */
-	public static void runOnUiThreadSafety(Activity activity,
-			final Runnable runnable) {
+	public static void runOnUiThreadSafety(Activity activity, final Runnable runnable) {
 		if (activity == null) {
 			return;
 		}
@@ -379,7 +377,7 @@ public class Utils {
 			dialog.dismiss();
 		}
 	}
-	
+
 	public static String getFileName(String filePath) {
 		String fileName = null;
 		if (!TextUtils.isEmpty(filePath)) {
@@ -393,18 +391,18 @@ public class Utils {
 		}
 		return fileName;
 	}
-	
+
 	public static void hideSoft(Context context) {
-		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);  
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 	}
-	
+
 	public static String formatTwoFractionDigits(double d) {
 		return formatFractionDigits(d, 2);
 	}
-	
+
 	public static String formatFractionDigits(double d, int count) {
-		NumberFormat nf=NumberFormat.getNumberInstance() ;
+		NumberFormat nf = NumberFormat.getNumberInstance();
 		nf.setMaximumFractionDigits(count);
 		return nf.format(d);
 	}
@@ -415,10 +413,15 @@ public class Utils {
 		intent.setData(Uri.parse("tel:" + phone));
 		context.startActivity(intent);
 	}
-	
+
 	public static String formatTime(long time) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		return format.format(new Date(time));
+	}
+
+	public static boolean checkEmail(String email) {
+		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		return email.matches(EMAIL_REGEX);
 	}
 
 }

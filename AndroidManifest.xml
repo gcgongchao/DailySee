@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name="com.dailysee.AppController"
@@ -60,9 +61,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.base.LoginActivity" />
+        <activity android:name=".ui.base.ProfileActivity" />
+        <activity android:name=".ui.base.EditProfileActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />
         <activity android:name=".ui.MerchantActivity" />
         <activity android:name=".ui.AboutActivity" />
+        
+        <service
+		    android:name="com.alexbbb.uploadservice.UploadService"
+		    android:enabled="true"
+		    android:exported="false" >
+		    <intent-filter>
+		        <action android:name="com.alexbbb.uploadservice.action.upload"/>
+		    </intent-filter>
+		</service>
 
         <service
             android:name="com.umeng.update.net.DownloadingService"

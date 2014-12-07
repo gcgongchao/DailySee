@@ -29,4 +29,9 @@ public class Constants {
 		public static final int SNACK = 20001;
 	}
 	
+	public interface Sex {
+		public static final String BOY = "男";
+		public static final String GIRL = "女";
+	}
+	
 }

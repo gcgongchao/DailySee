@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.dailysee.bean.CityEntity;
 import com.dailysee.bean.Member;
+import com.dailysee.db.CityDb;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
@@ -75,7 +77,7 @@ public class MainActivity extends BaseActivity {
 		mHander = new DelayHandler();
 		
 		initLocation();
-		requestCity(0);
+		onLoadCity();
 	}
 
 	@Override
@@ -158,6 +160,7 @@ public class MainActivity extends BaseActivity {
 			public void onSuccess(BaseResponse response) {
 				Member member = (Member) response.getResponse(new TypeToken<Member>() {});
 				if (member != null) {
+					mLoadDataRequired = false;
 					mSpUtil.setMember(member);
 					
 					Intent intent = new Intent(Constants.REFRESH_MEMBER_DETAIL);
@@ -171,11 +174,11 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onFinished() {
+				toCloseProgressMsg();
 			}
 
 			@Override
 			public void onFailed(String msg) {
-				toCloseProgressMsg();
 			}
 
 			@Override
@@ -191,6 +194,13 @@ public class MainActivity extends BaseActivity {
 	@Override 
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) { 
 		super.onActivityResult(requestCode, resultCode, data); 
+		
+		Bundle b = new Bundle();
+		b.putString("user", "个人中心");
+		Fragment userFragment = getSupportFragmentManager().findFragmentByTag("user");
+		if (userFragment != null && userFragment instanceof UserFragment) {
+			userFragment.onActivityResult(requestCode, resultCode, data); 
+		}
 	}
 
 	@Override
@@ -260,6 +270,17 @@ public class MainActivity extends BaseActivity {
 			mLocationClient.stop();
 		}
 	}
+	
+	private void onLoadCity() {
+		CityDb db = new CityDb(getActivity());
+		
+		mCityList = db.findAll();
+		if (mCityList != null && mCityList.size() > 0) {
+			getCityId();
+		} else {
+			requestCity(0);
+		}
+	}
 
 	private void requestCity(final int parentId) {
 		// Tag used to cancel the request
@@ -279,6 +300,9 @@ public class MainActivity extends BaseActivity {
 							Gson gson = new Gson();
 							mCityList = gson.fromJson(json, type);
 							if (mCityList != null && mCityList.size() > 0) {
+								CityDb db = new CityDb(getActivity());
+								db.saveAll(mCityList);
+								
 								getCityId();
 							}
 						} catch (JsonSyntaxException e) {
