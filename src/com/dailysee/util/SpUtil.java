@@ -273,7 +273,7 @@ public class SpUtil {
 	}
 	
 	public int getCityId() {
-		return getSp().getInt("area", Constants.DEFAULT_CITY);
+		return getSp().getInt("cityId", Constants.DEFAULT_CITY);
 	}
 	
 }

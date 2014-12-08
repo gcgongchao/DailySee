@@ -91,6 +91,30 @@ public class CityDb extends BaseDb {
         return list;
 	}
 	
+	public List<CityEntity> findCityRegionInfo(int parentId) {
+		List<CityEntity> list = new ArrayList<CityEntity>();
+
+		String selection = String.format(" %s = ? ", Table.PARENT_ID);
+		String[] selectionArgs = new String[] { Integer.toString(parentId) };
+        
+        Cursor cursor = null;
+        try {
+        	checkDb();
+            cursor = db.query(Table.TABLE_NAME, Table.PROJECTION, selection, selectionArgs, null, null, Table.CITY_ID + " asc" );
+            while (cursor != null && cursor.moveToNext()) {
+            	CityEntity CityEntity = (CityEntity)parseCursor(cursor);
+            	list.add(CityEntity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return list;
+	}
+	
 	public void saveAll(List<CityEntity> list) {
 		checkDb();
 		beginTransaction();
@@ -107,15 +131,37 @@ public class CityDb extends BaseDb {
 			endTransaction();
 		}
 	}
+	
+	public void saveCityRegionInfo(int cityId, List<CityEntity> list) {
+		checkDb();
+		beginTransaction();
+		try {
+			delete(cityId);
+			if (list != null && list.size() > 0) {
+				for (CityEntity entity : list) {
+					insert(entity);
+					if (entity.cityChilds != null && entity.cityChilds.size() > 0) {
+						for (CityEntity child : entity.cityChilds) {
+							insert(child);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endTransaction();
+		}
+	}
 
-	public int getCount(int cityId, int parentId) {
+	public int getCount(int parentId) {
 		int count = 0;
 		Cursor cursor = null;
 		try {
 			checkDb();
 
-			String selection = String.format(" %s = ? and %s = ? ", Table.CITY_ID, Table.PARENT_ID);
-			String[] selectionArgs = new String[] { Integer.toString(cityId), Integer.toString(parentId) };
+			String selection = String.format(" %s = ? ", Table.PARENT_ID);
+			String[] selectionArgs = new String[] { Integer.toString(parentId) };
 
 			cursor = db.query(Table.TABLE_NAME, Table.PROJECTION, selection, selectionArgs, null, null, Table._ID + " asc limit 1");
 			if (cursor != null) {
@@ -163,11 +209,11 @@ public class CityDb extends BaseDb {
 		}
 	}
 
-	public void delete(String shopId) {
+	public void delete(int cityId) {
 		try {
 			checkDb();
-			String whereClause = String.format(" %s = ? ", Table.CITY_ID);
-			String[] whereArgs = new String[] { shopId };
+			String whereClause = String.format(" %s = ? ", Table.PARENT_ID);
+			String[] whereArgs = new String[] { Integer.toString(cityId) };
 			db.delete(Table.TABLE_NAME, whereClause, whereArgs);
 		} catch (SQLException e) {
 			e.printStackTrace();

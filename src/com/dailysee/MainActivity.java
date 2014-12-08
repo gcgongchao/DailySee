@@ -301,25 +301,13 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				JSONArray dataArr = response.getDataArr();
-				if (dataArr != null) {
-					String json = dataArr.toString();
-
-					if (parentId == 0) {
-						try {
-							Type type = new TypeToken<List<CityEntity>>() {
-							}.getType();
-							Gson gson = new Gson();
-							mCityList = gson.fromJson(json, type);
-							if (mCityList != null && mCityList.size() > 0) {
-								CityDb db = new CityDb(getActivity());
-								db.saveAll(mCityList);
-								
-								getCityId();
-							}
-						} catch (JsonSyntaxException e) {
-							e.printStackTrace();
-						}
+				if (parentId == 0) {
+					mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+					if (mCityList != null && mCityList.size() > 0) {
+						CityDb db = new CityDb(getActivity());
+						db.saveAll(mCityList);
+						
+						getCityId();
 					}
 				}
 			}
@@ -355,13 +343,9 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onSuccess(BaseResponse response) {
 				List<CityEntity> mAreaList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
-				List<CityEntity> mRegionList = new ArrayList<CityEntity>();
-				if (mAreaList == null) {
-					mAreaList = new ArrayList<CityEntity>();
-				} else {
-					if (mAreaList.get(0) != null && mAreaList.get(0).cityChilds != null && mAreaList.get(0).cityChilds.size() > 0) {
-						mRegionList.addAll(mAreaList.get(0).cityChilds);
-					}
+				if (mAreaList != null && mAreaList.size() > 0) {
+					CityDb db = new CityDb(getActivity());
+					db.saveCityRegionInfo(cityId, mAreaList);
 				}
 			}
 

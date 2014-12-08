@@ -14,13 +14,18 @@ import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.adapter.MerchantAdapter;
+import com.dailysee.bean.CityEntity;
 import com.dailysee.bean.Merchant;
+import com.dailysee.db.CityDb;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.MerchantResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.SpUtil;
+import com.dailysee.widget.SelectRegionPopupWindow;
+import com.dailysee.widget.SelectRegionPopupWindow.OnSelectListener;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -46,6 +51,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	private MerchantAdapter mAdatper;
 	
 	private int filter = Constants.Filter.RECOMMEND;
+	
+	private SelectRegionPopupWindow mSelectRegionDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +113,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_filter:
+			toSelectRegion();
 			break;
 		case R.id.ll_recommend:
 			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
@@ -124,6 +132,75 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			}
 			break;
 		}
+	}
+	
+	private void showRegionPopupWindow() {
+		if (mSelectRegionDialog == null) {
+			mSelectRegionDialog = new SelectRegionPopupWindow(this, new OnSelectListener() {
+				
+				@Override
+				public void onSelectListener(String district, String region) {
+					mSelectRegionDialog.dismiss();
+				}
+			});
+			mSelectRegionDialog.init();
+		}
+		mSelectRegionDialog.showAsDropDown(tvFilter, 0, mSelectRegionDialog.getHeight());
+	}
+	
+	private void toSelectRegion() {
+		CityDb db = new CityDb(this);
+		int cityId = SpUtil.getInstance(this).getCityId();
+		if (db.getCount(cityId) <= 0) {
+			onLoadRegionInfo();
+		} else {
+			showRegionPopupWindow();
+		}
+	}
+	
+	public void onLoadRegionInfo() {
+		final int cityId = SpUtil.getInstance(getActivity()).getCityId();
+		
+		// Tag used to cancel the request
+		String tag = "tag_request_city";
+		NetRequest.getInstance(this).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				List<CityEntity> mAreaList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				if (mAreaList != null && mAreaList.size() > 0) {
+					CityDb db = new CityDb(getActivity());
+					db.saveCityRegionInfo(cityId, mAreaList);
+					
+					showRegionPopupWindow();
+				} else {
+					showToast("该城市暂无区域信息");
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在加载区域");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
+				params.put("parentId", Integer.toString(cityId));
+				return params;
+			}
+		}, tag);
 	}
 
 	@Override
