@@ -53,6 +53,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	private int filter = Constants.Filter.RECOMMEND;
 	
 	private SelectRegionPopupWindow mSelectRegionDialog = null;
+	protected String mArea = "";
+	protected String mRegion = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +143,12 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				@Override
 				public void onSelectListener(String district, String region) {
 					mSelectRegionDialog.dismiss();
+					
+					mArea = district;
+					mRegion = region;
+					
+					tvFilter.setText(region);
+					mPullRefreshListView.setRefreshing(false);
 				}
 			});
 			mSelectRegionDialog.init();
@@ -264,6 +272,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				}
 				params.put("prov", mSpUtil.getProvince());
 				params.put("city", mSpUtil.getCity());
+				params.put("area", mArea);
+				params.put("landmark", mRegion);
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;

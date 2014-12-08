@@ -1,5 +1,6 @@
 package com.dailysee.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -67,6 +68,9 @@ public class CityAdapter extends BaseAdapter {
 	}
 
 	public void setList(List<CityEntity> list) {
+		if (items == null) {
+			items = new ArrayList<CityEntity>();
+		}
 		items.clear();
 		if (list != null && list.size() > 0) {
 			items.addAll(list);

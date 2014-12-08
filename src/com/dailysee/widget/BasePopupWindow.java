@@ -15,13 +15,14 @@ public abstract class BasePopupWindow extends PopupWindow {
 	View contentView;
 	View.OnClickListener clickListener;
 
-	public BasePopupWindow(Context context) {
-	    this(context, null);
+	public BasePopupWindow(Context context, int layoutId) {
+	    this(context, null, layoutId);
 	}
 
-	public BasePopupWindow(Context context, OnClickListener onclickListener) {
+	public BasePopupWindow(Context context, OnClickListener onclickListener, int layoutId) {
 		super(context);
 		this.context = context;
+		setContentView(layoutId);
 		clickListener = onclickListener;
 	}
 

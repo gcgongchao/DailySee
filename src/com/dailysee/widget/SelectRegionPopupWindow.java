@@ -39,15 +39,15 @@ public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemCl
 	public int mCurrenTmpRegionPosition = 0;
 
 	public SelectRegionPopupWindow(Context context) {
-		super(context);
+		super(context, R.layout.dialog_select_region);
 	}
 
 	public SelectRegionPopupWindow(Context context, OnClickListener onclickListener) {
-		super(context, onclickListener);
+		super(context, onclickListener, R.layout.dialog_select_region);
 	}
 
 	public SelectRegionPopupWindow(Context context, OnSelectListener onSelectListener) {
-		super(context);
+		super(context, R.layout.dialog_select_region); 
 		mOnSelectListener = onSelectListener;
 	}
 
