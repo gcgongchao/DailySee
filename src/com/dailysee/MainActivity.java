@@ -1,12 +1,8 @@
 package com.dailysee;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,8 +34,6 @@ import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -59,9 +53,10 @@ public class MainActivity extends BaseActivity {
 	
 	private DelayHandler mHander;
 
-	protected List<CityEntity> mCityList;
+	protected List<CityEntity> mProvinceList;
 
 	public String mProvince;
+	public String mCity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,19 +164,6 @@ public class MainActivity extends BaseActivity {
 			}
 
 			@Override
-			public void onPreExecute() {
-			}
-
-			@Override
-			public void onFinished() {
-				toCloseProgressMsg();
-			}
-
-			@Override
-			public void onFailed(String msg) {
-			}
-
-			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
@@ -251,10 +233,11 @@ public class MainActivity extends BaseActivity {
 			}
 			
 			mProvince = location.getProvince();
-			String city = location.getCity();
-			if (!TextUtils.isEmpty(mProvince) && !TextUtils.isEmpty(city)) {
+			mCity = location.getCity();
+			if (!TextUtils.isEmpty(mProvince) && !TextUtils.isEmpty(mCity)) {
+				getCityId();
 				mSpUtil.setProvince(mProvince);
-				mSpUtil.setCity(city);
+				mSpUtil.setCity(mCity);
 				mSpUtil.setArea(location.getDistrict());
 			}
 			mSpUtil.setLat(location.getLatitude());
@@ -265,11 +248,16 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void getCityId() {
-		if (mCityList != null && mCityList.size() > 0 && !TextUtils.isEmpty(mProvince)) {
-			for (CityEntity city : mCityList) {
-				if (city != null && mProvince.equals(city.name)) {
-					mSpUtil.setCityId(city.cityId);
-					onLoadCityData(city.cityId);
+		if (mProvinceList != null && mProvinceList.size() > 0 && !TextUtils.isEmpty(mProvince)) {
+			for (CityEntity province : mProvinceList) {
+				if (province != null && mProvince.equals(province.name)) {
+					int provinceId = mSpUtil.getProvinceId(0);
+					int cityId = mSpUtil.getCityId(0);
+					if (provinceId != province.cityId || cityId == 0) {
+						mSpUtil.setProvinceId(province.cityId);
+						mSpUtil.setCityId(0);
+						onLoadCity(province.cityId);
+					}
 					stopLocation();
 				}
 			}
@@ -286,82 +274,88 @@ public class MainActivity extends BaseActivity {
 	private void onLoadCity() {
 		CityDb db = new CityDb(getActivity());
 		
-		mCityList = db.findAll();
-		if (mCityList != null && mCityList.size() > 0) {
+		mProvinceList = db.findAll();
+		if (mProvinceList != null && mProvinceList.size() > 0) {
 			getCityId();
 		} else {
-			requestCity(0);
+			requestProvince();
 		}
 	}
 
-	private void requestCity(final int parentId) {
+	private void requestProvince() {
 		// Tag used to cancel the request
 		String tag = "tag_request_city";
 		NetRequest.getInstance(this).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				if (parentId == 0) {
-					mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
-					if (mCityList != null && mCityList.size() > 0) {
-						CityDb db = new CityDb(getActivity());
-						db.saveAll(mCityList);
-						
-						getCityId();
-					}
+				mProvinceList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				if (mProvinceList != null && mProvinceList.size() > 0) {
+					CityDb db = new CityDb(getActivity());
+					db.saveAll(mProvinceList);
+					
+					getCityId();
 				}
-			}
-
-			@Override
-			public void onPreExecute() {
-			}
-
-			@Override
-			public void onFinished() {
-			}
-
-			@Override
-			public void onFailed(String msg) {
-
 			}
 
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
-				params.put("parentId", Integer.toString(parentId));
+				params.put("parentId", "0");
 				return params;
 			}
-		}, tag);
+		}, tag, true);
 	}
 	
-	public void onLoadCityData(final int cityId) {
+	public void onLoadCity(final int provinceId) {
 		// Tag used to cancel the request
 		String tag = "tag_request_city";
 		NetRequest.getInstance(this).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				List<CityEntity> mAreaList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
-				if (mAreaList != null && mAreaList.size() > 0) {
+				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				if (mCityList != null && mCityList.size() > 0) {
+					if (!TextUtils.isEmpty(mCity)) {
+						for (CityEntity city : mCityList) {
+							if (city != null && mCity.equals(city.name)) {
+								int cityId = mSpUtil.getCityId(0);
+								if (cityId != city.cityId) {
+									mSpUtil.setCityId(city.cityId);
+									onLoadCityRegionInfo(city.cityId);
+								}
+							}
+						}
+					}
+					
 					CityDb db = new CityDb(getActivity());
-					db.saveCityRegionInfo(cityId, mAreaList);
+					db.saveCityInfo(provinceId, mCityList);
 				}
 			}
 
 			@Override
-			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
+				params.put("parentId", Integer.toString(provinceId));
+				return params;
 			}
+		}, tag, true);
+	}
+	
+	public void onLoadCityRegionInfo(final int cityId) {
+		// Tag used to cancel the request
+		String tag = "tag_request_city_region";
+		NetRequest.getInstance(this).post(new Callback() {
 
 			@Override
-			public void onFinished() {
-				toCloseProgressMsg();
-			}
-
-			@Override
-			public void onFailed(String msg) {
-
+			public void onSuccess(BaseResponse response) {
+				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				if (mCityList != null && mCityList.size() > 0) {
+					CityDb db = new CityDb(getActivity());
+					db.saveCityRegionInfo(cityId, mCityList);
+				}
 			}
 
 			@Override
@@ -371,7 +365,7 @@ public class MainActivity extends BaseActivity {
 				params.put("parentId", Integer.toString(cityId));
 				return params;
 			}
-		}, tag);
+		}, tag, true);
 	}
 	
 	private class DelayHandler extends Handler {

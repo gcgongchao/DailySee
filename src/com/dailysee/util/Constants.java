@@ -10,6 +10,7 @@ public class Constants {
 
 	public static final int ADD_PICTURE = 10001;
 
+	public static final int DEFAULT_PROVINCE = 440000;// 深圳
 	public static final int DEFAULT_CITY = 440300;// 深圳
 
 	public static final String LOGOUT = "logout";

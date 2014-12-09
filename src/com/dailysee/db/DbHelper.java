@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class DbHelper extends SQLiteOpenHelper {
 	
-	private static final String DB_NAME = "tdaoj";
+	private static final String DB_NAME = "dailysee";
 
 	private static final int DATABASE_VERSION = 4;
 
@@ -34,24 +34,12 @@ public class DbHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.i(getTag(), "onUpgrade");
 		db.execSQL(CityDb.getDropTableSQL());
-//		db.execSQL(GroupDb.getDropTableSQL());
-//		db.execSQL(MemberDb.getDropTableSQL());
-//		db.execSQL(GameTimeDb.getDropTableSQL());
-//		db.execSQL(PlayingTimeDb.getDropTableSQL());
-//		db.execSQL(ActionDb.getDropTableSQL());
-//		db.execSQL(RecordDb.getDropTableSQL());
 		
 		createTable(db);
 	}
 
 	private void createTable(SQLiteDatabase db) {
 		db.execSQL(CityDb.getCreateTableSQL());
-//		db.execSQL(GroupDb.getCreateTableSQL());
-//		db.execSQL(MemberDb.getCreateTableSQL());
-//		db.execSQL(GameTimeDb.getCreateTableSQL());
-//		db.execSQL(PlayingTimeDb.getCreateTableSQL());
-//		db.execSQL(ActionDb.getCreateTableSQL());
-//		db.execSQL(RecordDb.getCreateTableSQL());
 	}
 
 	private String getTag() {

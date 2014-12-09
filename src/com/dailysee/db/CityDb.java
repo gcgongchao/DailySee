@@ -132,6 +132,23 @@ public class CityDb extends BaseDb {
 		}
 	}
 	
+	public void saveCityInfo(int provinceId, List<CityEntity> list) {
+		checkDb();
+		beginTransaction();
+		try {
+			delete(provinceId);
+			if (list != null && list.size() > 0) {
+				for (CityEntity entity : list) {
+					insert(entity);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endTransaction();
+		}
+	}
+	
 	public void saveCityRegionInfo(int cityId, List<CityEntity> list) {
 		checkDb();
 		beginTransaction();
@@ -166,7 +183,7 @@ public class CityDb extends BaseDb {
 			cursor = db.query(Table.TABLE_NAME, Table.PROJECTION, selection, selectionArgs, null, null, Table._ID + " asc limit 1");
 			if (cursor != null) {
 				cursor.moveToFirst();
-				count = cursor.getInt(cursor.getColumnIndexOrThrow(Table.NAME));
+				count = cursor.getCount();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

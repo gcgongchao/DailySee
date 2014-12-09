@@ -141,13 +141,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			mSelectRegionDialog = new SelectRegionPopupWindow(this, new OnSelectListener() {
 				
 				@Override
-				public void onSelectListener(String district, String region) {
+				public void onSelectListener(String title, String area, String region) {
 					mSelectRegionDialog.dismiss();
 					
-					mArea = district;
+					mArea = area;
 					mRegion = region;
 					
-					tvFilter.setText(region);
+					tvFilter.setText(title);
 					mPullRefreshListView.setRefreshing(false);
 				}
 			});

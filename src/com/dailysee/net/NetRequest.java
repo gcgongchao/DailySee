@@ -55,7 +55,11 @@ public class NetRequest {
 	}
 
 	public void get(final Callback callback, String tag) {
-		executeNetworkInvoke(Method.GET, callback, tag);
+		executeNetworkInvoke(Method.GET, callback, tag, false);
+	}
+
+	public void get(final Callback callback, String tag, boolean silent) {
+		executeNetworkInvoke(Method.GET, callback, tag, silent);
 	}
 
 	public void post(final Callback callback) {
@@ -63,13 +67,17 @@ public class NetRequest {
 	}
 
 	public void post(final Callback callback, String tag) {
-		executeNetworkInvoke(Method.POST, callback, tag);
+		executeNetworkInvoke(Method.POST, callback, tag, false);
 	}
 
-	public void executeNetworkInvoke(int method, final Callback callback, String tag) {
+	public void post(final Callback callback, String tag, boolean silent) {
+		executeNetworkInvoke(Method.POST, callback, tag, silent);
+	}
+
+	public void executeNetworkInvoke(int method, final Callback callback, String tag, boolean silent) {
 
 		if (!Utils.isNetworkValid(mContext)) {
-			onFailed(callback, "无网络，请检查您的网络设置");
+			onFailed(callback, "无网络，请检查您的网络设置", silent);
 			return;
 		}
 
@@ -85,9 +93,9 @@ public class NetRequest {
 		StringRequest strReq = null;
 		if (method == Method.GET) {
 			url = convertParams(url, callback.getParams());
-			strReq = new StringRequest(method, url, new SuccessResponse(callback), new ErrorResponse(callback));
+			strReq = new StringRequest(method, url, new SuccessResponse(callback, silent), new ErrorResponse(callback, silent));
 		} else if (method == Method.POST) {
-			strReq = new StringRequest(method, url, new SuccessResponse(callback), new ErrorResponse(callback)) {
+			strReq = new StringRequest(method, url, new SuccessResponse(callback, silent), new ErrorResponse(callback, silent)) {
 				@Override
 				protected Map<String, String> getParams() throws AuthFailureError {
 					Map<String, String> params = callback.getParams();
@@ -156,9 +164,11 @@ public class NetRequest {
 	private class SuccessResponse implements Response.Listener<String> {
 
 		private Callback callback;
+		private boolean silent;
 
-		public SuccessResponse(Callback callback) {
+		public SuccessResponse(Callback callback, boolean silent) {
 			this.callback = callback;
+			this.silent = silent;
 		}
 
 		@Override
@@ -175,11 +185,11 @@ public class NetRequest {
 					BaseResponse response = new BaseResponse(json, code, message, jsonObj);
 					onSuccess(callback, response);
 				} else {
-					onFailed(callback, "(" + code + ") " + message);
+					onFailed(callback, "(" + code + ") " + message, silent);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				onFailed(callback, "数据格式错误");
+				onFailed(callback, "数据格式错误", silent);
 			}
 		}
 	}
@@ -187,9 +197,11 @@ public class NetRequest {
 	private class ErrorResponse implements Response.ErrorListener {
 
 		private Callback callback;
+		private boolean silent;
 
-		public ErrorResponse(Callback callback) {
+		public ErrorResponse(Callback callback, boolean silent) {
 			this.callback = callback;
+			this.silent = silent;
 		}
 
 		@Override
@@ -212,7 +224,7 @@ public class NetRequest {
 				msg = "网络异常，请稍后重试";// 默认错误提示
 			}
 			
-			onFailed(callback, msg);
+			onFailed(callback, msg, silent);
 		}
 	}
 
@@ -231,8 +243,8 @@ public class NetRequest {
 			callback.onFinished();
 	}
 
-	public void onFailed(Callback callback, String msg) {
-		if (!TextUtils.isEmpty(msg)) {
+	public void onFailed(Callback callback, String msg, boolean silent) {
+		if (!TextUtils.isEmpty(msg) && !silent) {
 			toShowToast(msg);
 		}
 		if (callback != null)

@@ -1,5 +1,6 @@
 package com.dailysee.widget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -19,23 +20,25 @@ import com.dailysee.util.SpUtil;
 
 public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemClickListener, OnClickListener {
 
+	private static final String OTHER = "其他";
+
 	public static final String TAG = SelectRegionPopupWindow.class.getSimpleName();
 
 	private TextView tvTemp;
 	private ListView lvRegion;
 	private ListView lvArea;
 
-	private CityAdapter mAdapter;
-	private CityAdapter mAdapter2;
-	private List<CityEntity> cityListData = null;
-	private List<CityEntity> regionListData = null;
+	private CityAdapter mAreaAdapter;
+	private CityAdapter mRegionAdapter;
+	private List<CityEntity> mAreaList = null;
+	private List<CityEntity> mRegionList = null;
 	private CityDb mCityDb;
 
 	private OnSelectListener mOnSelectListener;
 
-	public int mCurrenDistrictPosition = 0;
-	public int mCurrenRegionPosition = 0;
-	public int mCurrenTmpDistrictPosition = 0;
+	public int mCurAreaPosition = 0;
+	public int mCurRegionPosition = 0;
+	public int mCurTmpAreaPosition = 0;
 	public int mCurrenTmpRegionPosition = 0;
 
 	public SelectRegionPopupWindow(Context context) {
@@ -71,24 +74,34 @@ public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemCl
 
 	private void initListView() {
 		int cityId = SpUtil.getInstance(context).getCityId();
-		cityListData = mCityDb.findCityRegionInfo(cityId);
-		if (cityListData != null && cityListData.size() > 0) {
-			mAdapter = new CityAdapter((Activity) context, cityListData);
-			lvArea.setAdapter(mAdapter);
-			lvArea.setSelection(mCurrenDistrictPosition);
+		mAreaList = mCityDb.findCityRegionInfo(cityId);
+		if (mAreaList != null && mAreaList.size() > 0) {
+			mAreaAdapter = new CityAdapter((Activity) context, mAreaList);
+			lvArea.setAdapter(mAreaAdapter);
+			lvArea.setSelection(mCurAreaPosition);
 			// 根据当前区域id,get所有的片区信息
-			if (cityListData.size() > mCurrenDistrictPosition) {
-				if (mCurrenDistrictPosition == 0)
-					regionListData = null;
-				else {
-					CityEntity entity = cityListData.get(mCurrenDistrictPosition);
-					int regionId = entity.cityId;
-					regionListData = mCityDb.findCityRegionInfo(regionId);
-				}
-				mAdapter2 = new CityAdapter((Activity) context, regionListData);
-				lvRegion.setAdapter(mAdapter2);
+			if (mAreaList.size() > mCurAreaPosition) {
+				CityEntity entity = mAreaList.get(mCurAreaPosition);
+				mRegionList = getCityRegionInfo(entity);
+				
+				mRegionAdapter = new CityAdapter((Activity) context, mRegionList);
+				lvRegion.setAdapter(mRegionAdapter);
 			}
 		}
+	}
+
+	private List<CityEntity> getCityRegionInfo(CityEntity entity) {
+		List<CityEntity> mRegionList = mCityDb.findCityRegionInfo(entity.cityId);
+		
+		if (mRegionList == null) {
+			mRegionList = new ArrayList<CityEntity>();
+		}
+		if (mRegionList.size() == 0) {
+			CityEntity city = new CityEntity();
+			city.name = OTHER;
+			mRegionList.add(city);
+		}
+		return mRegionList;
 	}
 
 	public void initPopViewsEvent() {
@@ -105,51 +118,41 @@ public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemCl
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (parent == lvArea) {
 			// 更新左侧区域
-			mCurrenTmpDistrictPosition = position;
+			mCurTmpAreaPosition = position;
 //			mAdapter.setCurrentPosition(mCurrenTmpDistrictPosition);
-			if (mCurrenTmpDistrictPosition == 0) {
-				mCurrenDistrictPosition = mCurrenTmpDistrictPosition;
-				mCurrenRegionPosition = -1;
-				regionListData = null;
-				mAdapter2.setList(regionListData);
-				if (mOnSelectListener != null) {
-					mOnSelectListener.onSelectListener("", "");
-				}
-				return;
-			}
 			// 更新右侧区域
-			CityEntity cityE = cityListData.get(mCurrenTmpDistrictPosition);
-			int regionId = cityE.cityId;
-			regionListData = mCityDb.findCityRegionInfo(regionId);
-			if (mCurrenTmpDistrictPosition == mCurrenDistrictPosition) {
-				mCurrenTmpRegionPosition = mCurrenRegionPosition;
+			CityEntity area = mAreaList.get(mCurTmpAreaPosition);
+			mRegionList = getCityRegionInfo(area);
+			if (mCurTmpAreaPosition == mCurAreaPosition) {
+				mCurrenTmpRegionPosition = mCurRegionPosition;
 			} else {
 				mCurrenTmpRegionPosition = -1;
 			}
 //			mAdapter2.setCurrentPosition(mCurrenTmpRegionPosition);
-			mAdapter2.setList(regionListData);
+			mRegionAdapter.setList(mRegionList);
+			lvRegion.setSelection(0);
 		} else if (parent == lvRegion) {
 			// 更新右侧区域
-			mCurrenDistrictPosition = mCurrenTmpDistrictPosition;
-			mCurrenRegionPosition = position;
+			mCurAreaPosition = mCurTmpAreaPosition;
+			mCurRegionPosition = position;
 //			mAdapter2.setCurrentPosition(mCurrenRegionPosition);
-			mAdapter2.notifyDataSetChanged();
+//			mRegionAdapter.notifyDataSetChanged();
 			if (mOnSelectListener != null) {
-				CityEntity districtE = cityListData.get(mCurrenDistrictPosition);
-				CityEntity regionE = regionListData.get(mCurrenRegionPosition);
-				if (districtE != null && regionE != null) {
-					String name = districtE.name;
-					if (mCurrenRegionPosition > 0) {
-						name = regionE.name;
+				CityEntity area = mAreaList.get(mCurAreaPosition);
+				CityEntity region = mRegionList.get(mCurRegionPosition);
+				if (area != null && region != null) {
+					if (OTHER.equals(region.name)) {
+						mOnSelectListener.onSelectListener(area.name, area.name, "");
+					} else {
+						mOnSelectListener.onSelectListener(region.name, area.name, region.name);
 					}
-					mOnSelectListener.onSelectListener(districtE.name, regionE.name);
 				}
 			}
 		}
 	}
 
 	public interface OnSelectListener {
-		void onSelectListener(String district, String region);
+		void onSelectListener(String title, String area, String region);
 	}
 
 	@Override

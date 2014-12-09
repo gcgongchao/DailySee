@@ -235,6 +235,8 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			case DELAY_AUTO_REFRESH:
 				if (mRefreshDataRequired) {
 					onLoad(true);
+				} else if (mAdapter != null) {
+					mAdapter.notifyDataSetChanged();
 				}
 //				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
 ////					mPullRefreshListView.demo();

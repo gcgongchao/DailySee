@@ -268,12 +268,28 @@ public class SpUtil {
 		return getSp().getString("area", "");
 	}
 
+	public void setProvinceId(int provinceId) {
+		getEdit().putInt("provinceId", provinceId).commit();
+	}
+	
+	public int getProvinceId() {
+		return getProvinceId(Constants.DEFAULT_PROVINCE);
+	}
+	
+	public int getProvinceId(int defaultValue) {
+		return getSp().getInt("provinceId", defaultValue);
+	}
+
 	public void setCityId(int cityId) {
 		getEdit().putInt("cityId", cityId).commit();
 	}
 	
 	public int getCityId() {
-		return getSp().getInt("cityId", Constants.DEFAULT_CITY);
+		return getCityId(Constants.DEFAULT_CITY);
+	}
+	
+	public int getCityId(int defaultValue) {
+		return getSp().getInt("cityId", defaultValue);
 	}
 	
 }
