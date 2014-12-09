@@ -8,7 +8,7 @@
         android:id="@+id/ll_merchant_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height"
-        android:background="@drawable/btn_orange"
+        android:background="@color/orange"
         android:orientation="horizontal" >
 
         <TextView

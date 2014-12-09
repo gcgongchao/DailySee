@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.RoomAdapter;
 import com.dailysee.bean.Merchant;
@@ -70,7 +73,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		View header = mInflater.inflate(R.layout.item_merchant_header, null);
 
 		mLlMerchantTitle = (LinearLayout) header.findViewById(R.id.ll_merchant_title);
-		mIvExpand = (ImageView) findViewById(R.id.iv_expand);
+		mIvExpand = (ImageView) header.findViewById(R.id.iv_expand);
 		mLlMerchantInfo = (LinearLayout) header.findViewById(R.id.ll_merchant_info);
 		mIvImage = (ImageView) header.findViewById(R.id.iv_image);
 		mTvMerchantDesc = (TextView) header.findViewById(R.id.tv_merchant_desc);
@@ -83,6 +86,18 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	public void onInitViewData() {
 		mAdapter = new RoomAdapter(getActivity(), items);
 		mListView.setAdapter(mAdapter);
+		
+		if (mMerchant != null) {
+			if (!TextUtils.isEmpty(mMerchant.logoUrl)) {
+				AppController.getInstance().getImageLoader().get(mMerchant.logoUrl, ImageLoader.getImageListener(mIvImage, R.drawable.ic_merchant_avatar, R.drawable.ic_merchant_avatar));
+			}
+			
+			String desc = mMerchant.introduction;
+			if (TextUtils.isEmpty(desc)) {
+				desc = "暂无介绍";
+			}
+			mTvMerchantDesc.setText(desc);
+		}
 	}
 
 	@Override
