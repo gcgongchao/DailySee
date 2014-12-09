@@ -66,6 +66,7 @@
         <activity android:name=".ui.base.EditProfileActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />
         <activity android:name=".ui.MerchantActivity" />
+        <activity android:name=".ui.MerchantRoomListActivity" />
         <activity android:name=".ui.TipDetailActivity" />
         <activity android:name=".ui.AboutActivity" />
         

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -70,6 +71,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	protected String mRegion = "";
 	
 	private SelectBookingDateDialog mSelectBookingDateDialog;
+	private String mSearch = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +162,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			clearSearchFocus();
 			String search = etSearch.getText().toString();
 			if (!TextUtils.isEmpty(search)) {
+				mSearch = search;
 				onLoad(true);
 			}
 			break;
@@ -309,6 +312,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				params.put("city", mSpUtil.getCity());
 				params.put("area", mArea);
 				params.put("landmark", mRegion);
+				if (!TextUtils.isEmpty(mSearch)) {
+					params.put("name", mSearch);
+				}
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
@@ -339,20 +345,21 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 					Utils.clossDialog(mSelectBookingDateDialog);
 					
 					String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
-					showToast(dateStr);
-					toMerchantDetail(merchant, dateStr);
+//					showToast(dateStr);
+					toMerchantRoomList(merchant, dateStr);
 				}
 			});
 		}
 		mSelectBookingDateDialog.show();
 	}
 
-	protected void toMerchantDetail(Merchant merchant, String date) {
-//		Intent intent = new Intent();
-//		intent.setClass(getActivity(), MerchantDetailActivity.class);
-//		intent.putExtra("merchantId", merchant.merchantId);
-//		intent.putExtra("date", date);
-//		startActivity(intent);
+	protected void toMerchantRoomList(Merchant merchant, String date) {
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), MerchantRoomListActivity.class);
+		intent.putExtra("merchant", merchant);
+		intent.putExtra("merchantId", merchant.merchantId);
+		intent.putExtra("date", date);
+		startActivity(intent);
 	}
 
 	@Override

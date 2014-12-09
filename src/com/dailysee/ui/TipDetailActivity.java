@@ -118,10 +118,10 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 			UiHelper.toBrowseImage(getActivity(), mTip.logoUrl);
 			break;
 		case R.id.btn_enter_merchant:
-//			Intent intent = new Intent();
-//			intent.setClass(getActivity(), MerchantDetailActivity.class);
-//			intent.putExtra("merchantId", mTip.merchantId);
-//			startActivity(intent);
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), MerchantRoomListActivity.class);
+			intent.putExtra("merchantId", mTip.merchantId);
+			startActivity(intent);
 			break;
 		}
 		
