@@ -128,7 +128,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		case R.id.ll_merchant_title:
 			boolean expandOn = mLlMerchantInfo.getVisibility() == View.VISIBLE;
 			mLlMerchantInfo.setVisibility(expandOn ? View.GONE : View.VISIBLE);
-			mIvExpand.setImageResource(expandOn ? R.drawable.ic_expand_off : R.drawable.ic_expand_on);
+			mIvExpand.setImageResource(expandOn ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.iv_image:
 
