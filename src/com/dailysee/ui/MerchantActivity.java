@@ -1,6 +1,7 @@
 package com.dailysee.ui;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
 
 public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnTouchListener, OnItemClickListener {
 
@@ -66,6 +68,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	private SelectRegionPopupWindow mSelectRegionDialog = null;
 	protected String mArea = "";
 	protected String mRegion = "";
+	
+	private SelectBookingDateDialog mSelectBookingDateDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -315,7 +319,40 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		
+		Merchant merchant = (Merchant) parent.getAdapter().getItem(position);
+		if (merchant != null) {
+			showSelectBookingDateDialog(merchant);
+		}
+	}
+
+	private void showSelectBookingDateDialog(final Merchant merchant) {
+		if (mSelectBookingDateDialog == null) {
+			mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
+				
+				@Override
+				public void onDateUnselected(Date date) {
+					
+				}
+				
+				@Override
+				public void onDateSelected(Date date) {
+					Utils.clossDialog(mSelectBookingDateDialog);
+					
+					String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
+					showToast(dateStr);
+					toMerchantDetail(merchant, dateStr);
+				}
+			});
+		}
+		mSelectBookingDateDialog.show();
+	}
+
+	protected void toMerchantDetail(Merchant merchant, String date) {
+//		Intent intent = new Intent();
+//		intent.setClass(getActivity(), MerchantDetailActivity.class);
+//		intent.putExtra("merchantId", merchant.merchantId);
+//		intent.putExtra("date", date);
+//		startActivity(intent);
 	}
 
 	@Override

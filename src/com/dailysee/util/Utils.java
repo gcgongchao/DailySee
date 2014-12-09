@@ -48,6 +48,9 @@ public class Utils {
 	public static final String ACTION_SHOW_MESSAGE = "bccsclient.action.SHOW_MESSAGE";
 	protected static final String EXTRA_ACCESS_TOKEN = "access_token";
 	public static final String EXTRA_MESSAGE = "message";
+	
+	public static final String DATE_FORMAT_YMDMH = "yyyy-MM-dd HH:mm";
+	public static final String DATE_FORMAT_YMD = "yyyy-MM-dd";
 
 	public static String logStringCache = "";
 
@@ -421,13 +424,22 @@ public class Utils {
 	}
 
 	public static String formatTime(long time) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		return format.format(new Date(time));
+		return formatDate(new Date(time));
+	}
+	
+	public static String formatDate(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_YMDMH);
+		return format.format(date);
+	}
+	
+	public static String formatDate(Date date, String pattern) {
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		return format.format(date);
 	}
 
 	public static boolean checkEmail(String email) {
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		return email.matches(EMAIL_REGEX);
 	}
-
+	
 }

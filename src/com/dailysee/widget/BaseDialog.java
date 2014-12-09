@@ -20,8 +20,7 @@ public abstract class BaseDialog extends Dialog {
 		this.context = context;
 	}
 
-	protected BaseDialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	protected BaseDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		this.context = context;
 	}
@@ -37,26 +36,26 @@ public abstract class BaseDialog extends Dialog {
 		init(context);
 	}
 
-	protected abstract void afterDialogViews();
-
-	protected abstract int getLayoutId();
-
 	protected void init(Context context) {
-		View view=getLayoutInflater().inflate(getLayoutId(), null);
+		View view = getLayoutInflater().inflate(getLayoutId(), null);
 		setContentView(view);
 		getWindow().setGravity(Gravity.BOTTOM);
 		setCanceledOnTouchOutside(true);
 		initDialogViews();
 		afterDialogViews();
-		 Window win = getWindow();
-	    WindowManager m = win.getWindowManager();
-		DisplayMetrics  dm = new DisplayMetrics();    
-	    m.getDefaultDisplay().getMetrics(dm);    
-		//Display d = m.getDefaultDisplay(); //
+		Window win = getWindow();
+		WindowManager m = win.getWindowManager();
+		DisplayMetrics dm = new DisplayMetrics();
+		m.getDefaultDisplay().getMetrics(dm);
+		// Display d = m.getDefaultDisplay(); //
 		WindowManager.LayoutParams p = getWindow().getAttributes();
 		p.width = (int) dm.widthPixels;
-	    win.setAttributes(p);
+		win.setAttributes(p);
 	}
 
+	protected abstract int getLayoutId();
+
 	protected abstract void initDialogViews();
+
+	protected abstract void afterDialogViews();
 }
