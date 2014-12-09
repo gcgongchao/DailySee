@@ -208,9 +208,11 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	
 	@Override
 	public void onDestroy() {
-		Log.d(TAG, "onDestroy() unregisterReceiver - UserReceiver");
+		Log.d(TAG, "onDestroy()");
 		if (mUserReceiver != null) {
+			Log.d(TAG, "onDestroy() unregisterReceiver - UserReceiver");
 			mContext.unregisterReceiver(mUserReceiver);
+			mUserReceiver = null;
 		}
 		super.onDestroy();
 	}
