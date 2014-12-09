@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -207,6 +208,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	
 	@Override
 	public void onDestroy() {
+		Log.d(TAG, "onDestroy() unregisterReceiver - UserReceiver");
 		if (mUserReceiver != null) {
 			mContext.unregisterReceiver(mUserReceiver);
 		}

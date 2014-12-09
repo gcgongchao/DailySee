@@ -44,6 +44,8 @@ import com.umeng.update.UmengUpdateAgent;
  */
 public class MainActivity extends BaseActivity {
 
+	private static final String TAG = MainActivity.class.getSimpleName();
+
 	private FragmentTabHost mTabHost;
 	
 	private boolean mLoadDataRequired = true;
@@ -195,8 +197,10 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
+		Log.d(TAG, "onDestroy()");
 		UserFragment userFragment = getUserFragment();
 		if (userFragment != null) {
+			Log.d(TAG, "onDestroy() on calling UserFragment.onDestroy()");
 			userFragment.onDestroy();
 		}
 		super.onDestroy();
