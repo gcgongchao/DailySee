@@ -23,7 +23,7 @@
             android:singleLine="true"
             android:text="如家快捷酒店"
             android:textColor="@color/black"
-            android:textSize="@dimen/subhead" />
+            android:textSize="@dimen/subtitle" />
 
         <TextView
             android:id="@+id/tv_time"
