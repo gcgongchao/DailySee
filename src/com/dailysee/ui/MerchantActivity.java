@@ -6,8 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +31,7 @@ import com.dailysee.net.response.MerchantResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
+import com.dailysee.util.Utils;
 import com.dailysee.widget.SelectRegionPopupWindow;
 import com.dailysee.widget.SelectRegionPopupWindow.OnSelectListener;
 import com.google.gson.reflect.TypeToken;
@@ -32,7 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleLis
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener {
+public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnTouchListener, OnItemClickListener {
 
 	private LinearLayout llFilter;
 	private TextView tvFilter;
@@ -42,6 +50,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 	private LinearLayout llNearby;
 	private TextView tvNearby;
+	
+	private EditText etSearch;
+	private ImageView ivSearch;
 
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
@@ -81,6 +92,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		llNearby = (LinearLayout) findViewById(R.id.ll_nearby);
 		tvNearby = (TextView) findViewById(R.id.tv_nearby);
 		
+		etSearch = (EditText) findViewById(R.id.et_search);
+		ivSearch = (ImageView) findViewById(R.id.iv_search);
+		
 		LinearLayout emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
@@ -109,6 +123,11 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		llFilter.setOnClickListener(this);
 		llRecommented.setOnClickListener(this);
 		llNearby.setOnClickListener(this);
+		
+		ivSearch.setOnClickListener(this);
+		
+		mListView.setOnTouchListener(this);
+		mListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -133,7 +152,19 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				mPullRefreshListView.setRefreshing(false);
 			}
 			break;
+		case R.id.iv_search:
+			clearSearchFocus();
+			String search = etSearch.getText().toString();
+			if (!TextUtils.isEmpty(search)) {
+				onLoad(true);
+			}
+			break;
 		}
+	}
+
+	private void clearSearchFocus() {
+		etSearch.clearFocus();
+		Utils.hideSoft(getActivity(), etSearch);
 	}
 	
 	private void showRegionPopupWindow() {
@@ -280,6 +311,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			}
 
 		}, tag);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		clearSearchFocus();
+		return super.onTouchEvent(event);
 	}
 
 }
