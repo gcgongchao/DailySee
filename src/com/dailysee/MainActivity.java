@@ -47,12 +47,12 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private FragmentTabHost mTabHost;
-	
+
 	private boolean mLoadDataRequired = true;
 
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
-	
+
 	private DelayHandler mHander;
 
 	protected List<CityEntity> mProvinceList;
@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onInit() {
 		mHander = new DelayHandler();
-		
+
 		initLocation();
 		onLoadCity();
 	}
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
 	public void onFindViews() {
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-//		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
+		// mTabHost.getTabWidget().setDividerDrawable(R.color.white);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public void onBindListener() {
-		
+
 	}
 
 	private void addTab(String key, String title, Class fragment, int resId) {
@@ -103,14 +103,14 @@ public class MainActivity extends BaseActivity {
 		mTabHost.addTab(setIndicator(mTabHost.newTabSpec(key), resId), fragment, b);
 	}
 
-	 public TabSpec setIndicator(TabSpec spec, int resId) {
-		 View v = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
-		 
-		 ImageView ivTab = (ImageView) v.findViewById(R.id.iv_tab);
-		 ivTab.setImageResource(resId);
-		 
-		 return spec.setIndicator(v);
-	 }
+	public TabSpec setIndicator(TabSpec spec, int resId) {
+		View v = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
+
+		ImageView ivTab = (ImageView) v.findViewById(R.id.iv_tab);
+		ivTab.setImageResource(resId);
+
+		return spec.setIndicator(v);
+	}
 
 	private void initLocation() {
 		LocationClientOption option = new LocationClientOption();
@@ -128,14 +128,14 @@ public class MainActivity extends BaseActivity {
 		} else {
 			Log.d("LocSDK4", "locClient is null or not started");
 		}
-		
+
 		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_STOP_LOCATION, 15 * 1000);
 	}
-	 
-	 @Override
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-			onLoadData();
+		onLoadData();
 	}
 
 	private void onLoadData() {
@@ -146,20 +146,21 @@ public class MainActivity extends BaseActivity {
 
 	private void onLoadMyInfo() {
 		if (!mSpUtil.isLogin()) {
-			return ;
+			return;
 		}
-		
+
 		// Tag used to cancel the request
 		String tag = "tag_request_get_member_detail";
 		NetRequest.getInstance(this).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				Member member = (Member) response.getResponse(new TypeToken<Member>() {});
+				Member member = (Member) response.getResponse(new TypeToken<Member>() {
+				});
 				if (member != null) {
 					mLoadDataRequired = false;
 					mSpUtil.setMember(member);
-					
+
 					Intent intent = new Intent(Constants.REFRESH_MEMBER_DETAIL);
 					sendBroadcast(intent);
 				}
@@ -174,17 +175,17 @@ public class MainActivity extends BaseActivity {
 			}
 		}, tag);
 	}
-	
-	@Override 
-	 protected void onActivityResult(int requestCode, int resultCode, Intent data) { 
-		super.onActivityResult(requestCode, resultCode, data); 
-		
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
 		UserFragment userFragment = getUserFragment();
 		if (userFragment != null) {
-			userFragment.onActivityResult(requestCode, resultCode, data); 
+			userFragment.onActivityResult(requestCode, resultCode, data);
 		}
 	}
-	
+
 	private UserFragment getUserFragment() {
 		Bundle b = new Bundle();
 		b.putString("user", "个人中心");
@@ -235,7 +236,7 @@ public class MainActivity extends BaseActivity {
 				sb.append("\naddr : ");
 				sb.append(location.getAddrStr());
 			}
-			
+
 			mProvince = location.getProvince();
 			mCity = location.getCity();
 			if (!TextUtils.isEmpty(mProvince) && !TextUtils.isEmpty(mCity)) {
@@ -274,10 +275,10 @@ public class MainActivity extends BaseActivity {
 			mLocationClient.stop();
 		}
 	}
-	
+
 	private void onLoadCity() {
 		CityDb db = new CityDb(getActivity());
-		
+
 		mProvinceList = db.findAll();
 		if (mProvinceList != null && mProvinceList.size() > 0) {
 			getCityId();
@@ -293,11 +294,12 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				mProvinceList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				mProvinceList = response.getListResponse(new TypeToken<List<CityEntity>>() {
+				});
 				if (mProvinceList != null && mProvinceList.size() > 0) {
 					CityDb db = new CityDb(getActivity());
 					db.saveAll(mProvinceList);
-					
+
 					getCityId();
 				}
 			}
@@ -311,7 +313,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}, tag, true);
 	}
-	
+
 	public void onLoadCity(final int provinceId) {
 		// Tag used to cancel the request
 		String tag = "tag_request_city";
@@ -319,7 +321,8 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {
+				});
 				if (mCityList != null && mCityList.size() > 0) {
 					if (!TextUtils.isEmpty(mCity)) {
 						for (CityEntity city : mCityList) {
@@ -332,7 +335,7 @@ public class MainActivity extends BaseActivity {
 							}
 						}
 					}
-					
+
 					CityDb db = new CityDb(getActivity());
 					db.saveCityInfo(provinceId, mCityList);
 				}
@@ -347,7 +350,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}, tag, true);
 	}
-	
+
 	public void onLoadCityRegionInfo(final int cityId) {
 		// Tag used to cancel the request
 		String tag = "tag_request_city_region";
@@ -355,7 +358,8 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {});
+				List<CityEntity> mCityList = response.getListResponse(new TypeToken<List<CityEntity>>() {
+				});
 				if (mCityList != null && mCityList.size() > 0) {
 					CityDb db = new CityDb(getActivity());
 					db.saveCityRegionInfo(cityId, mCityList);
@@ -371,10 +375,10 @@ public class MainActivity extends BaseActivity {
 			}
 		}, tag, true);
 	}
-	
+
 	private class DelayHandler extends Handler {
 		public static final int DELAY_STOP_LOCATION = 10001;
-		
+
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -385,7 +389,7 @@ public class MainActivity extends BaseActivity {
 			default:
 				break;
 			}
-			
+
 		}
 	}
 

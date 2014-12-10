@@ -1,61 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_ad" />
-
-    <ImageView
-        android:id="@+id/iv_merchant"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_merchant" />
+<com.dailysee.widget.CompatibleScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:scrollbars="none" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical" >
+        <FrameLayout
+            android:id="@+id/fl_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/iv_sale"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_sale" />
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:background="@color/app_gray" />
 
-            <ImageView
-                android:id="@+id/iv_gift"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_gift" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_ad_dots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:id="@+id/iv_dot1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_dot10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dip"
+                    android:src="@drawable/ic_dots_selector"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </FrameLayout>
 
         <ImageView
-            android:id="@+id/iv_consultant"
-            android:layout_width="0dp"
-            android:layout_height="170dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
+            android:id="@+id/iv_merchant"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_consultant" />
+            android:src="@drawable/ic_merchant" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_sale"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_sale" />
+
+                <ImageView
+                    android:id="@+id/iv_gift"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_gift" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_consultant"
+                android:layout_width="0dp"
+                android:layout_height="170dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_consultant" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</com.dailysee.widget.CompatibleScrollView>
