@@ -14,16 +14,16 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
-import com.dailysee.bean.Product;
+import com.dailysee.bean.RoomType;
 import com.dailysee.util.UiHelper;
 
 public class RoomAdapter extends BaseAdapter {
 
 	private Context context;
 	private LayoutInflater mInflater;
-	private ArrayList<Object> items;
+	private ArrayList<RoomType> items;
 
-	public RoomAdapter(Context context, ArrayList<Object> items) {
+	public RoomAdapter(Context context, ArrayList<RoomType> items) {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		this.items = items;
@@ -54,23 +54,22 @@ public class RoomAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		final Product product = (Product) getItem(position);
+		final RoomType roomType = (RoomType) getItem(position);
 
-		if (product.imgs != null && product.imgs.size() > 0) {
-			AppController.getInstance().getImageLoader().get(product.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_image, R.drawable.ic_image));
+		if (roomType.imgs != null && roomType.imgs.size() > 0) {
+			AppController.getInstance().getImageLoader().get(roomType.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_image, R.drawable.ic_image));
 			holder.image.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					UiHelper.toBrowseImageList(context, product.imgs, 0);
+					UiHelper.toBrowseImageList(context, roomType.imgs, 0);
 				}
 			});
 		}
 
-		holder.name.setText(product.name);
-		holder.desc.setText(product.name);
+		holder.name.setText(roomType.name);
+		holder.desc.setText(roomType.name);
 		
-
 		return convertView;
 	}
 

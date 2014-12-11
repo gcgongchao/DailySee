@@ -8,7 +8,9 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -130,6 +132,21 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		llRecommented.setOnClickListener(this);
 		llNearby.setOnClickListener(this);
 		
+		etSearch.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				mSearch = s.toString();
+			}
+		});
 		ivSearch.setOnClickListener(this);
 		
 		mListView.setOnTouchListener(this);
@@ -160,9 +177,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			break;
 		case R.id.iv_search:
 			clearSearchFocus();
-			String search = etSearch.getText().toString();
-			if (!TextUtils.isEmpty(search)) {
-				mSearch = search;
+			if (!TextUtils.isEmpty(mSearch)) {
+				mIndex = 1;
 				onLoad(true);
 			}
 			break;
@@ -332,7 +348,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	}
 
 	private void showSelectBookingDateDialog(final Merchant merchant) {
-		if (mSelectBookingDateDialog == null) {
+//		if (mSelectBookingDateDialog == null) {
 			mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
 				
 				@Override
@@ -349,7 +365,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 					toMerchantRoomList(merchant, dateStr);
 				}
 			});
-		}
+//		}
 		mSelectBookingDateDialog.show();
 	}
 

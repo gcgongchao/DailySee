@@ -27,7 +27,7 @@
     <dimen name="button">16sp</dimen>
     
     <dimen name="space">8dp</dimen>
-    <dimen name="height_line">3px</dimen>
+    <dimen name="height_line">1px</dimen>
     <dimen name="height_header">56dp</dimen>
     <dimen name="height_list_item">72dp</dimen>
     <dimen name="height_item">72dp</dimen>

@@ -149,7 +149,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	@Override
 	public void onResume() {
 		super.onResume();
-		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_AUTO_REFRESH, 1000);
+		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_AUTO_REFRESH, 0);
 	}
 	
 	@Override

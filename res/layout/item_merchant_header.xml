@@ -7,50 +7,49 @@
     <LinearLayout
         android:id="@+id/ll_merchant_title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edittext_height"
+        android:layout_height="wrap_content"
         android:background="@color/orange"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:paddingLeft="6dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
             android:paddingRight="@dimen/space"
-            android:paddingTop="5dp"
+            android:paddingTop="8dp"
             android:singleLine="true"
             android:text="商家介绍"
             android:textColor="@color/white"
-            android:textSize="@dimen/subtitle" />
+            android:textSize="@dimen/subhead" />
 
         <ImageView
             android:id="@+id/iv_expand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_expand_off" />
     </LinearLayout>
-    
     <LinearLayout
         android:id="@+id/ll_merchant_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:padding="10dp">
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <ImageView
             android:id="@+id/iv_image"
-	        android:layout_width="96dp"
-	        android:layout_height="72dp"
+            android:layout_width="96dp"
+            android:layout_height="72dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="6dp"
             android:layout_marginRight="8dp"
-            android:src="@drawable/ic_merchant_avatar"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_merchant_avatar" />
 
         <TextView
             android:id="@+id/tv_merchant_desc"
@@ -58,11 +57,37 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:layout_marginRight="6dp"
             android:gravity="top|left"
             android:text="商家介绍"
             android:textColor="@color/deep_gray"
             android:textSize="@dimen/body" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_line"
+        android:background="@color/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_gray"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="@dimen/space"
+            android:paddingTop="8dp"
+            android:singleLine="true"
+            android:text="选择房型"
+            android:textColor="@color/deep_gray"
+            android:textSize="@dimen/subhead" />
     </LinearLayout>
 
 </LinearLayout>

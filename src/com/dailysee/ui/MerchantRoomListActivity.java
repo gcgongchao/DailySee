@@ -22,15 +22,17 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.RoomAdapter;
 import com.dailysee.bean.Merchant;
+import com.dailysee.bean.RoomType;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener {
 
 	private ListView mListView;
-	private ArrayList<Object> items = new ArrayList<Object>();
+	private ArrayList<RoomType> items = new ArrayList<RoomType>();
 	private RoomAdapter mAdapter;
 
 	private LinearLayout mLlMerchantTitle;
@@ -63,7 +65,14 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		if (mMerchant == null || mMerchantId == 0)
 			finish();
 
-		setTitle("商家详情");
+		String title = null;
+		if (mMerchant != null) {
+			title = mMerchant.name;
+		}
+		if (TextUtils.isEmpty(title)) {
+			title = "商家详情";
+		}
+		setTitle(title);
 		setUp();
 	}
 
@@ -141,11 +150,16 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	private void onLoad() {
 		// Tag used to cancel the request
 		String tag = "tag_request_merchant_room_list";
-		NetRequest.getInstance(getActivity()).get(new Callback() {
+		NetRequest.getInstance(getActivity()).post(new Callback() {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				// onUpdateRoomList(roomList);
+				ArrayList<RoomType> list = response.getListResponse(new TypeToken<ArrayList<RoomType>>() {});
+				if (list != null && list.size() > 0) {
+					items.clear();
+					items.addAll(list);
+					mAdapter.notifyDataSetChanged();
+				}
 			}
 
 			@Override

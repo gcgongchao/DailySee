@@ -19,7 +19,7 @@
     <color name="input_border">#dcdcdc</color>
     <color name="background">#f7f7f8</color>
     <color name="title_color">#333333</color>
-    <color name="line">#EFEFED</color>
+    <color name="line">@color/gray</color>
     
     <color name="orange">#f89520</color>
     <color name="light_orange">#ff9520</color>
@@ -29,7 +29,6 @@
     <color name="body">#999084</color>
     <color name="green">#8eb32c</color>
     <color name="app_gray">#EFEFED</color>
-    
     
     <color name="app_black">#353535</color>
     <color name="bg_search">#e8e8e8</color>
