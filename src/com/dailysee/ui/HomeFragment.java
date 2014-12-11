@@ -25,6 +25,7 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.AdResponse;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.ui.merchant.MerchantActivity;
 import com.google.gson.reflect.TypeToken;
 
 public class HomeFragment extends BaseFragment implements OnClickListener, OnPageChangeListener {

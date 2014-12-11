@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.ui.user;
 
 import java.util.List;
 

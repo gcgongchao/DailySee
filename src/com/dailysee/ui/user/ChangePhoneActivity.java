@@ -1,4 +1,4 @@
-package com.dailysee.ui.base;
+package com.dailysee.ui.user;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +19,7 @@ import com.dailysee.R;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
+import com.dailysee.ui.base.BaseActivity;
 
 public class ChangePhoneActivity extends BaseActivity implements OnClickListener {
 

@@ -19,6 +19,11 @@ public class Constants {
 		public static final int RECOMMEND = 10001;
 		public static final int NEARBY = 10002;
 	}
+
+	public interface Product {
+		public static final int DRINKS = 10001;
+		public static final int SNACK = 20001;
+	}
 	
 	public interface Status {
 		public static final String UNCHECK = "UNCHECK";

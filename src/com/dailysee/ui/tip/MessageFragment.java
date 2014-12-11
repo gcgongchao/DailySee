@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.ui.tip;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.dailysee.ui.base;
+package com.dailysee.ui.user;
 
 import java.io.File;
 import java.util.Calendar;
@@ -39,6 +39,7 @@ import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
+import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;

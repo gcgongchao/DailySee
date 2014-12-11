@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.ui.merchant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +27,8 @@ import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.util.UiHelper;
+import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener {
@@ -95,12 +97,13 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	public void onInitViewData() {
 		mAdapter = new RoomAdapter(getActivity(), items);
 		mListView.setAdapter(mAdapter);
-		
+
 		if (mMerchant != null) {
 			if (!TextUtils.isEmpty(mMerchant.logoUrl)) {
-				AppController.getInstance().getImageLoader().get(mMerchant.logoUrl, ImageLoader.getImageListener(mIvImage, R.drawable.ic_merchant_avatar, R.drawable.ic_merchant_avatar));
+				AppController.getInstance().getImageLoader()
+						.get(mMerchant.logoUrl, ImageLoader.getImageListener(mIvImage, R.drawable.ic_merchant_avatar, R.drawable.ic_merchant_avatar));
 			}
-			
+
 			String desc = mMerchant.introduction;
 			if (TextUtils.isEmpty(desc)) {
 				desc = "暂无介绍";
@@ -118,15 +121,14 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Object obj = arg0.getAdapter().getItem(arg2);
-				// if (obj != null && obj instanceof Merchant) {
-				// Merchant merchant = (Merchant) obj;
-				//
-				// Intent intent = new Intent();
-				// intent.setClass(getActivity(), MerchantActivity.class);
-				// intent.putExtra("merchant", merchant);
-				// startActivity(intent);
-				// }
+				RoomType roomType = (RoomType) arg0.getAdapter().getItem(arg2);
+				if (roomType != null) {
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), MerchantProductListActivity.class);
+					intent.putExtra("merchant", mMerchant);
+					intent.putExtra("roomType", roomType);
+					startActivity(intent);
+				}
 			}
 		});
 	}
@@ -140,7 +142,9 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			mIvExpand.setImageResource(expandOn ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.iv_image:
-
+			if (mMerchant != null) {
+				UiHelper.toBrowseImage(getActivity(), mMerchant.logoUrl);
+			}
 			break;
 		default:
 			break;

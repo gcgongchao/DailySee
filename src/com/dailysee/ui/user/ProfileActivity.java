@@ -1,4 +1,4 @@
-package com.dailysee.ui.base;
+package com.dailysee.ui.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Member;
+import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.widget.ConfirmDialog;

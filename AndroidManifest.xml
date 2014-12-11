@@ -61,14 +61,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.base.LoginActivity" />
-        <activity android:name=".ui.base.ChangePhoneActivity" />
-        <activity android:name=".ui.base.ProfileActivity" />
-        <activity android:name=".ui.base.EditProfileActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />
-        <activity android:name=".ui.MerchantActivity" />
-        <activity android:name=".ui.MerchantRoomListActivity" />
-        <activity android:name=".ui.TipDetailActivity" />
-        <activity android:name=".ui.AboutActivity" />
+        
+        <activity android:name=".ui.user.ChangePhoneActivity" />
+        <activity android:name=".ui.user.ProfileActivity" />
+        <activity android:name=".ui.user.EditProfileActivityfileActivity" />
+        <activity android:name=".ui.user.AboutActivity" />
+        
+        <activity android:name=".ui.merchant.MerchantActivity" />
+        <activity android:name=".ui.merchant.MerchantRoomListActivity" />
+        <activity android:name=".ui.merchant.MerchantProductListActivity" />
+        
+        <activity android:name=".ui.tip.TipDetailActivity" />
         
         <service
 		    android:name="com.alexbbb.uploadservice.UploadService"

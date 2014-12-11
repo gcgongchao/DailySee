@@ -32,5 +32,7 @@
     
     <color name="app_black">#353535</color>
     <color name="bg_search">#e8e8e8</color>
+    <color name="blue">#1185cb</color>
+    <color name="app_blue">#359bea</color>
     
 </resources>

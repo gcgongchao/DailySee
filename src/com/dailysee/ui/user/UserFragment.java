@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.ui.user;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -21,9 +21,7 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
-import com.dailysee.ui.base.EditProfileActivity;
 import com.dailysee.ui.base.LoginActivity;
-import com.dailysee.ui.base.ProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 

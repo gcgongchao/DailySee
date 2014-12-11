@@ -9,7 +9,9 @@ public class Product implements Serializable {
     public String companyName;
 	public String name;//	String	是	商品名称	
 	public long productType;//	Long	是	商品所属类型ID	选择所属商品类型记录的productTypeId
-	public String productTypeName;// 商品类型名称	
+	public String productTypeName;// 商品类型名称
+	public long productTopType;//			顶级类型编码
+	public String productTopTypeName;//			顶级类型名称
     public String status;
     public String statusName;
 	public double price;//	Double	是	实际价格	单位：分

@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.widget;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.dailysee.R;
-import com.dailysee.widget.BaseDialog;
 import com.squareup.timessquare.CalendarPickerView;
 import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
 

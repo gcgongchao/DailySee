@@ -1,4 +1,4 @@
-package com.dailysee.ui;
+package com.dailysee.ui.tip;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -21,6 +21,7 @@ import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.merchant.MerchantRoomListActivity;
 import com.dailysee.util.TipSpUtil;
 import com.dailysee.util.UiHelper;
 import com.google.gson.reflect.TypeToken;

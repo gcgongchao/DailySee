@@ -24,6 +24,7 @@ import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
+import com.dailysee.ui.user.EditProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
