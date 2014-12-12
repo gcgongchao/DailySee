@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.ProductAdapter;
 import com.dailysee.bean.Merchant;
@@ -31,6 +32,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.ProductResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
@@ -66,7 +68,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private RoomType mRoomType;
 	
 	private int mShoppingCount;
-	private int mTotalPrice;
+	private double mTotalPrice;
 
 	private int mIndex;
 	
@@ -289,88 +291,52 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	}
 	
 	private class ChooseProductHandler extends Handler {
-//		private ShoppingCartDb mDb;
 		
 		public ChooseProductHandler() {
-//			mDb = new ShoppingCartDb(getActivity());
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-//			case Constants.ADD_FOOD:{
-//				showBottomBar();
-//				
-//				mShoppingCount ++;
+			case ProductAdapter.ADD_PRODUCT:{
+				showBottomBar();
+				
+				mShoppingCount ++;
 //				mTvShoppingCount.setText(Integer.toString(mShoppingCount));
-//				
-//				Food food = (Food) msg.obj;
-//				mTotalPrice = mTotalPrice + food.price;
-//				mTvTotalPrice.setText("￥" + mTotalPrice);
-//				
-//				addToShoppingCart(food);
-//				break;
-//			}
-//			case Constants.REMOVE_FOOD: {
-//				mShoppingCount --;
+				
+				Product product = (Product) msg.obj;
+				mTotalPrice = mTotalPrice + product.price;
+				mTvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+				
+				product.count ++;
+				
+				AppController.getInstance().addToShoppingCart(product);
+				break;
+			}
+			case ProductAdapter.REMOVE_PRODUCT: {
+				mShoppingCount --;
 //				mTvShoppingCount.setText(Integer.toString(mShoppingCount));
-//				if (mShoppingCount <= 0) {
-//					hideBottomBar();
-//				}
-//				
-//				Food food = (Food) msg.obj;
-//				mTotalPrice = mTotalPrice - food.price;
-//				if (mTotalPrice < 0) {
-//					mTotalPrice = 0;
-//				}
-//				mTvTotalPrice.setText("￥" + mTotalPrice);
-//				
-//				removeFromShoppingCart(food);
-//				break;
-//			}
+				if (mShoppingCount <= 0) {
+					hideBottomBar();
+				}
+				
+				Product product = (Product) msg.obj;
+				mTotalPrice = mTotalPrice - product.price;
+				if (mTotalPrice < 0) {
+					mTotalPrice = 0;
+				}
+				mTvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+				
+				product.count --;
+				AppController.getInstance().removeFromShoppingCart(product);
+				break;
+			}
 			default:
 				break;
 			}
 		}
 
-//		private void addToShoppingCart(Food food) {
-//			int count = mDb.getCount(mShopDetail.shop_id, food.foodId);
-//			
-//			ShoppingCart shoppingCart = new ShoppingCart();
-//			shoppingCart.shopId = mShopDetail.shop_id;
-//			shoppingCart.count = count + 1;
-//			shoppingCart.food = food;
-//			
-//			// 同步到内存和数据库
-//			AppController.getInstance().addToShoppingCart(shoppingCart);
-//
-//			if (count == 0) {
-//				mDb.insert(shoppingCart);
-//			} else {
-//				mDb.update(shoppingCart);
-//			}
-//		}
-//		
-//		private void removeFromShoppingCart(Food food) {
-//			String shopId = mShopDetail.shop_id;
-//			int count = mDb.getCount(shopId, food.foodId);
-//			
-//			ShoppingCart shoppingCart = new ShoppingCart();
-//			shoppingCart.shopId = shopId;
-//			shoppingCart.count = count - 1;
-//			shoppingCart.food = food;
-//
-//			// 同步到内存和数据库
-//			AppController.getInstance().removeFromShoppingCart(shoppingCart);
-//			
-//			if (count > 1) {
-//				mDb.update(shoppingCart);
-//			} else {
-//				mDb.delete(shopId);
-//			}
-//		}
-		
 	}
 	
 	@Override

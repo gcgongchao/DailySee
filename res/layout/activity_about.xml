@@ -195,7 +195,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70dp"
         android:gravity="center"
-        android:text="深圳市国粹商务咨询有限公司   版权所有"
+        android:text="深圳市天天有商务科技有限公司 版权所有"
         android:textColor="@color/deep_gray"
         android:textSize="14sp" />
 
@@ -206,7 +206,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="Copyright@2014-2018 GCSW.All Rights Reserved"
+        android:text="Copyright@2014-2018 TTYSW.All Rights Reserved"
         android:textColor="@color/deep_gray"
         android:textSize="14sp" />
 

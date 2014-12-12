@@ -118,6 +118,20 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 				}
 			});
 		}
+		
+		if (product != null && product.count > 0) {
+			holder.count.setText(Integer.toString(product.count));
+			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove_pressed);
+			if (product.count > product.validCnt) {
+				holder.btnAdd.setBackgroundResource(R.drawable.ic_add);
+			} else {
+				holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
+			}
+		} else {
+			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
+			holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
+			holder.count.setText("0");
+		}
 
 		holder.name.setText(product.name);
 		holder.price.setText("原    价: ￥" + Utils.formatTwoFractionDigits(product.price));
@@ -127,21 +141,20 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 5, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 		holder.salePrice.setText(style);
 		
-		if (product.isUp()) {// 上架状态
-			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
-			holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
-		} else {
-			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
-			holder.btnAdd.setBackgroundResource(R.drawable.ic_add);
-		}
 		holder.btnRemove.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				Message msg = new Message();
-				msg.what = REMOVE_PRODUCT;
-				msg.obj = product;
-				mHandler.sendMessage(msg);
+				int count = getProductCount(holder.count);
+				if (count > 0) {
+					count --;
+					holder.count.setText(Integer.toString(count));
+				
+					Message msg = new Message();
+					msg.what = REMOVE_PRODUCT;
+					msg.obj = product;
+					mHandler.sendMessage(msg);
+				}
 			}
 			
 		});
@@ -149,15 +162,27 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 
 			@Override
 			public void onClick(View arg0) {
-				Message msg = new Message();
-				msg.what = ADD_PRODUCT;
-				msg.obj = product;
-				mHandler.sendMessage(msg);
+				int count = getProductCount(holder.count);
+				count ++;
+//				if (count <= product.validCnt) {
+					holder.count.setText(Integer.toString(count));
+					
+					Message msg = new Message();
+					msg.what = ADD_PRODUCT;
+					msg.obj = product;
+					mHandler.sendMessage(msg);
+//				}
 			}
 			
 		});
 		
         return convertView;
+	}
+	
+	private int getProductCount(final TextView tvCount) {
+		String countStr = tvCount.getText().toString();
+		int count = Integer.parseInt(countStr);
+		return count;
 	}
 
 	@Override
@@ -188,6 +213,7 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 		public TextView salePrice;
 		public TextView price;
 		public ImageView btnRemove;
+		public TextView count;
 		public ImageView btnAdd;
 
 		public ChildrenViewHolder(View convertView) {
@@ -196,6 +222,7 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 			salePrice = (TextView) convertView.findViewById(R.id.tv_sale_price);
 			price = (TextView) convertView.findViewById(R.id.tv_price);
 			btnRemove = (ImageView) convertView.findViewById(R.id.iv_remove);
+			count = (TextView) convertView.findViewById(R.id.tv_count);
 			btnAdd = (ImageView) convertView.findViewById(R.id.iv_add);
 
 			convertView.setTag(this);

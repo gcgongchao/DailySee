@@ -23,6 +23,8 @@ public class Product implements Serializable {
 	public String logoUrl;//			头像	
 	public List<Image> imgs;//（相册类图片）	
 	
+	public int count;// 选购数量
+	
 	public boolean isUp() {
 		return "UP".equalsIgnoreCase(status);
 	}

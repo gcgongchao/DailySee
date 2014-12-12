@@ -1,5 +1,8 @@
 package com.dailysee;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -7,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.baidu.frontia.FrontiaApplication;
+import com.dailysee.bean.Product;
 import com.dailysee.util.LruBitmapCache;
 
 /*
@@ -23,6 +27,8 @@ public class AppController extends FrontiaApplication {
 	private ImageLoader mImageLoader;
 
 	private static AppController mInstance;
+	
+	private Map<Long, Product> mShoppingCartMap = new HashMap<Long, Product>(); 
 
 	@Override
 	public void onCreate() {
@@ -67,4 +73,40 @@ public class AppController extends FrontiaApplication {
 		}
 	}
 
+	public void addToShoppingCart(Product product) {
+		long productId = product.productId;
+		mShoppingCartMap.put(productId, product);
+	}
+	
+	public void removeFromShoppingCart(Product product) {
+		if (product == null) {
+			return ;
+		}
+		
+		long productId = product.productId;
+		int count = product.count;
+		
+		if (count > 0) {
+			mShoppingCartMap.put(productId, product);
+		} else {
+			mShoppingCartMap.remove(productId);
+		}
+	}
+	
+	public int findCountInShoppingCart(long productId) {
+		Product product = mShoppingCartMap.get(productId);
+		return product != null ? product.count : 0;
+	}
+
+	public Product findProductInShoppingCart(long productId) {
+		return mShoppingCartMap.get(productId);
+	}
+	
+	public Map<Long, Product> getShoppingCart() {
+		return mShoppingCartMap;
+	}
+	
+	public void clearShoppingCart() {
+		mShoppingCartMap.clear();
+	}
 }
