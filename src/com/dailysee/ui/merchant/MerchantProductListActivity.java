@@ -259,7 +259,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			mLlMerchantInfo.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 			mTvMerchantTitle.setTextColor(isExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
 	    	mLlMerchantTitle.setBackgroundColor(isExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
-	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_off : R.drawable.ic_expand_on);
+	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.btn_to_payment:
 //			AppController.getInstance().clearShoppingCart();

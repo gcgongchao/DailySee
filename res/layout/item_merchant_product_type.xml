@@ -34,7 +34,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_expand_off" />
+            android:src="@drawable/ic_expand_on" />
     </LinearLayout>
 
 </LinearLayout>

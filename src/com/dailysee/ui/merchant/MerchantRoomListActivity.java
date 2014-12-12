@@ -142,7 +142,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			mLlMerchantInfo.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 			mTvMerchantTitle.setTextColor(isExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
 	    	mLlMerchantTitle.setBackgroundColor(isExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
-	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_off : R.drawable.ic_expand_on);
+	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.iv_image:
 			if (mMerchant != null) {
