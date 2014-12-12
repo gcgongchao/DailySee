@@ -87,9 +87,12 @@ public class ProductExpandableAdapter extends BaseExpandableListAdapter {
     	} else{
     		holder = (GroupViewHolder) convertView.getTag();
     	}
-    	holder.mLlMerchantTitle.setBackgroundColor(isExpanded ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.app_gray));
     	holder.mTvMerchantTitle.setText(mGroupList.get(groupPosition));
+
+    	holder.mTvMerchantTitle.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.black));
+    	holder.mLlMerchantTitle.setBackgroundColor(isExpanded ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.app_gray));
     	holder.mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+    	
         return convertView;
 	}
 

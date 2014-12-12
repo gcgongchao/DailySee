@@ -28,7 +28,6 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.UiHelper;
-import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener {
@@ -40,6 +39,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	private LinearLayout mLlMerchantTitle;
 	private ImageView mIvExpand;
 	private LinearLayout mLlMerchantInfo;
+	private TextView mTvMerchantTitle;
 	private ImageView mIvImage;
 	private TextView mTvMerchantDesc;
 	private LayoutInflater mInflater;
@@ -84,6 +84,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		View header = mInflater.inflate(R.layout.item_merchant_header, null);
 
 		mLlMerchantTitle = (LinearLayout) header.findViewById(R.id.ll_merchant_title);
+		mTvMerchantTitle = (TextView) header.findViewById(R.id.tv_merchant_title);
 		mIvExpand = (ImageView) header.findViewById(R.id.iv_expand);
 		mLlMerchantInfo = (LinearLayout) header.findViewById(R.id.ll_merchant_info);
 		mIvImage = (ImageView) header.findViewById(R.id.iv_image);
@@ -137,9 +138,11 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_merchant_title:
-			boolean expandOn = mLlMerchantInfo.getVisibility() == View.VISIBLE;
-			mLlMerchantInfo.setVisibility(expandOn ? View.GONE : View.VISIBLE);
-			mIvExpand.setImageResource(expandOn ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+			boolean isExpanded = !(mLlMerchantInfo.getVisibility() == View.VISIBLE);
+			mLlMerchantInfo.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+			mTvMerchantTitle.setTextColor(isExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+	    	mLlMerchantTitle.setBackgroundColor(isExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.iv_image:
 			if (mMerchant != null) {

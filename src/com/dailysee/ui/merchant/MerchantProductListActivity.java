@@ -32,9 +32,10 @@ import com.dailysee.net.response.ProductResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
-public class MerchantProductListActivity extends BaseActivity implements OnClickListener, OnChildClickListener {
+public class MerchantProductListActivity extends BaseActivity implements OnClickListener, OnChildClickListener, OnLastItemVisibleListener {
 
 	protected static final String TAG = MerchantProductListActivity.class.getSimpleName();
 
@@ -78,7 +79,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant_product_list);
 		
-		onLoad();
+		onLoad(true);
 	}
 
 	@Override
@@ -145,6 +146,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mGroupList.add("特色小吃");
 		mChildrenList.add(new ArrayList<Product>());
 		
+		mExpandableListView.setGroupIndicator(null);
 		mAdapter = new ProductExpandableAdapter(getActivity(), mGroupList, mChildrenList, mHandler);
 		mExpandableListView.setAdapter(mAdapter);
 		
@@ -172,10 +174,11 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mLlMerchantTitle.setOnClickListener(this);
 		mBtnToPayment.setOnClickListener(this);
 		
+		mPullRefreshListView.setOnLastItemVisibleListener(this);
 		mExpandableListView.setOnChildClickListener(this);
 	}
 
-	public void onLoad() {
+	public void onLoad(final boolean showProgress) {
 		// Tag used to cancel the request
 		String tag = "tag_request_get_products";
 		NetRequest.getInstance(getActivity()).post(new Callback() {
@@ -198,7 +201,9 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				if (showProgress) {
+					toShowProgressMsg("正在加载...");
+				}
 			}
 
 			@Override
@@ -250,9 +255,11 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_merchant_title:
-			boolean expandOn = mLlMerchantInfo.getVisibility() == View.VISIBLE;
-			mLlMerchantInfo.setVisibility(expandOn ? View.GONE : View.VISIBLE);
-			mIvExpand.setImageResource(expandOn ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+			boolean isExpanded = !(mLlMerchantInfo.getVisibility() == View.VISIBLE);
+			mLlMerchantInfo.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+			mTvMerchantTitle.setTextColor(isExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+	    	mLlMerchantTitle.setBackgroundColor(isExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.btn_to_payment:
 //			AppController.getInstance().clearShoppingCart();
@@ -380,6 +387,12 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	@Override
 	public boolean onChildClick(ExpandableListView arg0, View arg1, int arg2, int arg3, long arg4) {
 		return false;
+	}
+
+	@Override
+	public void onLastItemVisible() {
+		mIndex ++;
+		onLoad(false);
 	}
 
 }
