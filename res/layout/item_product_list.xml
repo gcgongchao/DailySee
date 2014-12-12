@@ -58,41 +58,38 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:orientation="vertical" 
-        android:layout_marginLeft="8dp">
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <ImageView
+            android:id="@+id/iv_remove"
+            android:layout_width="24dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_remove"
+            android:scaleType="fitXY"/>
 
         <TextView
-            android:id="@+id/tv_sold_out"
+            android:id="@+id/tv_count"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_orange"
+            android:layout_height="32dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/btn_light_gray_frame"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:text="下架"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/body"
-            android:visibility="visible" />
+            android:text="0"
+            android:textColor="@color/deep_gray"
+            android:textSize="@dimen/body" />
 
-        <TextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/btn_orange_frame"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="3dp"
-            android:text="编辑"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/body"
-            android:visibility="visible" />
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="24dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_add_pressed"
+            android:scaleType="fitXY"/>
     </LinearLayout>
 
 </LinearLayout>

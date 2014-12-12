@@ -12,8 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -23,49 +24,89 @@ import com.dailysee.bean.Product;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
 
-public class ProductAdapter extends BaseAdapter {
+public class ProductAdapter extends BaseExpandableListAdapter {
 
-	public static final int EDIT_PRODUCT = 10001;
-	public static final int UPDATE_PRODUCT_STATUS =10002;
-	
+	public static final int ADD_PRODUCT = 10001;
+	public static final int REMOVE_PRODUCT =10002;
+
 	private Context context;
+	private ArrayList<String> mGroupList;
+	private ArrayList<ArrayList<Product>> mChildrenList;
 	private LayoutInflater mInflater;
-	private ArrayList<Product> items;
 	private Handler mHandler;
 
-	public ProductAdapter(Context context, ArrayList<Product> items, Handler mHandler) {
+	public ProductAdapter(Context context, ArrayList<String> mGroupList, ArrayList<ArrayList<Product>> mChildrenList, Handler mHandler) {
 		this.context = context;
+		this.mGroupList = mGroupList;
+		this.mChildrenList = mChildrenList;
 		mInflater = LayoutInflater.from(context);
-		this.items = items;
 		this.mHandler = mHandler;
 	}
 
 	@Override
-	public int getCount() {
-		return items != null ? items.size() : 0;
+	public int getGroupCount() {
+		return mGroupList != null ? mGroupList.size() : 0;
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return items.get(position);
+	public int getChildrenCount(int groupPosition) {
+		return mChildrenList.get(groupPosition).size();
 	}
 
 	@Override
-	public long getItemId(int position) {
-		return position;
+	public Object getGroup(int groupPosition) {
+		return mGroupList.get(groupPosition);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		final ViewHolder holder;
+	public Object getChild(int groupPosition, int childPosition) {
+		return mChildrenList.get(groupPosition).get(childPosition);
+	}
+
+	@Override
+	public long getGroupId(int groupPosition) {
+		return groupPosition;
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		return childPosition;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return false;
+	}
+
+	@Override
+	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+		GroupViewHolder holder = null;
+    	if(null == convertView){
+    		convertView = mInflater.inflate(R.layout.item_merchant_product_type, parent, false);
+    		holder = new GroupViewHolder(convertView);
+    	} else{
+    		holder = (GroupViewHolder) convertView.getTag();
+    	}
+    	holder.mTvMerchantTitle.setText(mGroupList.get(groupPosition));
+
+    	holder.mTvMerchantTitle.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.black));
+    	holder.mLlMerchantTitle.setBackgroundColor(isExpanded ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.app_gray));
+    	holder.mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+    	
+        return convertView;
+	}
+
+	@Override
+	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+		final ChildrenViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_product_list, null);
-			holder = new ViewHolder(convertView);
+			holder = new ChildrenViewHolder(convertView);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ChildrenViewHolder) convertView.getTag();
 		}
 
-		final Product product = (Product) getItem(position);
+		final Product product = (Product) getChild(groupPosition, childPosition);
 
 		if (product.imgs != null && product.imgs.size() > 0) {
 			AppController.getInstance().getImageLoader().get(product.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_image, R.drawable.ic_image));
@@ -87,65 +128,75 @@ public class ProductAdapter extends BaseAdapter {
 		holder.salePrice.setText(style);
 		
 		if (product.isUp()) {// 上架状态
-			holder.btnSoldOut.setText("下架");
-			holder.btnSoldOut.setBackgroundResource(R.drawable.btn_orange);
+			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
+			holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
 		} else {
-			holder.btnSoldOut.setText("上架");
-			holder.btnSoldOut.setBackgroundResource(R.drawable.btn_green);
+			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
+			holder.btnAdd.setBackgroundResource(R.drawable.ic_add);
 		}
-		holder.btnSoldOut.setOnClickListener(new OnClickListener() {
+		holder.btnRemove.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				Message msg = new Message();
-				msg.what = UPDATE_PRODUCT_STATUS;
+				msg.what = REMOVE_PRODUCT;
 				msg.obj = product;
 				mHandler.sendMessage(msg);
 			}
 			
 		});
-		holder.btnEdit.setOnClickListener(new OnClickListener() {
+		holder.btnAdd.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				Message msg = new Message();
-				msg.what = EDIT_PRODUCT;
+				msg.what = ADD_PRODUCT;
 				msg.obj = product;
 				mHandler.sendMessage(msg);
 			}
 			
 		});
 		
-		convertView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-//				Intent intent = new Intent();
-//				intent.setClass(context, ShopDetailActivity.class);
-//				intent.putExtra("shop", room);
-//				context.startActivity(intent);
-			}
-		});
-
-		return convertView;
+        return convertView;
 	}
 
-	private static class ViewHolder {
+	@Override
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
+		return true;
+	}
+	
+	private static class GroupViewHolder {
+
+		private LinearLayout mLlMerchantTitle;
+		private TextView mTvMerchantTitle;
+		private ImageView mIvExpand;
+
+		public GroupViewHolder(View convertView) {
+			mLlMerchantTitle = (LinearLayout) convertView.findViewById(R.id.ll_merchant_title);
+			mTvMerchantTitle = (TextView) convertView.findViewById(R.id.tv_merchant_title);
+			mIvExpand = (ImageView) convertView.findViewById(R.id.iv_expand);
+
+			convertView.setTag(this);
+		}
+
+	}
+	
+	private static class ChildrenViewHolder {
 
 		public ImageView image;
 		public TextView name;
 		public TextView salePrice;
 		public TextView price;
-		public TextView btnSoldOut;
-		public TextView btnEdit;
+		public ImageView btnRemove;
+		public ImageView btnAdd;
 
-		public ViewHolder(View convertView) {
+		public ChildrenViewHolder(View convertView) {
 			image = (ImageView) convertView.findViewById(R.id.iv_image);
 			name = (TextView) convertView.findViewById(R.id.tv_name);
 			salePrice = (TextView) convertView.findViewById(R.id.tv_sale_price);
 			price = (TextView) convertView.findViewById(R.id.tv_price);
-			btnSoldOut = (TextView) convertView.findViewById(R.id.tv_sold_out);
-			btnEdit = (TextView) convertView.findViewById(R.id.tv_edit);
+			btnRemove = (ImageView) convertView.findViewById(R.id.iv_remove);
+			btnAdd = (ImageView) convertView.findViewById(R.id.iv_add);
 
 			convertView.setTag(this);
 		}

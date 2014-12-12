@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dailysee.R;
-import com.dailysee.adapter.ProductExpandableAdapter;
+import com.dailysee.adapter.ProductAdapter;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Product;
 import com.dailysee.bean.RoomType;
@@ -45,7 +45,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private ExpandableListView mExpandableListView;
 	private ArrayList<String> mGroupList = new ArrayList<String>();
 	private ArrayList<ArrayList<Product>> mChildrenList = new ArrayList<ArrayList<Product>>();
-	private ProductExpandableAdapter mAdapter;
+	private ProductAdapter mAdapter;
 
 	private LinearLayout mLlMerchantTitle;
 	private TextView mTvMerchantTitle;
@@ -147,7 +147,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mChildrenList.add(new ArrayList<Product>());
 		
 		mExpandableListView.setGroupIndicator(null);
-		mAdapter = new ProductExpandableAdapter(getActivity(), mGroupList, mChildrenList, mHandler);
+		mAdapter = new ProductAdapter(getActivity(), mGroupList, mChildrenList, mHandler);
 		mExpandableListView.setAdapter(mAdapter);
 		
 		if (mRoomType != null) {
@@ -259,7 +259,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			mLlMerchantInfo.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 			mTvMerchantTitle.setTextColor(isExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
 	    	mLlMerchantTitle.setBackgroundColor(isExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
-	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_off : R.drawable.ic_expand_on);
 			break;
 		case R.id.btn_to_payment:
 //			AppController.getInstance().clearShoppingCart();
