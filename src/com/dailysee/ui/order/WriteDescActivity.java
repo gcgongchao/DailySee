@@ -38,7 +38,7 @@ public class WriteDescActivity extends BaseActivity implements OnClickListener {
 			descBackup = desc;
 		}
 		
-		setTitle("订单备注");
+		setTitle("填写留言");
 		setUp();
 	}
 
