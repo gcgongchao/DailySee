@@ -100,11 +100,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		case Constants.From.MERCHANT:
 			filter = Constants.Filter.RECOMMEND;
 			llRecommented.setVisibility(View.VISIBLE);
+			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
 			title = "天天商家";
 			break;
 		case Constants.From.GIFT:
 			filter = Constants.Filter.NEARBY;
 			llRecommented.setVisibility(View.GONE);
+			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 			title = "选择赠送地址";
 			break;
 		}
