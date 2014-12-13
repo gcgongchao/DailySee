@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical" >
+
+    <include layout="@layout/item_header" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_gray_selector"
+        android:padding="10dp" 
+    	android:layout_margin="@dimen/activity_margin">
+
+        <EditText
+            android:id="@+id/et_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:gravity="top"
+            android:maxLength="30"
+            android:minLines="6"
+            android:paddingRight="20dp"
+            android:singleLine="false" />
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/et_desc"
+            android:layout_alignRight="@id/et_desc"
+            android:text="800"
+            android:textSize="@dimen/caption" 
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginBottom="@dimen/activity_margin"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:background="@drawable/btn_blue_selector"
+        android:minWidth="@dimen/edittext_width"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -36,6 +36,8 @@ import com.google.gson.Gson;
 public class ConfirmOrderActivity extends BaseActivity implements OnClickListener {
 
 	protected static final String TAG = ConfirmOrderActivity.class.getSimpleName();
+
+	private static final int REQUEST_WRITE_DESC = 10000;
 	
 	private ListView mListView;
 	private List<Product> items = new ArrayList<Product>();
@@ -66,6 +68,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private SelectPaymentDialog mSelectPaymentDialog;
 
 	protected int mOrderId;
+
+	private String mDesc;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -154,6 +158,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	
 	@Override
 	public void onBindListener() {
+		llRemark.setOnClickListener(this);
 		mBtnCommit.setOnClickListener(this);
 	}
 
@@ -212,7 +217,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				params.put("buyerName", mSpUtil.getName());
 				params.put("bookDate", mDate);
 				params.put("mobile", getPhone());
-//				params.put("remark", getRemark());
+				params.put("remark", getRemark());
 				
 				List<ProductOrder> orderList = new ArrayList<ProductOrder>();
 				
@@ -233,9 +238,6 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_up:
-			finish();
-			break;
 		case R.id.btn_commit:
 			if (checkPhone()) {
 				if (mOrderId > 0) {
@@ -245,9 +247,18 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				}
 			}
 			break;
+		case R.id.ll_remark:
+			toWriteDesc();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private void toWriteDesc() {
+		Intent intent = new Intent(this, WriteDescActivity.class);
+		intent.putExtra("desc", mDesc);
+		startActivityForResult(intent, REQUEST_WRITE_DESC);
 	}
 	
 	private boolean checkPhone() {
@@ -280,6 +291,17 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			if (requestCode == REQUEST_WRITE_DESC && data != null) {
+				mDesc = data.getStringExtra("desc");
+				tvRemark.setText(mDesc);
+			}
+		}
 	}
 	
 }

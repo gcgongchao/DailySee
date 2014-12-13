@@ -1,22 +1,15 @@
 package com.dailysee.ui.user;
 
-import java.util.List;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
-import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
-import com.dailysee.widget.ConfirmDialog;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
 
