@@ -27,6 +27,7 @@ import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.google.gson.reflect.TypeToken;
 
@@ -49,6 +50,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	private long mMerchantId;
 	protected String mDate;
 
+	private int mFrom;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +69,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mMerchantId = intent.getLongExtra("merchantId", 0);
 			mDate = intent.getStringExtra("date");
+			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 		}
 
 		if (mMerchant == null || mMerchantId == 0)
@@ -133,6 +137,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 					intent.putExtra("merchant", mMerchant);
 					intent.putExtra("roomType", roomType);
 					intent.putExtra("date", mDate);
+					intent.putExtra("from", mFrom);
 					startActivityForResult(intent, REQUEST_SELECT_PRODUCT);
 				}
 			}

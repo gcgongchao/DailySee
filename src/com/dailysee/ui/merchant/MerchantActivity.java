@@ -27,6 +27,7 @@ import com.dailysee.R;
 import com.dailysee.adapter.MerchantAdapter;
 import com.dailysee.bean.CityEntity;
 import com.dailysee.bean.Merchant;
+import com.dailysee.bean.RoomType;
 import com.dailysee.db.CityDb;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
@@ -75,6 +76,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	
 	private SelectBookingDateDialog mSelectBookingDateDialog;
 	private String mSearch = "";
+	private int mFrom = Constants.From.MERCHANT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +88,33 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 	@Override
 	public void onInit() {
-		setTitle("天天商家");
-		setUp();
+		Intent intent = getIntent();
+		if (intent != null) {
+			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
+		}
+	}
+	
+	public String getFromTitle() {
+		String title = "";
+		switch (mFrom) {
+		case Constants.From.MERCHANT:
+			filter = Constants.Filter.RECOMMEND;
+			llRecommented.setVisibility(View.VISIBLE);
+			title = "天天商家";
+			break;
+		case Constants.From.GIFT:
+			filter = Constants.Filter.NEARBY;
+			llRecommented.setVisibility(View.GONE);
+			title = "选择赠送地址";
+			break;
+		}
+		return title;
 	}
 
 	@Override
 	public void onFindViews() {
+		setUp();
+		
 		llFilter = (LinearLayout) findViewById(R.id.ll_filter);
 		tvFilter = (TextView) findViewById(R.id.tv_filter);
 
@@ -100,6 +123,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 		llNearby = (LinearLayout) findViewById(R.id.ll_nearby);
 		tvNearby = (TextView) findViewById(R.id.tv_nearby);
+		
+		setTitle(getFromTitle());
 		
 		etSearch = (EditText) findViewById(R.id.et_search);
 		ivSearch = (ImageView) findViewById(R.id.iv_search);
@@ -376,6 +401,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		intent.putExtra("merchant", merchant);
 		intent.putExtra("merchantId", merchant.merchantId);
 		intent.putExtra("date", date);
+		intent.putExtra("from", mFrom);
 		startActivity(intent);
 	}
 

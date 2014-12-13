@@ -31,7 +31,7 @@ public class Constants {
 		public static final String PASS = "PASS";
 	}
 	
-	public interface TYPE {
+	public interface Type {
 		public static final int ROOM = 1001;
 		public static final int DRINKS = 10001;
 		public static final int SNACK = 20001;
@@ -46,6 +46,13 @@ public class Constants {
 		public static final String MERCHANT = "MERCHANT";//商户类信息, 
 		public static final String GOVERNMENT = "GOVERNMENT";//政府公告, 
 		public static final String ACTIVITY = "ACKTIVITY";//优惠活动
+	}
+	
+	public interface From {
+		public static final int MERCHANT = 1001;
+		public static final int SALE = 10002;
+		public static final int GIFT = 10003;
+		public static final int CONSULTANT = 10004;
 	}
 	
 }

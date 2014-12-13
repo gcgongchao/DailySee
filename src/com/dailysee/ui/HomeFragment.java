@@ -26,6 +26,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.AdResponse;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.merchant.MerchantActivity;
+import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;
 
 public class HomeFragment extends BaseFragment implements OnClickListener, OnPageChangeListener {
@@ -148,6 +149,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	private void toMerchant() {
 		Intent intent = new Intent();
 		intent.setClass(mContext, MerchantActivity.class);
+		intent.putExtra("from", Constants.From.MERCHANT);
 		startActivity(intent);
 	}
 
@@ -156,7 +158,10 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 
 	private void toGift() {
-		
+		Intent intent = new Intent();
+		intent.setClass(mContext, MerchantActivity.class);
+		intent.putExtra("from", Constants.From.GIFT);
+		startActivity(intent);
 	}
 
 	private void toConsultant() {

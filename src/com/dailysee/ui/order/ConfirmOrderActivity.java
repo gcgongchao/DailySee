@@ -1,7 +1,6 @@
 package com.dailysee.ui.order;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -29,16 +28,14 @@ import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.SelectPaymentDialog;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class ConfirmOrderActivity extends BaseActivity implements OnClickListener {
 
 	protected static final String TAG = ConfirmOrderActivity.class.getSimpleName();
-	
-	public static final int FROM_GIFT = 10001;
 	
 	private ListView mListView;
 	private List<Product> items = new ArrayList<Product>();
@@ -88,7 +85,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mTotalPrice = intent.getDoubleExtra("totalPrice", 0);
 			mDate = intent.getStringExtra("date");
-			mFrom = intent.getIntExtra("from", 0);
+			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 		}
 		
 		if (mRoomType == null || mMerchant == null) finish();
@@ -148,7 +145,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void showRemarkIfFromGift() {
-		if (mFrom == FROM_GIFT) {
+		if (mFrom == Constants.From.GIFT) {
 			llRemark.setVisibility(View.VISIBLE);
 		} else {
 			llRemark.setVisibility(View.GONE);

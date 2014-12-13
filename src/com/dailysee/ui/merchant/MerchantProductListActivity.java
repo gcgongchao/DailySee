@@ -35,6 +35,7 @@ import com.dailysee.ui.order.ConfirmOrderActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
@@ -79,6 +80,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 	private String mDate;
 
+	private int mFrom;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,6 +99,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			mRoomType = (RoomType) intent.getSerializableExtra("roomType");
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mDate = intent.getStringExtra("date");
+			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 		}
 		
 		if (mRoomType == null) finish();
@@ -129,6 +133,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mTvFooter = (TextView) footer.findViewById(R.id.tv_footer);
 		
 		mPullRefreshListView = (PullToRefreshExpandableListView) findViewById(R.id.pull_refresh_expandable_list);
+		mPullRefreshListView.setMode(Mode.PULL_FROM_END);
 		
 		mExpandableListView = mPullRefreshListView.getRefreshableView();
 		mExpandableListView.addHeaderView(header);
@@ -270,13 +275,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		case R.id.btn_to_payment:
 			if (mRoomType != null && mMerchant != null) {
 				if (mTotalPrice >= mRoomType.ttAmt) {
-					Intent intent = new Intent();
-					intent.setClass(this, ConfirmOrderActivity.class);
-					intent.putExtra("roomType", mRoomType);
-					intent.putExtra("merchant", mMerchant);
-					intent.putExtra("totalPrice", mTotalPrice);
-					intent.putExtra("date", mDate);
-					startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+					toConfirmOrder();
 				} else {
 					showToast("您选购的商品没有达到该商家的最低消费: ￥" + Utils.formatTwoFractionDigits(mRoomType.ttAmt));
 				}
@@ -285,6 +284,17 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		default:
 			break;
 		}
+	}
+
+	private void toConfirmOrder() {
+		Intent intent = new Intent();
+		intent.setClass(this, ConfirmOrderActivity.class);
+		intent.putExtra("roomType", mRoomType);
+		intent.putExtra("merchant", mMerchant);
+		intent.putExtra("totalPrice", mTotalPrice);
+		intent.putExtra("date", mDate);
+		intent.putExtra("from", mFrom);
+		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 
 	@Override
