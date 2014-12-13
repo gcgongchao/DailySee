@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RoomType implements Serializable {
-	public int roomTypeId;//			房间类型记录id	
+	public long roomTypeId;//			房间类型记录id	
 	public long merchantId;//			商户详情记录ID	
 	public String companyName;//			所属商户名称	
 	public String name;//			房间类型名	

@@ -25,6 +25,7 @@ import com.dailysee.R;
 import com.dailysee.adapter.ProductAdapter;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Product;
+import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
@@ -79,8 +80,9 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private TextView mTvFooter;
 
 	private String mDate;
-
 	private int mFrom;
+
+	private Room mRoom;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		Intent intent = getIntent();
 		if (intent != null) {
 			mRoomType = (RoomType) intent.getSerializableExtra("roomType");
+			mRoom = (Room) intent.getSerializableExtra("room");
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mDate = intent.getStringExtra("date");
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
@@ -290,6 +293,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		Intent intent = new Intent();
 		intent.setClass(this, ConfirmOrderActivity.class);
 		intent.putExtra("roomType", mRoomType);
+		intent.putExtra("room", mRoom);
 		intent.putExtra("merchant", mMerchant);
 		intent.putExtra("totalPrice", mTotalPrice);
 		intent.putExtra("date", mDate);

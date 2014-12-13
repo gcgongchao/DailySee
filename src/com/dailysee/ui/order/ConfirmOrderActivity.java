@@ -23,6 +23,7 @@ import com.dailysee.adapter.ConfirmOrderAdapter;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Product;
 import com.dailysee.bean.ProductOrder;
+import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
@@ -71,6 +72,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private String mDesc;
 
+	private Room mRoom;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,6 +89,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		Intent intent = getIntent();
 		if (intent != null) {
 			mRoomType = (RoomType) intent.getSerializableExtra("roomType");
+			mRoom = (Room) intent.getSerializableExtra("room");
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mTotalPrice = intent.getDoubleExtra("totalPrice", 0);
 			mDate = intent.getStringExtra("date");
@@ -194,7 +198,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				toShowProgressMsg("正在提交订单...");
 			}
 
 			@Override
@@ -213,6 +217,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
 				params.put("merchantId", Long.toString(mMerchant.merchantId));
 				params.put("sellerName", mMerchant.name);
+				if (mFrom == Constants.From.GIFT && mRoom != null) {
+					params.put("roomId", Long.toString(mRoom.roomId));
+				}
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("buyerName", mSpUtil.getName());
 				params.put("bookDate", mDate);
