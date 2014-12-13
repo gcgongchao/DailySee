@@ -32,6 +32,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener {
 
+	protected static final int REQUEST_SELECT_PRODUCT = 10001;
+	
 	private ListView mListView;
 	private ArrayList<RoomType> items = new ArrayList<RoomType>();
 	private RoomAdapter mAdapter;
@@ -45,6 +47,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	private LayoutInflater mInflater;
 	private Merchant mMerchant;
 	private long mMerchantId;
+	protected String mDate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		if (intent != null) {
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mMerchantId = intent.getLongExtra("merchantId", 0);
+			mDate = intent.getStringExtra("date");
 		}
 
 		if (mMerchant == null || mMerchantId == 0)
@@ -128,7 +132,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 					intent.setClass(getActivity(), MerchantProductListActivity.class);
 					intent.putExtra("merchant", mMerchant);
 					intent.putExtra("roomType", roomType);
-					startActivity(intent);
+					intent.putExtra("date", mDate);
+					startActivityForResult(intent, REQUEST_SELECT_PRODUCT);
 				}
 			}
 		});
@@ -193,6 +198,15 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			}
 
 		}, tag);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (REQUEST_SELECT_PRODUCT == requestCode) {
+			setResult(RESULT_OK);
+			finish();
+		}
 	}
 
 }

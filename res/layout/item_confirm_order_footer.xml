@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_gray"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:background="@drawable/item_selector"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/space"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text="合计: "
+            android:textColor="@color/black"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/text_input" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingRight="@dimen/activity_margin"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/deep_gray"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/text_input" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_line"
+        android:background="@color/orange" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_margin"
+        android:background="@color/app_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:background="@drawable/item_selector"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="8dp"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text="将发送天天券密码至手机号"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/caption" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:hint="请输入手机号码"
+            android:inputType="number"
+            android:paddingBottom="5dp"
+            android:paddingRight="@dimen/activity_margin"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:textColor="@color/deep_gray"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/text_input" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line" />
+
+    <LinearLayout
+        android:id="@+id/ll_remark"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edittext_height"
+        android:background="@drawable/item_selector"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/space"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text="备注"
+            android:textColor="@color/black"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/text_input" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:paddingBottom="5dp"
+            android:paddingRight="4dp"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/deep_gray"
+            android:textColorHint="@color/login_hint"
+            android:textSize="@dimen/text_input" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/activity_margin"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edittext_height"
+        android:layout_marginBottom="@dimen/activity_margin"
+        android:layout_marginLeft="@dimen/activity_margin"
+        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:background="@drawable/btn_orange_selector"
+        android:minWidth="@dimen/edittext_width"
+        android:text="选择支付方式完成支付"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

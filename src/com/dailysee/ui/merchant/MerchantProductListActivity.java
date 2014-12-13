@@ -31,6 +31,7 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.ProductResponse;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.order.ConfirmOrderActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
@@ -76,6 +77,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 	private TextView mTvFooter;
 
+	private String mDate;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,6 +95,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		if (intent != null) {
 			mRoomType = (RoomType) intent.getSerializableExtra("roomType");
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
+			mDate = intent.getStringExtra("date");
 		}
 		
 		if (mRoomType == null) finish();
@@ -264,21 +268,19 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	    	mIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.btn_to_payment:
-//			AppController.getInstance().clearShoppingCart();
-//			
-//			ShoppingCartDb mDb = new ShoppingCartDb(getActivity());
-//			mDb.clearAllData();
-//			if (mMerchant != null) {
-//				float upPrice = Float.parseFloat(mMerchant.up_price);
-//				if (mTotalPrice >= upPrice) {
-//					Intent intent = new Intent();
-//					intent.setClass(this, ConfirmFoodActivity.class);
-//					intent.putExtra("shop", mShopDetail);
-//					startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
-//				} else {
-//					showToast("您选购的美食没有达到该商家的起送价格: ￥" + mShopDetail.up_price);
-//				}
-//			}
+			if (mRoomType != null && mMerchant != null) {
+				if (mTotalPrice >= mRoomType.ttAmt) {
+					Intent intent = new Intent();
+					intent.setClass(this, ConfirmOrderActivity.class);
+					intent.putExtra("roomType", mRoomType);
+					intent.putExtra("merchant", mMerchant);
+					intent.putExtra("totalPrice", mTotalPrice);
+					intent.putExtra("date", mDate);
+					startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+				} else {
+					showToast("您选购的商品没有达到该商家的最低消费: ￥" + Utils.formatTwoFractionDigits(mRoomType.ttAmt));
+				}
+			}
 			break;
 		default:
 			break;
@@ -306,7 +308,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 //				mTvShoppingCount.setText(Integer.toString(mShoppingCount));
 				
 				Product product = (Product) msg.obj;
-				mTotalPrice = mTotalPrice + product.price;
+				mTotalPrice = mTotalPrice + product.ttPrice;
 				mTvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
 				
 				product.count ++;
@@ -342,12 +344,10 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-//		if (REQUEST_CONFIRM_ORDER == requestCode) {
-//			onUpdateBottomBar();
-//			if (mAdapter != null) {
-//				mAdapter.notifyDataSetChanged();
-//			}
-//		}
+		if (REQUEST_CONFIRM_ORDER == requestCode) {
+			setResult(RESULT_OK);
+			finish();
+		}
 	}
 
 	@Override

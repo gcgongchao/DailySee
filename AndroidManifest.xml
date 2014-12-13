@@ -72,6 +72,8 @@
         <activity android:name=".ui.merchant.MerchantRoomListActivity" />
         <activity android:name=".ui.merchant.MerchantProductListActivity" />
         
+        <activity android:name=".ui.order.ConfirmOrderActivity" />
+        
         <activity android:name=".ui.tip.TipDetailActivity" />
         
         <service
