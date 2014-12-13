@@ -9,11 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
-        <com.dailysee.merchant.widget.HackyViewPager
+        <com.dailysee.widget.HackyViewPager
             android:id="@+id/vpImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-        </com.dailysee.merchant.widget.HackyViewPager>
+        </com.dailysee.widget.HackyViewPager>
     </FrameLayout>
 
     <RelativeLayout

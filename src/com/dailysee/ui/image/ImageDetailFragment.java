@@ -16,8 +16,8 @@ import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.util.UiHelper;
-import com.dailysee.util.ZoomableImageView;
-import com.dailysee.util.ZoomableImageView.OnSingleClickListener;
+import com.dailysee.widget.ZoomableImageView;
+import com.dailysee.widget.ZoomableImageView.OnSingleClickListener;
 
 public class ImageDetailFragment extends Fragment {
 	private static final String IMAGE_EXTRA = "image_extra";
