@@ -1,11 +1,12 @@
 package com.dailysee.ui.merchant;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +38,6 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
-import com.dailysee.widget.SelectBookingDateDialog;
 import com.dailysee.widget.SelectRegionPopupWindow;
 import com.dailysee.widget.SelectRegionPopupWindow.OnSelectListener;
 import com.google.gson.reflect.TypeToken;
@@ -44,7 +45,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
 
 public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnTouchListener, OnItemClickListener {
 
@@ -73,7 +73,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	protected String mArea = "";
 	protected String mRegion = "";
 	
-	private SelectBookingDateDialog mSelectBookingDateDialog;
+//	private SelectBookingDateDialog mSelectBookingDateDialog;
 	private String mSearch = "";
 	private int mFrom = Constants.From.MERCHANT;
 
@@ -380,25 +380,41 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	}
 
 	private void showSelectBookingDateDialog(final Merchant merchant) {
-//		if (mSelectBookingDateDialog == null) {
-			mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
-				
-				@Override
-				public void onDateUnselected(Date date) {
-					
-				}
-				
-				@Override
-				public void onDateSelected(Date date) {
-					Utils.clossDialog(mSelectBookingDateDialog);
-					
-					String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
-//					showToast(dateStr);
-					toMerchantRoomList(merchant, dateStr);
-				}
-			});
-//		}
-		mSelectBookingDateDialog.show();
+//		mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
+//			
+//			@Override
+//			public void onDateUnselected(Date date) {
+//				
+//			}
+//			
+//			@Override
+//			public void onDateSelected(Date date) {
+//				Utils.clossDialog(mSelectBookingDateDialog);
+//				
+//				String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
+//				toMerchantRoomList(merchant, dateStr);
+//			}
+//		});
+//		mSelectBookingDateDialog.show();
+		
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+		
+		DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
+                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
+                    	toMerchantRoomList(merchant, dateStr);
+                    }
+                }, 
+                year, // 传入年份
+                month, // 传入月份
+                dayOfMonth // 传入天数
+            );
+		dialog.show();
 	}
 
 	protected void toMerchantRoomList(Merchant merchant, String date) {
