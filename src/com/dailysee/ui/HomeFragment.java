@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.dailysee.R;
 import com.dailysee.adapter.AdAdapter;
@@ -26,6 +26,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.AdResponse;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.merchant.MerchantActivity;
+import com.dailysee.ui.sale.SaleActivity;
 import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;
 
@@ -154,7 +155,10 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 
 	private void toSale() {
-		
+		Intent intent = new Intent();
+		intent.setClass(mContext, SaleActivity.class);
+		intent.putExtra("from", Constants.From.SALE);
+		startActivity(intent);
 	}
 
 	private void toGift() {

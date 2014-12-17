@@ -1,43 +1,35 @@
-package com.dailysee.ui.merchant;
+package com.dailysee.ui.sale;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dailysee.R;
-import com.dailysee.adapter.MerchantAdapter;
+import com.dailysee.adapter.SaleAdapter;
 import com.dailysee.bean.CityEntity;
 import com.dailysee.bean.Merchant;
+import com.dailysee.bean.Preferential;
 import com.dailysee.db.CityDb;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.MerchantResponse;
+import com.dailysee.net.response.PreferentialResponse;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.merchant.MerchantRoomListActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
-import com.dailysee.util.Utils;
 import com.dailysee.widget.SelectRegionPopupWindow;
 import com.dailysee.widget.SelectRegionPopupWindow.OnSelectListener;
 import com.google.gson.reflect.TypeToken;
@@ -46,41 +38,33 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleLis
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnTouchListener, OnItemClickListener {
+public class SaleActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener,  OnItemClickListener {
 
 	private LinearLayout llFilter;
 	private TextView tvFilter;
 
-	private LinearLayout llRecommented;
-	private TextView tvRecommented;
-
 	private LinearLayout llNearby;
 	private TextView tvNearby;
 	
-	private EditText etSearch;
-	private ImageView ivSearch;
-
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
 
 	private int mIndex = 1;
-	private List<Merchant> merchantList = new ArrayList<Merchant>();
-	private MerchantAdapter mAdatper;
+	private List<Preferential> saleList = new ArrayList<Preferential>();
+	private SaleAdapter mAdatper;
 	
-	private int filter = Constants.Filter.RECOMMEND;
+	private int filter = Constants.Filter.NEARBY;
 	
 	private SelectRegionPopupWindow mSelectRegionDialog = null;
 	protected String mArea = "";
 	protected String mRegion = "";
 	
-//	private SelectBookingDateDialog mSelectBookingDateDialog;
-	private String mSearch = "";
-	private int mFrom = Constants.From.MERCHANT;
+	private int mFrom = Constants.From.GIFT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_merchant);
+		setContentView(R.layout.activity_sale);
 		
 		onLoad(true);
 	}
@@ -89,48 +73,21 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	public void onInit() {
 		Intent intent = getIntent();
 		if (intent != null) {
-			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
+			mFrom = intent.getIntExtra("from", Constants.From.SALE);
 		}
+		
+		setTitle("天天优惠");
+		setUp();
 	}
 	
-	public String getFromTitle() {
-		String title = "";
-		switch (mFrom) {
-		case Constants.From.MERCHANT:
-			filter = Constants.Filter.RECOMMEND;
-			llRecommented.setVisibility(View.VISIBLE);
-			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			title = "天天商家";
-			break;
-		case Constants.From.GIFT:
-			filter = Constants.Filter.NEARBY;
-			llRecommented.setVisibility(View.GONE);
-			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			title = "选择赠送地址";
-			break;
-		}
-		return title;
-	}
-
 	@Override
 	public void onFindViews() {
-		setUp();
 		
 		llFilter = (LinearLayout) findViewById(R.id.ll_filter);
 		tvFilter = (TextView) findViewById(R.id.tv_filter);
 
-		llRecommented = (LinearLayout) findViewById(R.id.ll_recommend);
-		tvRecommented = (TextView) findViewById(R.id.tv_recommend);
-
 		llNearby = (LinearLayout) findViewById(R.id.ll_nearby);
 		tvNearby = (TextView) findViewById(R.id.tv_nearby);
-		
-		setTitle(getFromTitle());
-		
-		etSearch = (EditText) findViewById(R.id.et_search);
-		ivSearch = (ImageView) findViewById(R.id.iv_search);
 		
 		LinearLayout emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 
@@ -151,37 +108,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		tvFilter.requestFocus();
 		tvFilter.requestFocusFromTouch();
 		
-		mAdatper = new MerchantAdapter(getActivity(), merchantList);
+		mAdatper = new SaleAdapter(getActivity(), saleList);
 		mListView.setAdapter(mAdatper);
 	}
 
 	@Override
 	public void onBindListener() {
 		llFilter.setOnClickListener(this);
-		llRecommented.setOnClickListener(this);
 		llNearby.setOnClickListener(this);
 		
-		etSearch.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-			
-			@Override
-			public void afterTextChanged(Editable s) {
-				mSearch = s.toString();
-			}
-		});
-		ivSearch.setOnClickListener(this);
-
-		llFilter.setOnTouchListener(this);
-		llRecommented.setOnTouchListener(this);
-		llNearby.setOnTouchListener(this);
-		mListView.setOnTouchListener(this);
 		mListView.setOnItemClickListener(this);
 	}
 
@@ -191,35 +126,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		case R.id.ll_filter:
 			toSelectRegion();
 			break;
-		case R.id.ll_recommend:
-			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			if (filter != Constants.Filter.RECOMMEND) {
-				filter = Constants.Filter.RECOMMEND;
-				mPullRefreshListView.setRefreshing(false);
-			}
-			break;
 		case R.id.ll_nearby:
-			tvRecommented.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			if (filter != Constants.Filter.NEARBY) {
-				filter = Constants.Filter.NEARBY;
-				mPullRefreshListView.setRefreshing(false);
-			}
-			break;
-		case R.id.iv_search:
-			clearSearchFocus();
-			if (!TextUtils.isEmpty(mSearch)) {
-				mIndex = 1;
-				onLoad(true);
-			}
+			mPullRefreshListView.setRefreshing(false);
 			break;
 		}
-	}
-
-	private void clearSearchFocus() {
-		etSearch.clearFocus();
-		Utils.hideSoft(getActivity(), etSearch);
 	}
 	
 	private void showRegionPopupWindow() {
@@ -316,14 +226,14 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				MerchantResponse merchantResponse = (MerchantResponse) response.getResponse(new TypeToken<MerchantResponse>(){});
+				PreferentialResponse preferentialResponse = (PreferentialResponse) response.getResponse(new TypeToken<PreferentialResponse>(){});
 				if (mIndex == 1) {
-					merchantList.clear();
+					saleList.clear();
 				}
 				
-				List<Merchant> list = merchantResponse.rows;
+				List<Preferential> list = preferentialResponse.rows;
 				if (list != null && list.size() > 0) {
-					merchantList.addAll(list);
+					saleList.addAll(list);
 				}
 				mAdatper.notifyDataSetChanged();
 			}
@@ -349,20 +259,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				if (filter == Constants.Filter.RECOMMEND) {
-					params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getRecMerchant");
-				} else {
-					params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMerchant");
-					params.put("jd", mSpUtil.getLng());
-					params.put("wd", mSpUtil.getLat());
-				}
+				params.put("mtd", "com.guocui.tty.api.web.PreferentialController.getClosePerferentials");
+				params.put("jd", mSpUtil.getLng());
+				params.put("wd", mSpUtil.getLat());
 				params.put("prov", mSpUtil.getProvince());
 				params.put("city", mSpUtil.getCity());
 				params.put("area", mArea);
 				params.put("landmark", mRegion);
-				if (!TextUtils.isEmpty(mSearch)) {
-					params.put("name", mSearch);
-				}
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
@@ -375,62 +278,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Merchant merchant = (Merchant) parent.getAdapter().getItem(position);
 		if (merchant != null) {
-			showSelectBookingDateDialog(merchant);
+			toMerchantRoomList(merchant);
 		}
 	}
 
-	private void showSelectBookingDateDialog(final Merchant merchant) {
-//		mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
-//			
-//			@Override
-//			public void onDateUnselected(Date date) {
-//				
-//			}
-//			
-//			@Override
-//			public void onDateSelected(Date date) {
-//				Utils.clossDialog(mSelectBookingDateDialog);
-//				
-//				String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
-//				toMerchantRoomList(merchant, dateStr);
-//			}
-//		});
-//		mSelectBookingDateDialog.show();
-		
-		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
-		
-		DatePickerDialog dialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
-                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
-                    	toMerchantRoomList(merchant, dateStr);
-                    }
-                }, 
-                year, // 传入年份
-                month, // 传入月份
-                dayOfMonth // 传入天数
-            );
-		dialog.show();
-	}
-
-	protected void toMerchantRoomList(Merchant merchant, String date) {
+	protected void toMerchantRoomList(Merchant merchant) {
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), MerchantRoomListActivity.class);
 		intent.putExtra("merchant", merchant);
 		intent.putExtra("merchantId", merchant.merchantId);
-		intent.putExtra("date", date);
 		intent.putExtra("from", mFrom);
 		startActivity(intent);
-	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		clearSearchFocus();
-		return super.onTouchEvent(event);
 	}
 
 }

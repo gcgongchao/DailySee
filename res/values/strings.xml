@@ -19,5 +19,6 @@
     <string name="upload_error">上传失败</string>
     
 	<string name="app_version">当前版本:%1$s</string>
+	<string name="sale_remain_days">剩余%s天</string>
 
 </resources>
