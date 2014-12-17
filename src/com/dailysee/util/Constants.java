@@ -55,4 +55,12 @@ public class Constants {
 		public static final int CONSULTANT = 10004;
 	}
 	
+	public interface OrderFilter {
+
+		String ALL = "";
+		String UNPROCESSED = "WAIT_PAY";
+		String PROCESSED = "SUCCEED";
+		
+	}
+	
 }
