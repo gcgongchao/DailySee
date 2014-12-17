@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.text.TextUtils;
 
+import com.alexbbb.uploadservice.UploadService;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -34,6 +35,8 @@ public class AppController extends FrontiaApplication {
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;
+
+		UploadService.NAMESPACE = getPackageName();
 	}
 
 	public static synchronized AppController getInstance() {

@@ -59,8 +59,6 @@ public class UiHelper {
     	return !"ENABLE".equalsIgnoreCase(status);
     }
     
-
-    
     public static void toBrowseImage(Context context, String imageUrl) {
     	if (!TextUtils.isEmpty(imageUrl)) {
 	    	ArrayList<String> images = new ArrayList<String>();

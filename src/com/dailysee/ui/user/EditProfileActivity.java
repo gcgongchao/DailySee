@@ -78,7 +78,6 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 		initDialog();
 
 		// Set your application namespace to avoid conflicts with other apps using this library
-		UploadService.NAMESPACE = "com.dailysee";
 		uploadReceiver.register(this);
 	}
 
