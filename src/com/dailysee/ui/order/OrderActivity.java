@@ -280,7 +280,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_up:
+		case R.id.iv_action:
 			showOrderFilterPopupWindow();
 			break;
 		}
