@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dailysee.AppController;
 import com.dailysee.util.Md5Utils;
+import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
 
 public class NetRequest {
@@ -100,6 +101,9 @@ public class NetRequest {
 				protected Map<String, String> getParams() throws AuthFailureError {
 					Map<String, String> params = callback.getParams();
 					params.put("app", APP);
+					
+					String loginId = SpUtil.getInstance(mContext).getLoginId();
+					params.put("loginName", loginId);
 
 					String newSign = genSign(params);
 					params.put("sign", newSign);
@@ -120,6 +124,9 @@ public class NetRequest {
 		}
 		
 		params.put("app", APP);
+		
+		String loginId = SpUtil.getInstance(mContext).getLoginId();
+		params.put("loginName", loginId);
 		
 		String newSign = genSign(params);
 		params.put("sign", newSign);
