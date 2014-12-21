@@ -46,6 +46,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/iv_action"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="14dp"
+            android:padding="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_filter_order"
+            android:visibility="gone" />
     </LinearLayout>
     
     <View 

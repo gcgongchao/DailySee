@@ -1,4 +1,4 @@
-package com.dailysee.ui.tip;
+package com.dailysee.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +27,7 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.TipResponse;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.ui.tip.TipDetailActivity;
 import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;

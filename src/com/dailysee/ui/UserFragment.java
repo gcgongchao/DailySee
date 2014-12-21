@@ -1,4 +1,4 @@
-package com.dailysee.ui.user;
+package com.dailysee.ui;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -22,6 +22,10 @@ import com.dailysee.R;
 import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.base.LoginActivity;
+import com.dailysee.ui.order.OrderActivity;
+import com.dailysee.ui.user.AboutActivity;
+import com.dailysee.ui.user.EditProfileActivity;
+import com.dailysee.ui.user.ProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 
@@ -123,27 +127,34 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!mSpUtil.isLogin()) {
 				toLogin();
 			} else {
-				
+				toOrder(Constants.OrderFilter.ALL);
 			}
 			break;
 		case R.id.ll_book_order:
 			if (!mSpUtil.isLogin()) {
 				toLogin();
 			} else {
-				
+				toOrder(Constants.OrderFilter.UNPROCESSED);
 			}
 			break;
 		case R.id.ll_uncomment_order:
 			if (!mSpUtil.isLogin()) {
 				toLogin();
 			} else {
-				
+				toOrder(Constants.OrderFilter.PROCESSED);
 			}
 			break;
 		case R.id.ll_about:
 			startActivity(new Intent(mContext, AboutActivity.class));
 			break;
 		}
+	}
+
+	private void toOrder(String filter) {
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), OrderActivity.class);
+		intent.putExtra("filter", filter);
+		startActivity(intent);
 	}
 
 	private void toProfile() {

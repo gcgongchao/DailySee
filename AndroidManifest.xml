@@ -74,10 +74,14 @@
         
         <activity android:name=".ui.sale.SaleActivity" />
         
+        <activity android:name=".ui.order.OrderActivity" />
         <activity android:name=".ui.order.ConfirmOrderActivity" />
         <activity android:name=".ui.order.WriteDescActivity" />
         
         <activity android:name=".ui.tip.TipDetailActivity" />
+        
+        <activity android:name=".ui.consultant.ConsultantActivity" />
+        <activity android:name=".ui.consultant.ConsultantDetailActivity" />
         
         <service
 		    android:name="com.alexbbb.uploadservice.UploadService"

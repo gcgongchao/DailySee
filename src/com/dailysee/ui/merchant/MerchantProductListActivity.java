@@ -358,7 +358,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (REQUEST_CONFIRM_ORDER == requestCode) {
+		if (REQUEST_CONFIRM_ORDER == requestCode && resultCode == RESULT_OK) {
 			setResult(RESULT_OK);
 			finish();
 		}

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -444,6 +445,20 @@ public class Utils {
 	public static boolean checkEmail(String email) {
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		return email.matches(EMAIL_REGEX);
+	}
+	
+	public static int parseAge(String birthday) {
+		long now = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YMD);
+		Date bDate;
+		try {
+			bDate = sdf.parse(birthday);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			bDate = new Date();
+		}
+		int age = (int)((now - bDate.getTime())/(1000*60*60*24)/365); 
+		return age;
 	}
 	
 }

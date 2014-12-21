@@ -38,6 +38,7 @@ public class Constants {
 	}
 	
 	public interface Sex {
+		public static final String ALL = "";
 		public static final String MEN = "MAN";
 		public static final String WOMEN = "WOMEN";
 	}
@@ -56,11 +57,9 @@ public class Constants {
 	}
 	
 	public interface OrderFilter {
-
 		String ALL = "";
 		String UNPROCESSED = "WAIT_PAY";
 		String PROCESSED = "SUCCEED";
-		
 	}
 	
 }

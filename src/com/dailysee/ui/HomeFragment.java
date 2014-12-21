@@ -25,6 +25,7 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.AdResponse;
 import com.dailysee.ui.base.BaseFragment;
+import com.dailysee.ui.consultant.ConsultantActivity;
 import com.dailysee.ui.merchant.MerchantActivity;
 import com.dailysee.ui.sale.SaleActivity;
 import com.dailysee.util.Constants;
@@ -169,7 +170,10 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 
 	private void toConsultant() {
-		
+		Intent intent = new Intent();
+		intent.setClass(mContext, ConsultantActivity.class);
+		intent.putExtra("from", Constants.From.CONSULTANT);
+		startActivity(intent);
 	}
 	
 	@Override

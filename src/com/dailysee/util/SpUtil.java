@@ -218,6 +218,17 @@ public class SpUtil {
 		getEdit().putString("message_refresh_time", time).commit();
 	}
 
+	public String getOrderRefreshTime() {
+		return getSp().getString("order_refresh_time", "从未更新");
+	}
+	
+	public void setOrderRefreshTime() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = sdf.format(date);
+		getEdit().putString("order_refresh_time", time).commit();
+	}
+
 	public void setLat(double lat) {
 		getEdit().putString("lat", Double.toString(lat)).commit();
 	}
