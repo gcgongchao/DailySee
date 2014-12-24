@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseFragment;
@@ -22,7 +21,6 @@ public class CallMeFragment extends BaseFragment implements OnClickListener {
 	private ImageView ivImage;
 
 	public CallMeFragment() {
-
 	}
 
 	@Override

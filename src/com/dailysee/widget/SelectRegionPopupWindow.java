@@ -68,6 +68,8 @@ public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemCl
 	}
 
 	public void initPopViewsValue() {
+		lvRegion.setVisibility(View.GONE);
+		
 		mCityDb = new CityDb(context);
 		initListView();
 	}
@@ -113,43 +115,55 @@ public class SelectRegionPopupWindow extends BasePopupWindow implements OnItemCl
 	public void show(View v, int x, int y) {
 		this.showAsDropDown(v, x, y);
 	}
-
+	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (parent == lvArea) {
 			// 更新左侧区域
-			mCurTmpAreaPosition = position;
-//			mAdapter.setCurrentPosition(mCurrenTmpDistrictPosition);
-			// 更新右侧区域
-			CityEntity area = mAreaList.get(mCurTmpAreaPosition);
-			mRegionList = getCityRegionInfo(area);
-			if (mCurTmpAreaPosition == mCurAreaPosition) {
-				mCurrenTmpRegionPosition = mCurRegionPosition;
-			} else {
-				mCurrenTmpRegionPosition = -1;
-			}
-//			mAdapter2.setCurrentPosition(mCurrenTmpRegionPosition);
-			mRegionAdapter.setList(mRegionList);
-			lvRegion.setSelection(0);
-		} else if (parent == lvRegion) {
-			// 更新右侧区域
-			mCurAreaPosition = mCurTmpAreaPosition;
-			mCurRegionPosition = position;
-//			mAdapter2.setCurrentPosition(mCurrenRegionPosition);
-//			mRegionAdapter.notifyDataSetChanged();
-			if (mOnSelectListener != null) {
-				CityEntity area = mAreaList.get(mCurAreaPosition);
-				CityEntity region = mRegionList.get(mCurRegionPosition);
-				if (area != null && region != null) {
-					if (OTHER.equals(region.name)) {
-						mOnSelectListener.onSelectListener(area.name, area.name, "");
-					} else {
-						mOnSelectListener.onSelectListener(region.name, area.name, region.name);
-					}
-				}
+			mCurAreaPosition = position;
+			CityEntity area = mAreaList.get(mCurAreaPosition);
+			if (area != null) {
+				mOnSelectListener.onSelectListener(area.name, area.name, "");
 			}
 		}
 	}
+
+//	@Override
+//	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//		if (parent == lvArea) {
+//			// 更新左侧区域
+//			mCurTmpAreaPosition = position;
+////			mAdapter.setCurrentPosition(mCurrenTmpDistrictPosition);
+//			// 更新右侧区域
+//			CityEntity area = mAreaList.get(mCurTmpAreaPosition);
+//			mRegionList = getCityRegionInfo(area);
+//			if (mCurTmpAreaPosition == mCurAreaPosition) {
+//				mCurrenTmpRegionPosition = mCurRegionPosition;
+//			} else {
+//				mCurrenTmpRegionPosition = -1;
+//			}
+////			mAdapter2.setCurrentPosition(mCurrenTmpRegionPosition);
+//			mRegionAdapter.setList(mRegionList);
+//			lvRegion.setSelection(0);
+//		} else if (parent == lvRegion) {
+//			// 更新右侧区域
+//			mCurAreaPosition = mCurTmpAreaPosition;
+//			mCurRegionPosition = position;
+////			mAdapter2.setCurrentPosition(mCurrenRegionPosition);
+////			mRegionAdapter.notifyDataSetChanged();
+//			if (mOnSelectListener != null) {
+//				CityEntity area = mAreaList.get(mCurAreaPosition);
+//				CityEntity region = mRegionList.get(mCurRegionPosition);
+//				if (area != null && region != null) {
+//					if (OTHER.equals(region.name)) {
+//						mOnSelectListener.onSelectListener(area.name, area.name, "");
+//					} else {
+//						mOnSelectListener.onSelectListener(region.name, area.name, region.name);
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public interface OnSelectListener {
 		void onSelectListener(String title, String area, String region);
