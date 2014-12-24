@@ -62,9 +62,9 @@ public class ConsultantAdapter extends BaseAdapter {
 			AppController.getInstance().getImageLoader().get(merchant.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_image_merchant, R.drawable.ic_image_merchant));
 		}
 //		holder.rbHot.setRating(merchant.getHot());
-		holder.tvName.setText(merchant.name);
+		holder.tvName.setText(merchant.getName());
 		holder.tvAddress.setText(merchant.addr);
-		holder.tvDesc.setText(merchant.introduction);
+		holder.tvDesc.setText(merchant.getSignature());
 		
 		return convertView;
 	}

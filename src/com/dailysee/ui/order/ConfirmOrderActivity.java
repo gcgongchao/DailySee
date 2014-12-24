@@ -8,7 +8,10 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.ConfirmOrderAdapter;
+import com.dailysee.bean.Consultant;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Product;
 import com.dailysee.bean.ProductOrder;
@@ -47,7 +51,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private LayoutInflater mInflater;
 
 	private LinearLayout mEmptyView;
-	
+
+	private LinearLayout llOrderInfo;
 	private TextView tvRoom;
 	private TextView tvTime;
 
@@ -68,11 +73,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	
 	private SelectPaymentDialog mSelectPaymentDialog;
 
-	protected int mOrderId;
+	private long mOrderId;
 
 	private String mDesc;
 
 	private Room mRoom;
+
+	private Consultant mConsultant;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -94,9 +101,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mTotalPrice = intent.getDoubleExtra("totalPrice", 0);
 			mDate = intent.getStringExtra("date");
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
+			mConsultant = (Consultant) intent.getSerializableExtra("consultant");
 		}
 		
-		if (mRoomType == null || mMerchant == null) finish();
+		if (((mFrom == Constants.From.GIFT || mFrom == Constants.From.MERCHANT) && (mRoomType == null || mMerchant == null))
+				|| (mFrom == Constants.From.CONSULTANT && mConsultant == null)) {
+			finish();
+		}
 		
 		setTitle("确认订单");
 		setUp();
@@ -107,6 +118,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		mEmptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 		
 		View header = mInflater.inflate(R.layout.item_confirm_order_header, null);
+		llOrderInfo = (LinearLayout) header.findViewById(R.id.ll_order_info);
 		tvRoom = (TextView) header.findViewById(R.id.tv_room);
 		tvTime = (TextView) header.findViewById(R.id.tv_time);
 		
@@ -125,17 +137,41 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onInitViewData() {
-		tvRoom.setText(mRoomType.name);
-		tvTime.setText("时间: " + mDate);
-		
-		items = getShoppingCartItems();
-		mAdapter = new ConfirmOrderAdapter(getActivity(), items);
-		mListView.setAdapter(mAdapter);
-		
-		tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
-		etPhone.setText(mSpUtil.getLoginId());
-		
-		showRemarkIfFromGift();
+		switch (mFrom) {
+		case Constants.From.CONSULTANT:
+			llOrderInfo.setBackgroundColor(getResources().getColor(R.color.white));
+			
+			String name = mConsultant.getName();
+			String orderInfo = "商务顾问" + name + "服务一次";
+			SpannableStringBuilder builder = new SpannableStringBuilder(orderInfo);
+			builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + name.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
+			
+			tvRoom.setText(builder);
+			tvRoom.setTextColor(getResources().getColor(R.color.deep_gray));
+			tvTime.setText("时间: " + mDate);
+			tvTime.setTextColor(getResources().getColor(R.color.gray));
+			
+			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
+			mListView.setAdapter(mAdapter);
+			
+			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+			llRemark.setVisibility(View.GONE);
+			break;
+		case Constants.From.GIFT:
+		case Constants.From.MERCHANT:
+			tvRoom.setText(mRoomType.name);
+			tvTime.setText("时间: " + mDate);
+			
+			items = getShoppingCartItems();
+			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
+			mListView.setAdapter(mAdapter);
+			
+			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+			etPhone.setText(mSpUtil.getLoginId());
+			
+			showRemarkIfFromGift();
+			break;
+		}
 	}
 
 	private List<Product> getShoppingCartItems() {
@@ -192,7 +228,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				mOrderId = 1;
+				mOrderId = Long.parseLong(response.getDataStr());
 				showSelectPaymentDialog();
 			}
 
@@ -215,27 +251,37 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
-				params.put("merchantId", Long.toString(mMerchant.merchantId));
-				params.put("sellerName", mMerchant.name);
-				if (mFrom == Constants.From.GIFT && mRoom != null) {
-					params.put("roomId", Long.toString(mRoom.roomId));
-				}
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("buyerName", mSpUtil.getName());
 				params.put("bookDate", mDate);
 				params.put("mobile", getPhone());
 				params.put("remark", getRemark());
-				
-				List<ProductOrder> orderList = new ArrayList<ProductOrder>();
-				
-				ProductOrder roomOrder = new ProductOrder(mRoomType);
-				orderList.add(roomOrder);
-				
-				for (Product product : items) {
-					ProductOrder productOrder = new ProductOrder(product);
-					orderList.add(productOrder);
+
+				switch (mFrom) {
+				case Constants.From.GIFT:
+				case Constants.From.MERCHANT:
+					params.put("merchantId", Long.toString(mMerchant.merchantId));
+					params.put("sellerName", mMerchant.name);
+					if (mFrom == Constants.From.GIFT && mRoom != null) {
+						params.put("roomId", Long.toString(mRoom.roomId));
+					} 
+					List<ProductOrder> orderList = new ArrayList<ProductOrder>();
+					
+					ProductOrder roomOrder = new ProductOrder(mRoomType);
+					orderList.add(roomOrder);
+					
+					for (Product product : items) {
+						ProductOrder productOrder = new ProductOrder(product);
+						orderList.add(productOrder);
+					}
+					params.put("items", new Gson().toJson(orderList));
+					break;
+				case Constants.From.CONSULTANT:
+					params.put("sellerName", mConsultant.getName());
+					params.put("merchantId", Long.toString(mConsultant.counselorId));
+					params.put("amount", Double.toString(mConsultant.price));
+					break;
 				}
-				params.put("items", new Gson().toJson(orderList));
 				return params;
 			}
 

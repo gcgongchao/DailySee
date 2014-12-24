@@ -1,11 +1,15 @@
 package com.dailysee.ui.consultant;
 
+import java.util.Calendar;
+
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,50 +99,50 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		}
 	}
 
-	private void onRefreshMemberDetail(Consultant member) {
-		if (!TextUtils.isEmpty(member.logoUrl)) {
-			AppController.getInstance().getImageLoader().get(member.logoUrl, ImageLoader.getImageListener(ivImage, R.drawable.ic_avatar, R.drawable.ic_avatar));
+	private void onRefreshMemberDetail(Consultant consultant) {
+		if (!TextUtils.isEmpty(consultant.logoUrl)) {
+			AppController.getInstance().getImageLoader().get(consultant.logoUrl, ImageLoader.getImageListener(ivImage, R.drawable.ic_avatar, R.drawable.ic_avatar));
 		}
 		
-		tvName.setText(member.nick);
-		ivSex.setImageResource(Constants.Sex.MEN.equals(member.sex) ? R.drawable.ic_boy : (Constants.Sex.WOMEN.equals(member.sex) ? R.drawable.ic_girl : 0));
-		tvBwh.setText("三围: " + member.three);
-		if (!TextUtils.isEmpty(member.age)) {
-			tvAge.setText(Utils.parseAge(member.age) + "岁");
+		tvName.setText(consultant.getName());
+		ivSex.setImageResource(Constants.Sex.MEN.equals(consultant.sex) ? R.drawable.ic_boy : (Constants.Sex.WOMEN.equals(consultant.sex) ? R.drawable.ic_girl : 0));
+		tvBwh.setText("三围: " + consultant.three);
+		if (!TextUtils.isEmpty(consultant.age)) {
+			tvAge.setText(Utils.parseAge(consultant.age) + "岁");
 		} else {
 			tvAge.setText("");
 		}
-		if (!TextUtils.isEmpty(member.three)) {
-			tvBwh.setText("三围: " + member.three);
+		if (!TextUtils.isEmpty(consultant.three)) {
+			tvBwh.setText("三围: " + consultant.three);
 		} else {
 			tvBwh.setText("");
 		}
-		if (!TextUtils.isEmpty(member.height)) {
-			tvHeight.setText("身高: " + member.height);
+		if (!TextUtils.isEmpty(consultant.height)) {
+			tvHeight.setText("身高: " + consultant.height);
 		} else {
 			tvHeight.setText("");
 		}
-		tvSignature.setText(member.signature);
-		tvIntroduction.setText(member.introduction);
+		tvSignature.setText(consultant.getSignature());
+		tvIntroduction.setText(consultant.introduction);
 		
-		if (member.imgs != null) {
-			int size = member.imgs.size();
+		if (consultant.imgs != null) {
+			int size = consultant.imgs.size();
 			if (size > 0) {
-				String imageUrl = member.imgs.get(0).url;
+				String imageUrl = consultant.imgs.get(0).url;
 				ivImage1.setVisibility(View.VISIBLE);
 				if (!TextUtils.isEmpty(imageUrl)) {
 					AppController.getInstance().getImageLoader().get(imageUrl, ImageLoader.getImageListener(ivImage1, R.drawable.ic_image, R.drawable.ic_image));
 				}
 			}
 			if (size > 1) {
-				String imageUrl = member.imgs.get(1).url;
+				String imageUrl = consultant.imgs.get(1).url;
 				ivImage2.setVisibility(View.VISIBLE);
 				if (!TextUtils.isEmpty(imageUrl)) {
 					AppController.getInstance().getImageLoader().get(imageUrl, ImageLoader.getImageListener(ivImage2, R.drawable.ic_image, R.drawable.ic_image));
 				}
 			}
 			if (size > 2) {
-				String imageUrl = member.imgs.get(2).url;
+				String imageUrl = consultant.imgs.get(2).url;
 				ivImage3.setVisibility(View.VISIBLE);
 				if (!TextUtils.isEmpty(imageUrl)) {
 					AppController.getInstance().getImageLoader().get(imageUrl, ImageLoader.getImageListener(ivImage3, R.drawable.ic_image, R.drawable.ic_image));
@@ -182,16 +186,41 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 			UiHelper.toBrowseImageList(getActivity(), consultant.imgs, 0);
 			break;
 		case R.id.btn_commit:
-			toConfirmOrder();
+			if (consultant != null) {
+				showSelectBookingDateDialog();
+			}
 			break;
 		}
 	}
 
-	private void toConfirmOrder() {
+	private void showSelectBookingDateDialog() {
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+		
+		DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
+                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
+                    	toConfirmOrder(dateStr);
+                    }
+                }, 
+                year, // 传入年份
+                month, // 传入月份
+                dayOfMonth // 传入天数
+            );
+		dialog.show();
+	}
+
+	private void toConfirmOrder(String date) {
 		Intent intent = new Intent();
 		intent.setClass(this, ConfirmOrderActivity.class);
 		intent.putExtra("consultant", consultant);
 		intent.putExtra("from", mFrom);
+		intent.putExtra("date", date);
+		intent.putExtra("totalPrice", consultant.price);
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 	

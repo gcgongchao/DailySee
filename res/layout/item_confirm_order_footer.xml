@@ -4,6 +4,11 @@
     android:layout_height="wrap_content"
     android:background="@color/app_gray"
     android:orientation="vertical" >
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_line"
+        android:background="@color/gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +51,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_line"
+        android:layout_height="1dp"
         android:background="@color/orange" />
 
     <View
@@ -96,7 +101,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/height_line"
         android:background="@color/line" />
 
     <LinearLayout

@@ -34,6 +34,7 @@ public class Consultant implements Serializable {
 	public String email;//	String	否	100	邮件
 	public String logoUrl;
 	public List<Image> imgs;// （证件类图片）
+	public double price;
 	
 	public String getRegion() {
 		String region = null;
@@ -47,5 +48,20 @@ public class Consultant implements Serializable {
 			}
 		}
 		return region;
+	}
+	
+	public String getName() {
+		if (TextUtils.isEmpty(nick)) {
+			return name;
+		}
+		return nick;
+	}
+	
+	public String getSignature() {
+		String sign = signature;
+		if (TextUtils.isEmpty(sign)) {
+			sign = "这个人很懒，什么都没有留下。";
+		}
+		return sign;
 	}
 }
