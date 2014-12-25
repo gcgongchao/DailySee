@@ -33,6 +33,7 @@ import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.SelectPaymentDialog;
@@ -43,6 +44,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	protected static final String TAG = ConfirmOrderActivity.class.getSimpleName();
 
 	private static final int REQUEST_WRITE_DESC = 10000;
+	private static final int REQUEST_LOGIN = 10001;
 	
 	private ListView mListView;
 	private List<Product> items = new ArrayList<Product>();
@@ -137,6 +139,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onInitViewData() {
+		etPhone.setText(mSpUtil.getLoginId());
+		
 		switch (mFrom) {
 		case Constants.From.CONSULTANT:
 			llOrderInfo.setBackgroundColor(getResources().getColor(R.color.white));
@@ -293,10 +297,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		switch (v.getId()) {
 		case R.id.btn_commit:
 			if (checkPhone()) {
-				if (mOrderId > 0) {
-					showSelectPaymentDialog();
+				if (!mSpUtil.isLogin()) {
+					toLogin();
 				} else {
-					requestCreateOrder();
+					toCommitOrder();
 				}
 			}
 			break;
@@ -306,6 +310,20 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		default:
 			break;
 		}
+	}
+
+	private void toCommitOrder() {
+		if (mOrderId > 0) {
+			showSelectPaymentDialog();
+		} else {
+			requestCreateOrder();
+		}
+	}
+
+	private void toLogin() {
+		Intent intent = new Intent();
+		intent.setClass(this, LoginActivity.class);
+		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 
 	private void toWriteDesc() {
@@ -353,6 +371,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			if (requestCode == REQUEST_WRITE_DESC && data != null) {
 				mDesc = data.getStringExtra("desc");
 				tvRemark.setText(mDesc);
+			} else if (requestCode == REQUEST_LOGIN) {
+				toCommitOrder();
 			}
 		}
 	}
