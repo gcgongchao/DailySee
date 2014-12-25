@@ -220,7 +220,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		intent.putExtra("consultant", consultant);
 		intent.putExtra("from", mFrom);
 		intent.putExtra("date", date);
-		intent.putExtra("totalPrice", consultant.price);
+		intent.putExtra("totalPrice", consultant.worth);
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 	

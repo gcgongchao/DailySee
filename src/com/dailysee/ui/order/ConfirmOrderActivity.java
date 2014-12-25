@@ -283,7 +283,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				case Constants.From.CONSULTANT:
 					params.put("sellerName", mConsultant.getName());
 					params.put("merchantId", Long.toString(mConsultant.counselorId));
-					params.put("amount", Double.toString(mConsultant.price));
+					params.put("amount", Double.toString(mConsultant.worth));
 					break;
 				}
 				return params;

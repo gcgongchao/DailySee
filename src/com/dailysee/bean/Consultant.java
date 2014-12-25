@@ -34,7 +34,7 @@ public class Consultant implements Serializable {
 	public String email;//	String	否	100	邮件
 	public String logoUrl;
 	public List<Image> imgs;// （证件类图片）
-	public double price;
+	public double worth;
 	
 	public String getRegion() {
 		String region = null;
