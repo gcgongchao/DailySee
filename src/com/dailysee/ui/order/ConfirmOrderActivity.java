@@ -1,15 +1,17 @@
 package com.dailysee.ui.order;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.ConfirmOrderAdapter;
@@ -37,6 +40,8 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.PayUtils;
+import com.dailysee.util.Result;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.ConfirmDialog;
 import com.dailysee.widget.SelectPaymentDialog;
@@ -50,6 +55,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private static final int REQUEST_WRITE_DESC = 10000;
 	private static final int REQUEST_LOGIN = 10001;
+
+	private static final int SDK_PAY_FLAG = 20001;
 	
 	private ListView mListView;
 	private List<Product> items = new ArrayList<Product>();
@@ -220,10 +227,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				if (v.getId() == R.id.btn_wechat_payment) {
 					showToast("微信支付成功");
 				} else if (v.getId() == R.id.btn_alipay_payment) {
-					showToast("支付宝支付成功");
+					toAlipayPayment();
 				} else if (v.getId() == R.id.btn_up_payment) {
-					String tn = "ttyo" + Long.toString(mOrderId);
-					UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
+					toUPPayment();
 				}
 				AppController.getInstance().clearShoppingCart();
 				
@@ -416,5 +422,70 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		});
         dialog.show();
 	}
+
+	private void toUPPayment() {
+		String tn = "ttyo" + Long.toString(mOrderId);
+		UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
+	}
+
+	private void toAlipayPayment() {
+		showToast("支付宝支付成功");
+		String orderInfo = PayUtils.getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+		String sign = PayUtils.sign(orderInfo);
+		try {
+			// 仅需对sign 做URL编码
+			sign = URLEncoder.encode(sign, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
+				+ PayUtils.getSignType();
+
+		Runnable payRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				// 构造PayTask 对象
+				PayTask alipay = new PayTask(ConfirmOrderActivity.this);
+				// 调用支付接口
+				String result = alipay.pay(payInfo);
+
+				Message msg = new Message();
+				msg.what = SDK_PAY_FLAG;
+				msg.obj = result;
+				mHandler.sendMessage(msg);
+			}
+		};
+
+		Thread payThread = new Thread(payRunnable);
+		payThread.start();
+	}
+	
+	private Handler mHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case SDK_PAY_FLAG: {
+				Result resultObj = new Result((String) msg.obj);
+				String resultStatus = resultObj.resultStatus;
+
+				// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+				if (TextUtils.equals(resultStatus, "9000")) {
+					showToastShort("支付成功");
+				} else {
+					// 判断resultStatus 为非“9000”则代表可能支付失败
+					// “8000” 代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+					if (TextUtils.equals(resultStatus, "8000")) {
+						showToastShort("支付结果确认中");
+					} else {
+						showToastShort("支付失败");
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		};
+	};
 	
 }

@@ -36,6 +36,13 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
     <application
         android:name="com.dailysee.AppController"
         android:allowBackup="true"
@@ -85,6 +92,17 @@
         
         <!-- 银联支付 -->
         <activity android:name="com.unionpay.uppay.PayActivity"/>
+		<!-- 银联支付 -->
+		
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
         
         <service
 		    android:name="com.alexbbb.uploadservice.UploadService"
