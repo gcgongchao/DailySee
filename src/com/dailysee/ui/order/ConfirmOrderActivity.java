@@ -268,7 +268,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
+				if (mFrom == Constants.From.MERCHANT || mFrom == Constants.From.GIFT) {
+					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
+				} else if (mFrom == Constants.From.CONSULTANT) {
+					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveServiceOrder");
+				}
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("buyerName", mSpUtil.getName());
 				params.put("bookDate", mDate);
