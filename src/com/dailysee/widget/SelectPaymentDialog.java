@@ -9,6 +9,7 @@ import com.dailysee.R;
 public class SelectPaymentDialog extends BaseDialog {
 	private Button btnWechatPayment;
 	private Button btnAlipayPayment;
+	private Button btnUPPayment;
 	private Button btnCancel;
 	private View.OnClickListener mListener;
 
@@ -29,17 +30,20 @@ public class SelectPaymentDialog extends BaseDialog {
 
 	@Override
 	protected void initDialogViews() {
-		btnCancel = (Button) findViewById(R.id.btn_cancel_pic);
-		btnAlipayPayment = (Button) findViewById(R.id.btn_alipay_payment);
 		btnWechatPayment = (Button) findViewById(R.id.btn_wechat_payment);
+		btnAlipayPayment = (Button) findViewById(R.id.btn_alipay_payment);
+		btnUPPayment = (Button) findViewById(R.id.btn_up_payment);
+		btnCancel = (Button) findViewById(R.id.btn_cancel);
+		
+		btnAlipayPayment.setOnClickListener(mListener);
+		btnWechatPayment.setOnClickListener(mListener);
+		btnUPPayment.setOnClickListener(mListener);
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				cancel();
 			}
 		});
-		btnAlipayPayment.setOnClickListener(mListener);
-		btnWechatPayment.setOnClickListener(mListener);
 	}
 
 }

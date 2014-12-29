@@ -47,6 +47,10 @@ public class BaseResponse<T> {
 		return json;
 	}
 	
+	public String getSimpleDataStr() {
+		return parent.optString("data");
+	}
+	
 	public T getResponse(TypeToken<T> token) {
 		Gson gson = new Gson();
 		String json = getDataStr();

@@ -7,17 +7,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="221dp"
+        android:layout_height="wrap_content"
         android:background="#f0565656"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp" 
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp" 
         android:layout_gravity="bottom">
 
         <Button
             android:id="@+id/btn_wechat_payment"
             android:layout_width="fill_parent"
-            android:layout_height="47dip"
+            android:layout_height="@dimen/edittext_height"
             android:layout_margin="10dip"
             android:background="@drawable/btn_orange_selector"
             android:gravity="center"
@@ -29,9 +29,10 @@
         <Button
             android:id="@+id/btn_alipay_payment"
             android:layout_width="fill_parent"
-            android:layout_height="47dip"
+            android:layout_height="@dimen/edittext_height"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_orange_selector"
             android:gravity="center"
             android:padding="10dip"
@@ -40,9 +41,22 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/btn_cancel_pic"
+            android:id="@+id/btn_up_payment"
             android:layout_width="fill_parent"
-            android:layout_height="47dip"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/btn_orange_selector"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="银联支付"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/edittext_height"
             android:layout_margin="10dip"
             android:background="@drawable/btn_gray_selector"
             android:gravity="center"

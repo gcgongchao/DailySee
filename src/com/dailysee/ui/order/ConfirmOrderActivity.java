@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -36,8 +38,11 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.ConfirmDialog;
 import com.dailysee.widget.SelectPaymentDialog;
 import com.google.gson.Gson;
+import com.unionpay.UPPayAssistEx;
+import com.unionpay.uppay.PayActivity;
 
 public class ConfirmOrderActivity extends BaseActivity implements OnClickListener {
 
@@ -216,6 +221,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					showToast("微信支付成功");
 				} else if (v.getId() == R.id.btn_alipay_payment) {
 					showToast("支付宝支付成功");
+				} else if (v.getId() == R.id.btn_up_payment) {
+					String tn = "ttyo" + Long.toString(mOrderId);
+					UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
 				}
 				AppController.getInstance().clearShoppingCart();
 				
@@ -232,7 +240,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				mOrderId = Long.parseLong(response.getDataStr());
+				mOrderId = Long.parseLong(response.getSimpleDataStr());
 				showSelectPaymentDialog();
 			}
 
@@ -375,6 +383,38 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				toCommitOrder();
 			}
 		}
+		
+		/*************************************************
+         * 步骤3：处理银联手机支付控件返回的支付结果
+         ************************************************/
+        if (data == null) {
+            return;
+        }
+
+        String msg = "";
+        /*
+         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+         */
+        String str = data.getExtras().getString("pay_result");
+        if (str.equalsIgnoreCase("success")) {
+            msg = "支付成功！";
+        } else if (str.equalsIgnoreCase("fail")) {
+            msg = "支付失败！";
+        } else if (str.equalsIgnoreCase("cancel")) {
+            msg = "用户取消了支付";
+        }
+
+        showPayResult(msg);
+	}
+
+	private void showPayResult(String msg) {
+		ConfirmDialog dialog = new ConfirmDialog(this, msg, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			}
+		});
+        dialog.show();
 	}
 	
 }

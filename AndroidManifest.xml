@@ -83,6 +83,9 @@
         <activity android:name=".ui.consultant.ConsultantActivity" />
         <activity android:name=".ui.consultant.ConsultantDetailActivity" />
         
+        <!-- 银联支付 -->
+        <activity android:name="com.unionpay.uppay.PayActivity"/>
+        
         <service
 		    android:name="com.alexbbb.uploadservice.UploadService"
 		    android:enabled="true"
