@@ -56,8 +56,9 @@ public class Utils {
 	public static String logStringCache = "";
 
 	public static final int MEDIA_TYPE_IMAGE = 1;
-
 	public static final int MEDIA_TYPE_VIDEO = 2;
+	
+	private static long lastClickTime;
 
 	// 获取ApiKey
 	public static String getMetaValue(Context context, String metaKey) {
@@ -459,6 +460,16 @@ public class Utils {
 		}
 		int age = (int)((now - bDate.getTime())/(1000*60*60*24)/365); 
 		return age;
+	}
+
+	public static boolean isFastDoubleClick() {
+		long time = System.currentTimeMillis();
+		long timeD = time - lastClickTime;
+		if (0 < timeD && timeD < 500) {
+			return true;
+		}
+		lastClickTime = time;
+		return false;
 	}
 	
 }

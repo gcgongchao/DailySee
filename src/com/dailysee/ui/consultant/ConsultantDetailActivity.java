@@ -203,8 +203,10 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
-                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
-                    	toConfirmOrder(dateStr);
+                    	if (!Utils.isFastDoubleClick()) {
+	                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
+	                    	toConfirmOrder(dateStr);
+                    	}
                     }
                 }, 
                 year, // 传入年份

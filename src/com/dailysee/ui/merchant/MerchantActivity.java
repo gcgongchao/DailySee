@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,6 +49,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class MerchantActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnTouchListener, OnItemClickListener {
 
+	protected static final String TAG = MerchantActivity.class.getSimpleName();
+	
 	private LinearLayout llFilter;
 	private TextView tvFilter;
 
@@ -406,8 +409,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
-                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
-                    	toMerchantRoomList(merchant, dateStr);
+                    	if (!Utils.isFastDoubleClick()) {
+	                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
+	                    	toMerchantRoomList(merchant, dateStr);
+                    	}
                     }
                 }, 
                 year, // 传入年份
