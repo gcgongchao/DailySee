@@ -171,7 +171,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mListView.setAdapter(mAdapter);
 			
 			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
-			llRemark.setVisibility(View.GONE);
+//			llRemark.setVisibility(View.GONE);
 			break;
 		case Constants.From.GIFT:
 		case Constants.From.MERCHANT:
@@ -185,7 +185,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
 			etPhone.setText(mSpUtil.getLoginId());
 			
-			showRemarkIfFromGift();
+//			showRemarkIfFromGift();
 			break;
 		}
 	}
@@ -226,17 +226,21 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				Utils.clossDialog(mSelectPaymentDialog);
 				if (v.getId() == R.id.btn_wechat_payment) {
 					showToast("微信支付成功");
+					onPaySuccess();
 				} else if (v.getId() == R.id.btn_alipay_payment) {
 					toAlipayPayment();
 				} else if (v.getId() == R.id.btn_up_payment) {
 					toUPPayment();
 				}
-				AppController.getInstance().clearShoppingCart();
-				
-				setResult(RESULT_OK);
-				finish();
 			}
 		});
+	}
+	
+	public void onPaySuccess() {
+		AppController.getInstance().clearShoppingCart();
+		
+		setResult(RESULT_OK);
+		finish();
 	}
 
 	private void requestCreateOrder() {		
@@ -406,15 +410,18 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
          * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
          */
         String str = data.getExtras().getString("pay_result");
-        if (str.equalsIgnoreCase("success")) {
-            msg = "支付成功！";
-        } else if (str.equalsIgnoreCase("fail")) {
-            msg = "支付失败！";
-        } else if (str.equalsIgnoreCase("cancel")) {
-            msg = "用户取消了支付";
+        if (!TextUtils.isEmpty(str)) {
+	        if (str.equalsIgnoreCase("success")) {
+	            msg = "支付成功！";
+				onPaySuccess();
+	        } else if (str.equalsIgnoreCase("fail")) {
+	            msg = "支付失败！";
+	        } else if (str.equalsIgnoreCase("cancel")) {
+	            msg = "用户取消了支付";
+	        }
+	
+	        showPayResult(msg);
         }
-
-        showPayResult(msg);
 	}
 
 	private void showPayResult(String msg) {
@@ -475,6 +482,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
 				if (TextUtils.equals(resultStatus, "9000")) {
 					showToastShort("支付成功");
+					onPaySuccess();
 				} else {
 					// 判断resultStatus 为非“9000”则代表可能支付失败
 					// “8000” 代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
