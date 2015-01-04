@@ -84,6 +84,11 @@
                     android:src="@drawable/ic_arrow_right" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
             <LinearLayout
                 android:id="@+id/ll_unlogin"
                 android:layout_width="match_parent"
@@ -133,8 +138,18 @@
 
             <View
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_margin"
                 android:background="@color/app_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
 
             <LinearLayout
                 android:id="@+id/ll_all_order"
@@ -286,8 +301,18 @@
 
             <View
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_margin"
                 android:background="@color/app_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
 
             <LinearLayout
                 android:id="@+id/ll_about"

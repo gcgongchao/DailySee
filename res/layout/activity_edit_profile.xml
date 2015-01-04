@@ -25,6 +25,11 @@
                 android:layout_height="@dimen/activity_margin"
                 android:background="@color/app_gray" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
             <LinearLayout
                 android:id="@+id/ll_avatar"
                 android:layout_width="match_parent"
@@ -271,6 +276,11 @@
                     android:textColorHint="@color/login_hint"
                     android:textSize="@dimen/text_input" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
 
             <View
                 android:layout_width="match_parent"
