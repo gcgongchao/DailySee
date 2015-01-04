@@ -97,7 +97,7 @@
                 android:minWidth="@dimen/edittext_width"
                 android:text="登录"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/subtitle" />
 
             <TextView
                 android:id="@+id/btn_to_register"
