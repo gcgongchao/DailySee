@@ -309,6 +309,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						break;
 					}
 					mIndex = 1;
+					mRefreshDataRequired = true;
 					onRefreshData();
 				}
 			});
