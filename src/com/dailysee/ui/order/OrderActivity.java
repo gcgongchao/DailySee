@@ -146,12 +146,12 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+//				toShowProgressMsg("正在加载...");
 			}
 
 			@Override
 			public void onFinished() {
-				toCloseProgressMsg();
+//				toCloseProgressMsg();
 				mPullRefreshListView.onRefreshComplete();
 			}
 
@@ -163,9 +163,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.OrderController.getCustomerOrder");
+				params.put("mtd", "tty.order.list.get");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
-//				params.put("orderStatus", "");
+				params.put("orderStatus", filter);
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
@@ -180,7 +180,11 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	@Override
 	public void onResume() {
 		super.onResume();
-		mHandler.sendEmptyMessageDelayed(OrderHandler.DELAY_AUTO_REFRESH, 0);
+		onRefreshData();
+	}
+
+	private void onRefreshData() {
+		mHandler.sendEmptyMessageDelayed(OrderHandler.DELAY_AUTO_REFRESH, 200);
 	}
 
 	@Override
@@ -210,7 +214,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			switch (msg.what) {
 			case DELAY_AUTO_REFRESH:
 				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
-//					mPullRefreshListView.demo();
+					mPullRefreshListView.demo();
 					mPullRefreshListView.setRefreshing(false);
 				}
 				break;
@@ -270,7 +274,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.OrderController.getOrderDetail");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
-				params.put("orderStatus", filter);
+//				params.put("orderStatus", filter);
 				params.put("orderId", Long.toString(order.orderId));
 				return params;
 			}
@@ -305,7 +309,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						break;
 					}
 					mIndex = 1;
-					mPullRefreshListView.setRefreshing(false);
+					onRefreshData();
 				}
 			});
 			mOrderFilterPopupWindow.init();

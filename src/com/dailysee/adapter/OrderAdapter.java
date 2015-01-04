@@ -131,7 +131,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder.divider.setVisibility(View.GONE);
 			holder.count.setText("X" + orderItem.quantity);
 			holder.name.setText(orderItem.name);
-			holder.price.setText("原    价: ￥" + Utils.formatTwoFractionDigits(orderItem.price));
+			holder.price.setText("￥" + Utils.formatTwoFractionDigits(orderItem.price));
 		} else {
 			holder.llOrderItemInfo.setVisibility(View.GONE);
 			holder.llOrderItemFooter.setVisibility(View.VISIBLE);
