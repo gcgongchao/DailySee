@@ -140,8 +140,8 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						
 						mChildrenList.add(items);
 					}
-					mAdapter.notifyDataSetChanged();
 				}
+				mAdapter.notifyDataSetChanged();
 			}
 
 			@Override
