@@ -180,7 +180,7 @@ public class NetRequest {
 
 		@Override
 		public void onResponse(String json) {
-			Log.d("TAG", "response: " + json.toString());
+			Log.d(TAG, "response: " + json.toString());
 			onFinished(callback);
 
 			try {
@@ -213,7 +213,7 @@ public class NetRequest {
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			Log.e("TAG", error.getMessage(), error);
+			Log.e(TAG, error.getMessage(), error);
 			onFinished(callback);
 			
 			String msg = error.getMessage();
