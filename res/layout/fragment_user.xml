@@ -25,6 +25,11 @@
                 android:layout_height="@dimen/activity_margin"
                 android:background="@color/app_gray" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
             <LinearLayout
                 android:id="@+id/ll_user_info"
                 android:layout_width="match_parent"
@@ -83,11 +88,6 @@
                     android:gravity="center_vertical"
                     android:src="@drawable/ic_arrow_right" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_line"
-                android:background="@color/line" />
 
             <LinearLayout
                 android:id="@+id/ll_unlogin"
