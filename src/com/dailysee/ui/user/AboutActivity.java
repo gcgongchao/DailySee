@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseActivity;
@@ -12,6 +13,9 @@ import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 public class AboutActivity extends BaseActivity implements OnClickListener{
 
@@ -71,16 +75,37 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
             	mFeedbackAgent.startFeedbackActivity();
                 break;
             case R.id.ll_check_update:
-                checkUpdateVersion();
+                toCheckUpdateVersion();
                 break;
             case R.id.ll_call_us:
                 break;
         }
     }
 
-    private void checkUpdateVersion() {
-        // 检查更新
-    	UmengUpdateAgent.forceUpdate(this);
+    private void toCheckUpdateVersion() {
+    	// 检查更新
+		UmengUpdateAgent.setUpdateAutoPopup(false);
+		UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+		    @Override
+		    public void onUpdateReturned(int updateStatus,UpdateResponse updateInfo) {
+		        switch (updateStatus) {
+		        case UpdateStatus.Yes: // has update
+		            UmengUpdateAgent.showUpdateDialog(getActivity(), updateInfo);
+		            break;
+		        case UpdateStatus.No: // has no update
+		            Toast.makeText(getActivity(), "没有更新", Toast.LENGTH_SHORT).show();
+		            break;
+		        case UpdateStatus.NoneWifi: // none wifi
+		            Toast.makeText(getActivity(), "没有wifi连接， 只在wifi下更新", Toast.LENGTH_SHORT).show();
+		            break;
+		        case UpdateStatus.Timeout: // time out
+		            Toast.makeText(getActivity(), "超时", Toast.LENGTH_SHORT).show();
+		            break;
+		        }
+		    }
+		});
+		UmengUpdateAgent.update(this);
+//    	UmengUpdateAgent.forceUpdate(this);
     }
     
 }

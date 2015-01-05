@@ -8,26 +8,27 @@
     <RelativeLayout
         android:id="@+id/umeng_fb_contact_header"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="#000000" >
+        android:background="@color/white" >
 
         <ImageView
             android:id="@+id/umeng_fb_back"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:src="@drawable/umeng_fb_back_selector" />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_up" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/umeng_fb_contact_title"
-            android:textColor="#ffffff"
-            android:textSize="25sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/title" />
 
         <ImageView
             android:id="@+id/umeng_fb_save"
@@ -36,7 +37,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:src="@drawable/umeng_fb_tick_selector" />
+            android:src="@drawable/umeng_fb_tick_selected" />
     </RelativeLayout>
 
     <RelativeLayout
