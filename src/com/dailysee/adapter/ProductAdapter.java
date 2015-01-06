@@ -3,7 +3,6 @@ package com.dailysee.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Spannable;
