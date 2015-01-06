@@ -106,7 +106,7 @@
             android:layout_weight="1"
             android:background="@color/transparent"
             android:hint="请输入搜索商家的信息"
-            android:paddingLeft="16dp"
+            android:paddingLeft="10dp"
             android:text=""
             android:textColorHint="@color/light_gray"
             android:textSize="@dimen/subtitle" />
@@ -115,8 +115,8 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/ic_search" />
     </LinearLayout>
 

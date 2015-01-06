@@ -3,6 +3,7 @@ package com.dailysee.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Spannable;
@@ -134,12 +135,17 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 		}
 
 		holder.name.setText(product.name);
-		holder.price.setText("原    价: ￥" + Utils.formatTwoFractionDigits(product.price));
+		holder.price.setText("原    价:￥" + Utils.formatTwoFractionDigits(product.price));
+//		holder.price.setText("￥" + Utils.formatTwoFractionDigits(product.price));
+//		holder.price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰 
 		
-		String title = "天天价: ￥" + Utils.formatTwoFractionDigits(product.ttPrice);
+		String title = "天天价:￥" + Utils.formatTwoFractionDigits(product.ttPrice);
 		SpannableStringBuilder style = new SpannableStringBuilder(title);
 		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 5, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 		holder.salePrice.setText(style);
+//		String title = "￥" + Utils.formatTwoFractionDigits(product.ttPrice);
+//		holder.salePrice.setText(title);
+//		holder.salePrice.setTextColor(context.getResources().getColor(R.color.orange));
 		
 		holder.btnRemove.setOnClickListener(new OnClickListener() {
 
