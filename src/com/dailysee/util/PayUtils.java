@@ -35,7 +35,7 @@ public class PayUtils {
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
 		// 服务器异步通知页面路径
-		orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
+		orderInfo += "&notify_url=" + "\"" + "http://120.24.77.231/ebp/cgi/payNotify.htm" + "\"";
 
 		// 接口名称， 固定值
 		orderInfo += "&service=\"mobile.securitypay.pay\"";
