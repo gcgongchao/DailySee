@@ -18,7 +18,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="160dp"
                 android:layout_gravity="center"
                 android:background="@color/app_gray" />
 
@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="5dip"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal"
                 android:visibility="visible" >
 
@@ -120,7 +120,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:scaleType="centerCrop"
+            android:background="@color/theme"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_merchant" />
 
         <LinearLayout
@@ -140,26 +141,29 @@
                 <ImageView
                     android:id="@+id/iv_sale"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="100dp"
+                    android:background="@color/deep_orange"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_sale" />
 
                 <ImageView
                     android:id="@+id/iv_gift"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="10dp"
-                    android:scaleType="centerCrop"
+                    android:background="@color/deep_orange"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_gift" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_consultant"
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="210dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:scaleType="centerCrop"
+                android:background="@color/green"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_consultant" />
         </LinearLayout>
     </LinearLayout>

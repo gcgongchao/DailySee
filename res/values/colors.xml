@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-     <color name="theme">#fa6605</color>
+    <color name="theme">#fa6605</color>
     
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
@@ -21,6 +21,7 @@
     <color name="title_color">#333333</color>
     <color name="line">@color/gray</color>
     
+    <color name="deep_orange">#ff8000</color>
     <color name="orange">#f89520</color>
     <color name="light_orange">#ff9520</color>
     <color name="deep_gray">#58585a</color>
