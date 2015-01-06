@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.dailysee.MainActivity;
 import com.dailysee.R;
-import com.dailysee.SplashActivity;
 import com.dailysee.bean.Member;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;

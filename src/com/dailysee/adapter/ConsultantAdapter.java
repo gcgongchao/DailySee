@@ -16,7 +16,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Consultant;
-import com.dailysee.bean.Merchant;
 
 public class ConsultantAdapter extends BaseAdapter {
 

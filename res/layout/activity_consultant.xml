@@ -135,6 +135,8 @@
             android:hint="请输入搜索顾问的信息"
             android:paddingLeft="16dp"
             android:text=""
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColorHint="@color/light_gray"
             android:textSize="@dimen/subtitle" />
 

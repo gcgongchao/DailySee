@@ -162,8 +162,8 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 			
 			@Override
 			public void onClick(View v) {
-				if (!TextUtils.isEmpty(mSpUtil.getAvatar())) {
-					UiHelper.toBrowseImage(getActivity(), mSpUtil.getAvatar());
+				if (consultant != null && !TextUtils.isEmpty(consultant.logoUrl)) {
+					UiHelper.toBrowseImage(getActivity(), consultant.logoUrl);
 				}
 			}
 		});

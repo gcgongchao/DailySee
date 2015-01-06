@@ -24,7 +24,6 @@ import com.dailysee.db.CityDb;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
-import com.dailysee.net.response.MerchantResponse;
 import com.dailysee.net.response.PreferentialResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.merchant.MerchantRoomListActivity;

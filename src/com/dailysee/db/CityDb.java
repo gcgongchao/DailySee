@@ -3,13 +3,13 @@ package com.dailysee.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dailysee.bean.CityEntity;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.provider.BaseColumns;
+
+import com.dailysee.bean.CityEntity;
 
 public class CityDb extends BaseDb {
 	

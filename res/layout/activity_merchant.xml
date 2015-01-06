@@ -107,6 +107,8 @@
             android:background="@color/transparent"
             android:hint="请输入搜索商家的信息"
             android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:text=""
             android:textColorHint="@color/light_gray"
             android:textSize="@dimen/subtitle" />
