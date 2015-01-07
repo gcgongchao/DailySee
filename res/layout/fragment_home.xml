@@ -18,7 +18,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="@dimen/home_ad_height"
                 android:layout_gravity="center"
                 android:background="@color/app_gray" />
 
@@ -118,7 +118,7 @@
         <ImageView
             android:id="@+id/iv_merchant"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="@dimen/home_item_height"
             android:layout_margin="10dp"
             android:background="@color/theme"
             android:padding="10dp"
@@ -142,7 +142,7 @@
                 <ImageView
                     android:id="@+id/iv_sale"
                     android:layout_width="match_parent"
-                    android:layout_height="123dp"
+                    android:layout_height="@dimen/home_item_height"
                     android:background="@color/deep_orange"
                     android:padding="10dp"
                     android:scaleType="centerInside"
@@ -151,7 +151,7 @@
                 <ImageView
                     android:id="@+id/iv_gift"
                     android:layout_width="match_parent"
-                    android:layout_height="123dp"
+                    android:layout_height="@dimen/home_item_height"
                     android:layout_marginTop="10dp"
                     android:background="@color/deep_orange"
                     android:padding="10dp"
@@ -162,7 +162,7 @@
             <ImageView
                 android:id="@+id/iv_consultant"
                 android:layout_width="0dp"
-                android:layout_height="256dp"
+                android:layout_height="@dimen/home_item_height_l"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                 android:background="@color/green"

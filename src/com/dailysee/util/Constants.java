@@ -62,4 +62,10 @@ public class Constants {
 		String PROCESSED = "SUCCEED";
 	}
 	
+	public interface Payment {
+		String UP = "100001";//银联: 100001,
+		String ALIPAY = "100002";//支付宝:100002
+		String WECHAT = "100003";//微信: 100003
+	}
+	
 }

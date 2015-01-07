@@ -38,6 +38,10 @@
     <dimen name="height_avater">40dp</dimen>
     <dimen name="height_icon">24dp</dimen>
     
+    <dimen name="home_ad_height">160dp</dimen>
+    <dimen name="home_item_height">122dp</dimen>
+    <dimen name="home_item_height_l">254dp</dimen>
+    
     <dimen name="image_width">96dp</dimen>
     <dimen name="image_height">72dp</dimen>
     

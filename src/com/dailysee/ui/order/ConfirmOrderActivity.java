@@ -1,7 +1,5 @@
 package com.dailysee.ui.order;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,6 +38,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.Constants.Payment;
 import com.dailysee.util.PayUtils;
 import com.dailysee.util.Result;
 import com.dailysee.util.Utils;
@@ -224,18 +223,69 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onClick(View v) {
 				Utils.clossDialog(mSelectPaymentDialog);
+				String payment = null;
 				if (v.getId() == R.id.btn_wechat_payment) {
-					showToast("微信支付成功");
-					onPaySuccess();
+					payment = Payment.WECHAT;
+//					showToast("微信支付成功");
+//					onPaySuccess();
 				} else if (v.getId() == R.id.btn_alipay_payment) {
-					toAlipayPayment();
+					payment = Payment.ALIPAY;
+//					toAlipayPayment();
 				} else if (v.getId() == R.id.btn_up_payment) {
-					toUPPayment();
+					payment = Payment.UP;
+//					toUPPayment();
 				}
+				requestPayParams(payment);
 			}
 		});
 	}
 	
+	protected void requestPayParams(final String payment) {
+		// Tag used to cancel the request
+		String tag = "tag_request_pay_params";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				String url = response.getData().optString("url");
+				String params = response.getData().optString("params");
+				String payInfo = url + params;
+				if (Payment.ALIPAY.equals(payment)) {
+					toAlipayPayment(payInfo);
+				} else if (Payment.UP.endsWith(payment)) {
+					toUPPayment(payInfo);
+				}
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交订单...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.mobile.securitypay.pay");
+				params.put("memberId", mSpUtil.getMemberIdStr());
+				params.put("orderId", Long.toString(mOrderId));
+				params.put("thirdpayId", payment);
+
+				return params;
+			}
+
+		}, tag);
+	}
+
 	public void onPaySuccess() {
 		AppController.getInstance().clearShoppingCart();
 		
@@ -272,11 +322,6 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				if (mFrom == Constants.From.MERCHANT || mFrom == Constants.From.GIFT) {
-					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
-				} else if (mFrom == Constants.From.CONSULTANT) {
-					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveServiceOrder");
-				}
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("buyerName", mSpUtil.getName());
 				params.put("bookDate", mDate);
@@ -286,6 +331,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				switch (mFrom) {
 				case Constants.From.GIFT:
 				case Constants.From.MERCHANT:
+					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
 					params.put("merchantId", Long.toString(mMerchant.merchantId));
 					params.put("sellerName", mMerchant.name);
 					if (mFrom == Constants.From.GIFT && mRoom != null) {
@@ -303,6 +349,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("items", new Gson().toJson(orderList));
 					break;
 				case Constants.From.CONSULTANT:
+					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveServiceOrder");
 					params.put("sellerName", mConsultant.getName());
 					params.put("merchantId", Long.toString(mConsultant.counselorId));
 					params.put("amount", Double.toString(mConsultant.worth));
@@ -318,13 +365,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_commit:
-			if (checkPhone()) {
+//			if (checkPhone()) {
 				if (!mSpUtil.isLogin()) {
 					toLogin();
 				} else {
 					toCommitOrder();
 				}
-			}
+//			}
 			break;
 		case R.id.ll_remark:
 			toWriteDesc();
@@ -434,23 +481,23 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
         dialog.show();
 	}
 
-	private void toUPPayment() {
-		String tn = "ttyo" + Long.toString(mOrderId);
+	private void toUPPayment(String tn) {
+//		String tn = "ttyo" + Long.toString(mOrderId);
 		UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
 	}
 
-	private void toAlipayPayment() {
-		showToast("支付宝支付成功");
-		String orderInfo = PayUtils.getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
-		String sign = PayUtils.sign(orderInfo);
-		try {
-			// 仅需对sign 做URL编码
-			sign = URLEncoder.encode(sign, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
-				+ PayUtils.getSignType();
+	private void toAlipayPayment(final String payInfo) {
+//		showToast("支付宝支付成功");
+//		String orderInfo = PayUtils.getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+//		String sign = PayUtils.sign(orderInfo);
+//		try {
+//			// 仅需对sign 做URL编码
+//			sign = URLEncoder.encode(sign, "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
+//				+ PayUtils.getSignType();
 
 		Runnable payRunnable = new Runnable() {
 
