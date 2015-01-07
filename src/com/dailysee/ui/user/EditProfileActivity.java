@@ -83,7 +83,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onInit() {
-		setTitle("完善资料");
+		setTitle("编辑个人资料");
 		setUp();
 	}
 
@@ -127,14 +127,14 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 
 	private void onRefreshSex() {
 		if (Constants.Sex.MEN.equals(sex)) {
-			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_on, 0, 0, 0);
+			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_off, 0, 0, 0);
 		} else if (Constants.Sex.WOMEN.equals(sex)) {
-			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_off, 0, 0, 0);
+			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_on, 0, 0, 0);
 		} else {
-			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_off, 0, 0, 0);
+			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex_off, 0, 0, 0);
 		}
 	}
 	

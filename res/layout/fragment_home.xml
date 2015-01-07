@@ -118,9 +118,10 @@
         <ImageView
             android:id="@+id/iv_merchant"
             android:layout_width="match_parent"
-            android:layout_height="105dp"
+            android:layout_height="128dp"
             android:layout_margin="10dp"
             android:background="@color/theme"
+            android:padding="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_merchant" />
 
@@ -141,17 +142,19 @@
                 <ImageView
                     android:id="@+id/iv_sale"
                     android:layout_width="match_parent"
-                    android:layout_height="105dp"
+                    android:layout_height="123dp"
                     android:background="@color/deep_orange"
+                    android:padding="10dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_sale" />
 
                 <ImageView
                     android:id="@+id/iv_gift"
                     android:layout_width="match_parent"
-                    android:layout_height="105dp"
+                    android:layout_height="123dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/deep_orange"
+                    android:padding="10dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_gift" />
             </LinearLayout>
@@ -159,10 +162,11 @@
             <ImageView
                 android:id="@+id/iv_consultant"
                 android:layout_width="0dp"
-                android:layout_height="220dp"
+                android:layout_height="256dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                 android:background="@color/green"
+                android:padding="10dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_consultant" />
         </LinearLayout>
