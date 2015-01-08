@@ -1,5 +1,7 @@
 package com.dailysee.ui.order;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -249,7 +252,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			public void onSuccess(BaseResponse response) {
 				String url = response.getData().optString("url");
 				String params = response.getData().optString("params");
-				String payInfo = url + params;
+//				String payInfo = url + params;
+				String payInfo = params;
 				if (Payment.ALIPAY.equals(payment)) {
 					toAlipayPayment(payInfo);
 				} else if (Payment.UP.endsWith(payment)) {
@@ -486,7 +490,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
 	}
 
-	private void toAlipayPayment(final String payInfo) {
+	private void toAlipayPayment(final String params) {
 //		showToast("支付宝支付成功");
 //		String orderInfo = PayUtils.getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
 //		String sign = PayUtils.sign(orderInfo);
@@ -498,6 +502,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 //		}
 //		final String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
 //				+ PayUtils.getSignType();
+//		
+//		Log.d(TAG, payInfo);
+		
+		final String payInfo = params;
 
 		Runnable payRunnable = new Runnable() {
 
