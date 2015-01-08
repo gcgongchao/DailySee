@@ -119,7 +119,8 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 			});
 		}
 		
-		if (product != null && product.count > 0) {
+//		product.count= AppController.getInstance().findCountInShoppingCart(product.productId);
+		if (product.count > 0) {
 			holder.count.setText(Integer.toString(product.count));
 			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove_pressed);
 			if (product.count > product.validCnt) {

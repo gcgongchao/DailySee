@@ -73,7 +73,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private int mShoppingCount;
 	private double mTotalPrice;
 
-	private int mIndex;
+	private int mIndex = 1;
 	
 	private ChooseProductHandler mHandler;
 
@@ -89,6 +89,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant_product_list);
 		
+		AppController.getInstance().clearShoppingCart();
 		onLoad(true);
 	}
 
