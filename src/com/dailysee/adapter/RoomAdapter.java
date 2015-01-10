@@ -96,7 +96,7 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 		final RoomType roomType = (RoomType) getGroup(groupPosition);
 
 		if (roomType.imgs != null && roomType.imgs.size() > 0) {
-			AppController.getInstance().getImageLoader().get(roomType.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_image, R.drawable.ic_image));
+			AppController.getInstance().getImageLoader().get(roomType.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_noimage, R.drawable.ic_noimage));
 			holder.image.setOnClickListener(new OnClickListener() {
 				
 				@Override

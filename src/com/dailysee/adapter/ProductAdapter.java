@@ -109,7 +109,7 @@ public class ProductAdapter extends BaseExpandableListAdapter {
 		final Product product = (Product) getChild(groupPosition, childPosition);
 
 		if (product.imgs != null && product.imgs.size() > 0) {
-			AppController.getInstance().getImageLoader().get(product.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_image, R.drawable.ic_image));
+			AppController.getInstance().getImageLoader().get(product.imgs.get(0).url, ImageLoader.getImageListener(holder.image, R.drawable.ic_noimage, R.drawable.ic_noimage));
 			holder.image.setOnClickListener(new OnClickListener() {
 				
 				@Override

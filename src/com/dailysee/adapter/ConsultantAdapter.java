@@ -58,7 +58,7 @@ public class ConsultantAdapter extends BaseAdapter {
 		Consultant merchant = items.get(position);
 		
 		if (!TextUtils.isEmpty(merchant.logoUrl)) {
-			AppController.getInstance().getImageLoader().get(merchant.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_image_merchant, R.drawable.ic_image_merchant));
+			AppController.getInstance().getImageLoader().get(merchant.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_noimage, R.drawable.ic_noimage));
 		}
 //		holder.rbHot.setRating(merchant.getHot());
 		holder.tvName.setText(merchant.getName());

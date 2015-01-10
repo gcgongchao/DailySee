@@ -120,7 +120,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 
 			mAvatarUploadUrl = member.logoUrl;
 			if (!TextUtils.isEmpty(mAvatarUploadUrl)) {
-				AppController.getInstance().getImageLoader().get(mAvatarUploadUrl, ImageLoader.getImageListener(ivAvatar, R.drawable.ic_image, R.drawable.ic_image));
+				AppController.getInstance().getImageLoader().get(mAvatarUploadUrl, ImageLoader.getImageListener(ivAvatar, R.drawable.ic_avatar, R.drawable.ic_avatar));
 			}
 		}
 	}
