@@ -164,7 +164,8 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "tty.order.list.get");
-				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+//				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("belongObjId", mSpUtil.getMemberIdStr());
 				params.put("orderStatus", filter);
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
