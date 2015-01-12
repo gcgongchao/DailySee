@@ -80,19 +80,9 @@ public class ProductAdapter extends BaseAdapter {
 		}
 		
 //		product.count= AppController.getInstance().findCountInShoppingCart(product.productId);
-		if (product.count > 0) {
-			holder.count.setText(Integer.toString(product.count));
-			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove_pressed);
-			if (product.count > product.validCnt) {
-				holder.btnAdd.setBackgroundResource(R.drawable.ic_add);
-			} else {
-				holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
-			}
-		} else {
-			holder.btnRemove.setBackgroundResource(R.drawable.ic_remove);
-			holder.btnAdd.setBackgroundResource(R.drawable.ic_add_pressed);
-			holder.count.setText("0");
-		}
+		int count = AppController.getInstance().findCountInShoppingCart(product.productId);
+//		int count = product.count;
+		setBtnEnable(holder, product, count);
 
 		holder.name.setText(product.name);
 		holder.price.setText("原    价:￥" + Utils.formatTwoFractionDigits(product.price));
@@ -114,7 +104,7 @@ public class ProductAdapter extends BaseAdapter {
 				int count = getProductCount(holder.count);
 				if (count > 0) {
 					count --;
-					holder.count.setText(Integer.toString(count));
+					setBtnEnable(holder, product, count);
 				
 					Message msg = new Message();
 					msg.what = REMOVE_PRODUCT;
@@ -131,7 +121,7 @@ public class ProductAdapter extends BaseAdapter {
 				int count = getProductCount(holder.count);
 				count ++;
 //				if (count <= product.validCnt) {
-					holder.count.setText(Integer.toString(count));
+					setBtnEnable(holder, product, count);
 					
 					Message msg = new Message();
 					msg.what = ADD_PRODUCT;
@@ -143,6 +133,27 @@ public class ProductAdapter extends BaseAdapter {
 		});
 		
         return convertView;
+	}
+
+
+	private void setBtnEnable(final ViewHolder holder, final Product product, int count) {
+		holder.count.setText(Integer.toString(count));
+		if (count > 0) {
+			holder.btnRemove.setEnabled(true);
+			holder.btnRemove.setImageResource(R.drawable.ic_remove_pressed);
+//			if (count >= product.validCnt) {
+//				holder.btnAdd.setEnabled(false);
+//				holder.btnAdd.setImageResource(R.drawable.ic_add);
+//			} else {
+				holder.btnAdd.setEnabled(true);
+				holder.btnAdd.setImageResource(R.drawable.ic_add_pressed);
+//			}
+		} else {
+			holder.btnRemove.setEnabled(false);
+			holder.btnRemove.setImageResource(R.drawable.ic_remove);
+			holder.btnAdd.setEnabled(true);
+			holder.btnAdd.setImageResource(R.drawable.ic_add_pressed);
+		}
 	}
 	
 	private int getProductCount(final TextView tvCount) {

@@ -22,7 +22,7 @@ public class WriteDescActivity extends BaseActivity implements OnClickListener {
 
 	private String desc;
 	private String descBackup;
-
+	private String title;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,12 @@ public class WriteDescActivity extends BaseActivity implements OnClickListener {
 	public void onInit() {
 		Intent intent = getIntent();
 		if (intent != null) {
+			title = intent.getStringExtra("title");
 			desc = intent.getStringExtra("desc");
 			descBackup = desc;
 		}
 		
-		setTitle("填写留言");
+		setTitle(title);
 		setUp();
 	}
 

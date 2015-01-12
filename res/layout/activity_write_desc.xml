@@ -44,7 +44,7 @@
         android:layout_marginBottom="@dimen/activity_margin"
         android:layout_marginLeft="@dimen/activity_margin"
         android:layout_marginRight="@dimen/activity_margin"
-        android:background="@drawable/btn_blue_selector"
+        android:background="@drawable/btn_orange_selector"
         android:minWidth="@dimen/edittext_width"
         android:text="确定"
         android:textColor="@color/white"

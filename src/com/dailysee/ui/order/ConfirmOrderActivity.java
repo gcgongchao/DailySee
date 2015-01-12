@@ -75,6 +75,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private TextView tvTotalPrice;
 	private TextView etPhone;
 	private LinearLayout llRemark;
+	private TextView tvRemarkTitle;
 	private TextView tvRemark;
 	private Button mBtnCommit;
 
@@ -142,6 +143,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		tvTotalPrice = (TextView) footer.findViewById(R.id.tv_total_price);
 		etPhone = (TextView) footer.findViewById(R.id.et_phone);
 		llRemark = (LinearLayout) footer.findViewById(R.id.ll_remark);
+		tvRemarkTitle = (TextView) footer.findViewById(R.id.tv_remark_title);
 		tvRemark = (TextView) footer.findViewById(R.id.tv_remark);
 		mBtnCommit = (Button) footer.findViewById(R.id.btn_commit);
 
@@ -174,6 +176,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			
 			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
 //			llRemark.setVisibility(View.GONE);
+			tvRemarkTitle.setText("留言");
 			break;
 		case Constants.From.GIFT:
 		case Constants.From.MERCHANT:
@@ -188,6 +191,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			etPhone.setText(mSpUtil.getLoginId());
 			
 //			showRemarkIfFromGift();
+			if (mFrom == Constants.From.GIFT) {
+				tvRemarkTitle.setText("留言");
+			} else {
+				tvRemarkTitle.setText("叮嘱商家");
+			}
 			break;
 		}
 	}
@@ -401,6 +409,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private void toWriteDesc() {
 		Intent intent = new Intent(this, WriteDescActivity.class);
+		intent.putExtra("title", tvRemarkTitle.getText().toString());
 		intent.putExtra("desc", mDesc);
 		startActivityForResult(intent, REQUEST_WRITE_DESC);
 	}

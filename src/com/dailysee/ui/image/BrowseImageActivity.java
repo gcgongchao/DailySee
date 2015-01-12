@@ -155,6 +155,7 @@ public class BrowseImageActivity extends BaseActivity {
 			svDesc.setVisibility(View.VISIBLE);
 			rlTitleBar.setVisibility(View.VISIBLE);
 		}
+		finish();
 	}
 
 	public void onImageLongClick(View v) {
