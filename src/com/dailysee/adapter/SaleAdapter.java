@@ -60,7 +60,7 @@ public class SaleAdapter extends BaseAdapter {
 
 		if (!TextUtils.isEmpty(preferential.logoUrl)) {
 			AppController.getInstance().getImageLoader()
-					.get(preferential.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_noimage, R.drawable.ic_noimage));
+					.get(preferential.logoUrl, ImageLoader.getImageListener(holder.ivImage, R.drawable.ic_noimage_l, R.drawable.ic_noimage_l));
 		}
 		int remainDays = getDaysBetween(preferential.startDate, preferential.endDate);
 		holder.tvTime.setText(context.getResources().getString(R.string.sale_remain_days, Integer.toString(remainDays)));

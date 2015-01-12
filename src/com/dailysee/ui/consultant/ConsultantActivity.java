@@ -96,7 +96,7 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 		}
 		
-		setTitle("商务顾问");
+		setTitle("商务公关");
 		setUp();
 	}
 	

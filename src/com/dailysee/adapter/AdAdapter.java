@@ -38,7 +38,7 @@ public class AdAdapter extends PagerAdapter {
 		
 		String url = adList.get(position).logoUrl;
 		if (!TextUtils.isEmpty(url)) {
-			AppController.getInstance().getImageLoader().get(adList.get(position).logoUrl, ImageLoader.getImageListener(imageView, R.drawable.ic_noimage, R.drawable.ic_noimage));
+			AppController.getInstance().getImageLoader().get(adList.get(position).logoUrl, ImageLoader.getImageListener(imageView, R.drawable.ic_noimage_l, R.drawable.ic_noimage_l));
 		}
 		return view;
 	}

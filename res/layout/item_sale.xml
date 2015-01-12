@@ -23,7 +23,7 @@
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_noimage" />
+                android:src="@drawable/ic_noimage_l" />
 
             <TextView
                 android:id="@+id/tv_time"
