@@ -50,8 +50,7 @@
         <LinearLayout
             android:id="@+id/ll_room_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
             android:visibility="visible" >
@@ -194,6 +193,11 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_expand_on" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_line"
+            android:background="@color/line" />
 
         <LinearLayout
             android:id="@+id/ll_snack_content"
