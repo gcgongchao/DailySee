@@ -91,7 +91,7 @@ public class ProductAdapter extends BaseAdapter {
 		
 		String title = "天天价:¥" + Utils.formatTwoFractionDigits(product.ttPrice);
 		SpannableStringBuilder style = new SpannableStringBuilder(title);
-		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 5, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
+		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 4, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 		holder.salePrice.setText(style);
 //		String title = "¥" + Utils.formatTwoFractionDigits(product.ttPrice);
 //		holder.salePrice.setText(title);

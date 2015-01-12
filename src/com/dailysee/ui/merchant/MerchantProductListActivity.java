@@ -90,6 +90,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private ProductAdapter mSnackAdapter;
 	
 	protected ProductType mSnackType;
+
+	private View mEmptyView;
 	
 	private LinearLayout mLlBottomBar;
 //	private TextView mTvShoppingCount;
@@ -179,6 +181,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mSnackListView = mPullRefreshSnackListView.getRefreshableView();
 		mSnackEmptyView = (LinearLayout) findViewById(R.id.ll_snack_no_data);
 		
+		mEmptyView = findViewById(R.id.empty_view);
+		
 		mLlBottomBar = (LinearLayout) findViewById(R.id.ll_bottom_bar);
 //		mTvShoppingCount = (TextView) findViewById(R.id.tv_shopping_count);
 		mTvTotalPrice = (TextView) findViewById(R.id.tv_total_price);
@@ -209,6 +213,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 		mSnackAdapter = new ProductAdapter(this, mSnackList, mHandler);
 		mSnackListView.setAdapter(mSnackAdapter);
+		
+		mEmptyView.setVisibility(View.GONE);
 		
 		hideBottomBar();
 	}
@@ -369,6 +375,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mTvSnackTitle.setTextColor(isSnackExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
 		mLlSnackTitle.setBackgroundColor(isSnackExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
 		mIvSnackExpand.setImageResource(isSnackExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+		
+		mEmptyView.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
 	}
 	
 	private void onLoadProductType() {
