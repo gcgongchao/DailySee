@@ -54,7 +54,7 @@ public class ConfirmOrderAdapter extends BaseAdapter {
 		final Product product = (Product) getItem(position);
 		holder.name.setText(product.name);
 		holder.count.setText("X" + product.count);
-		holder.price.setText("￥" + Utils.formatTwoFractionDigits(product.ttPrice));
+		holder.price.setText("¥" + Utils.formatTwoFractionDigits(product.ttPrice));
 
 		return convertView;
 	}

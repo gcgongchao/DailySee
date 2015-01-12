@@ -174,7 +174,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
 			mListView.setAdapter(mAdapter);
 			
-			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 //			llRemark.setVisibility(View.GONE);
 			tvRemarkTitle.setText("留言");
 			break;
@@ -187,7 +187,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
 			mListView.setAdapter(mAdapter);
 			
-			tvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 			etPhone.setText(mSpUtil.getLoginId());
 			
 //			showRemarkIfFromGift();

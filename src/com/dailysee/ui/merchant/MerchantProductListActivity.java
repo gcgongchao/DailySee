@@ -311,7 +311,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 //			hideBottomBar();
 //		}
 //		mTvShoppingCount.setText(Integer.toString(mShoppingCount));
-//		mTvTotalPrice.setText("￥" + mTotalPrice);
+//		mTvTotalPrice.setText("¥" + mTotalPrice);
 //	}
 	
 	@Override
@@ -341,7 +341,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				if (mTotalPrice >= mRoomType.ttAmt) {
 					toConfirmOrder();
 				} else {
-					showToast("您选购的商品没有达到该商家的最低消费: ￥" + Utils.formatTwoFractionDigits(mRoomType.ttAmt));
+					showToast("您选购的商品没有达到该商家的最低消费: ¥" + Utils.formatTwoFractionDigits(mRoomType.ttAmt));
 				}
 			}
 			break;
@@ -537,7 +537,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				
 				Product product = (Product) msg.obj;
 				mTotalPrice = mTotalPrice + product.ttPrice;
-				mTvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+				mTvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 				
 				product.count ++;
 				
@@ -556,7 +556,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				if (mTotalPrice < 0) {
 					mTotalPrice = 0;
 				}
-				mTvTotalPrice.setText("￥" + Utils.formatTwoFractionDigits(mTotalPrice));
+				mTvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 				
 				product.count --;
 				AppController.getInstance().removeFromShoppingCart(product);

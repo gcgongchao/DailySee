@@ -392,5 +392,19 @@ public class MainActivity extends BaseActivity {
 
 		}
 	}
+	
+	private long firstClickTime = 0;
+
+	@Override
+	public void onBackPressed() {
+		long secondTime = System.currentTimeMillis();
+		if (secondTime - firstClickTime > 2000) {
+			showToast("再按一次退出程序...");
+			firstClickTime = secondTime;
+			return;
+		} else {
+			finish();
+		}
+	}
 
 }

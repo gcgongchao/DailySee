@@ -39,7 +39,7 @@
         android:layout_marginLeft="8dp"
         android:gravity="top"
         android:minWidth="40dp"
-        android:text="￥16"
+        android:text="¥16"
         android:textColor="@color/deep_gray"
         android:textSize="@dimen/body"
         android:visibility="visible" />
