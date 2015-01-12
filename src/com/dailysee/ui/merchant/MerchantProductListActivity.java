@@ -427,8 +427,16 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			}
 		}, tag);
 	}
-
+	
 	protected void onLoadProductListByType(final ProductType productType) {
+		onLoadProductListByType(productType, false);
+	}
+
+	protected void onLoadProductListByType(final ProductType productType, final boolean silent) {
+		if (productType == null) {
+			return ;
+		}
+		
 		// Tag used to cancel the request
 		String tag = "tag_request_get_products";
 		NetRequest.getInstance(this).post(new Callback() {
@@ -462,12 +470,19 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				if (!silent) {
+					toShowProgressMsg("正在加载...");
+				}
 			}
 
 			@Override
 			public void onFinished() {
 				toCloseProgressMsg();
+				if (productTopType == Constants.Type.DRINKS) {
+					mPullRefreshDrinkListView.onRefreshComplete();
+				} else {
+					mPullRefreshSnackListView.onRefreshComplete();
+				}
 			}
 
 			@Override
@@ -566,13 +581,25 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 		mIndex = 1;
-		onLoadProductType();
+		ProductType productType = null;
+		if (productTopType == Constants.Type.DRINKS) {
+			productType = mDrinkType;
+		} else {
+			productType = mSnackType;
+		}
+		onLoadProductListByType(productType, true);
 	}
 
 	@Override
 	public void onLastItemVisible() {
 		mIndex ++;
-		onLoadProductType();
+		ProductType productType = null;
+		if (productTopType == Constants.Type.DRINKS) {
+			productType = mDrinkType;
+		} else {
+			productType = mSnackType;
+		}
+		onLoadProductListByType(productType, true);
 	}
 
 	@Override
