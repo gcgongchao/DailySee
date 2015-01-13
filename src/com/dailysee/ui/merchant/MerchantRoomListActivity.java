@@ -289,7 +289,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.RoomController.getRoomTypes");
+				params.put("mtd", "tty.roomtype.list.get");
 				params.put("merchantId", Long.toString(mMerchantId));
 				return params;
 			}
