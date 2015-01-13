@@ -313,7 +313,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						filter = Constants.OrderFilter.WAIT_PAY;
 						break;
 					case R.id.tv_filter_2:
-						filter = Constants.OrderFilter.WAIT_CONFIRM_GOODS;
+						filter = Constants.OrderFilter.WAIT_ACCEPT_CONFIRM + "|" + Constants.OrderFilter.WAIT_CONFIRM_GOODS;
 						break;
 					case R.id.tv_filter_3:
 						filter = Constants.OrderFilter.SUCCEED;

@@ -134,7 +134,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!mSpUtil.isLogin()) {
 				toLogin();
 			} else {
-				toOrder(Constants.OrderFilter.WAIT_CONFIRM_GOODS);
+				toOrder(Constants.OrderFilter.WAIT_ACCEPT_CONFIRM + "|" + Constants.OrderFilter.WAIT_CONFIRM_GOODS);
 			}
 			break;
 		case R.id.ll_uncomment_order:
