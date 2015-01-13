@@ -40,6 +40,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	protected static final String TAG = OrderActivity.class.getSimpleName();
 	private PullToRefreshExpandableListView mPullRefreshListView;
 	private ExpandableListView mExpandableListView;
+	
+	private LinearLayout emptyView;
+	
     private List<Order> mGroupList = new ArrayList<Order>();
     private List<List<OrderItem>> mChildrenList = new ArrayList<List<OrderItem>>();
 	private OrderAdapter mAdapter;
@@ -81,8 +84,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		mPullRefreshListView = (PullToRefreshExpandableListView) findViewById(R.id.pull_refresh_expandable_list);
 		mExpandableListView = mPullRefreshListView.getRefreshableView();
 		
-		LinearLayout emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
-		mExpandableListView.setEmptyView(emptyView);
+		emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 	}
 
 	@Override
@@ -124,9 +126,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				
 				OrderResponse orderResponse = (OrderResponse) response.getResponse(new TypeToken<OrderResponse>(){});
 				if (orderResponse != null && orderResponse.rows != null && orderResponse.rows.size() > 0) {
-					mGroupList.addAll(orderResponse.rows);
-					for (int i = 0; i < mGroupList.size(); i++) {
-						Order order = mGroupList.get(i);
+					List<Order> orderList = orderResponse.rows;
+					for (int i = 0; i < orderList.size(); i++) {
+						Order order = orderList.get(i);
 						List<OrderItem> items = null;
 						if (order != null && order.items != null) {
 							items = order.items;
@@ -134,12 +136,17 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 							items = new ArrayList<OrderItem>();
 						}
 						
-						OrderItem itemFooter = new OrderItem();
-						itemFooter.price = order.amount;
-						items.add(itemFooter);
+						if (order != null) {
+							OrderItem itemFooter = new OrderItem();
+							itemFooter.price = order.amount;
+							items.add(itemFooter);
+						}
 						
 						mChildrenList.add(items);
 					}
+					mGroupList.addAll(orderList);
+				} else {
+					mExpandableListView.setEmptyView(emptyView);
 				}
 				mAdapter.notifyDataSetChanged();
 			}
@@ -302,11 +309,14 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					case R.id.tv_filter_all:
 						filter = Constants.OrderFilter.ALL;
 						break;
-					case R.id.tv_filter_unprocessed:
-						filter = Constants.OrderFilter.UNPROCESSED;
+					case R.id.tv_filter_1:
+						filter = Constants.OrderFilter.WAIT_PAY;
 						break;
-					case R.id.tv_filter_processed:
-						filter = Constants.OrderFilter.PROCESSED;
+					case R.id.tv_filter_2:
+						filter = Constants.OrderFilter.WAIT_CONFIRM_GOODS;
+						break;
+					case R.id.tv_filter_3:
+						filter = Constants.OrderFilter.SUCCEED;
 						break;
 					}
 					mIndex = 1;

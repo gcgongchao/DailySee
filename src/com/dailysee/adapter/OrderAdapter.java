@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.dailysee.R;
 import com.dailysee.bean.Order;
 import com.dailysee.bean.OrderItem;
+import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 
 public class OrderAdapter extends BaseExpandableListAdapter {
@@ -123,6 +124,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder = (ChildrenViewHolder) convertView.getTag();
 		}
 
+		final Order order = (Order) getGroup(groupPosition);
 		final OrderItem orderItem = (OrderItem) getChild(groupPosition, childPosition);
 
 		if (orderItem.itemId > 0) { 
@@ -136,7 +138,25 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder.llOrderItemInfo.setVisibility(View.GONE);
 			holder.llOrderItemFooter.setVisibility(View.VISIBLE);
 			holder.divider.setVisibility(View.VISIBLE);
-			holder.totalPrice.setText(Utils.formatTwoFractionDigits(orderItem.price));
+			holder.totalPrice.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
+			
+			/**
+			 * WAIT_PAY: 等待付款; 
+			 * WAIT_ACCEPT_CONFIRM:已支付,待接单确认
+			 * WAIT_CONFIRM_GOODS:已接单,待确认消费, 
+			 * REFUND_INPROCESS: 退款待处理,
+			 * REFUND:退款(退款成功)
+			 * SUCCEED: 交易成功    
+			 * CLOSE:交易关闭
+			 */
+			holder.btnDeal.setVisibility(View.GONE);
+			if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
+				holder.btnDeal.setText("去付款");
+				holder.btnDeal.setVisibility(View.VISIBLE);
+			} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+				holder.btnDeal.setText("去评价");
+				holder.btnDeal.setVisibility(View.VISIBLE);
+			}
 			holder.btnDeal.setOnClickListener(new OnClickListener() {
 				
 				@Override

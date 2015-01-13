@@ -37,7 +37,7 @@
             android:background="@color/line" />
 
         <TextView
-            android:id="@+id/tv_filter_unprocessed"
+            android:id="@+id/tv_filter_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/item_list_selector"
@@ -48,7 +48,7 @@
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="10dp"
             android:singleLine="true"
-            android:text="未处理订单"
+            android:text="未付款"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
@@ -58,7 +58,7 @@
             android:background="@color/line" />
 
         <TextView
-            android:id="@+id/tv_filter_processed"
+            android:id="@+id/tv_filter_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/item_list_selector"
@@ -69,7 +69,28 @@
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="10dp"
             android:singleLine="true"
-            android:text="已处理订单"
+            android:text="待消费"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_line"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/tv_filter_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_list_selector"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:text="未评论"
             android:textColor="@color/black"
             android:textSize="18dp" />
 

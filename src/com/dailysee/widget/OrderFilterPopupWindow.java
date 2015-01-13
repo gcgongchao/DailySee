@@ -13,8 +13,9 @@ public class OrderFilterPopupWindow extends BasePopupWindow implements OnClickLi
 
 	private TextView tvTemp;
 	private TextView tvFilterAll;
-	private TextView tvFilterUnprocessed;
-	private TextView tvFilterProcessed;
+	private TextView tvFilter1;
+	private TextView tvFilter2;
+	private TextView tvFilter3;
 
 	private OnClickListener mOnClickListener;
 
@@ -35,8 +36,9 @@ public class OrderFilterPopupWindow extends BasePopupWindow implements OnClickLi
 
 	public void initPopFindViews() {
 		tvFilterAll = (TextView) contentView.findViewById(R.id.tv_filter_all);
-		tvFilterUnprocessed = (TextView) contentView.findViewById(R.id.tv_filter_unprocessed);
-		tvFilterProcessed = (TextView) contentView.findViewById(R.id.tv_filter_processed);
+		tvFilter1 = (TextView) contentView.findViewById(R.id.tv_filter_1);
+		tvFilter2 = (TextView) contentView.findViewById(R.id.tv_filter_2);
+		tvFilter3 = (TextView) contentView.findViewById(R.id.tv_filter_3);
 
 		tvTemp = (TextView) contentView.findViewById(R.id.tv_temp);
 	}
@@ -48,8 +50,9 @@ public class OrderFilterPopupWindow extends BasePopupWindow implements OnClickLi
 		tvTemp.setOnClickListener(this);
 		
 		tvFilterAll.setOnClickListener(mOnClickListener);
-		tvFilterUnprocessed.setOnClickListener(mOnClickListener);
-		tvFilterProcessed.setOnClickListener(mOnClickListener);
+		tvFilter1.setOnClickListener(mOnClickListener);
+		tvFilter2.setOnClickListener(mOnClickListener);
+		tvFilter3.setOnClickListener(mOnClickListener);
 	}
 
 	public void show(View v, int x, int y) {

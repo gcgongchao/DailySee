@@ -58,8 +58,13 @@ public class Constants {
 	
 	public interface OrderFilter {
 		String ALL = "";
-		String UNPROCESSED = "WAIT_PAY";
-		String PROCESSED = "SUCCEED";
+		String WAIT_PAY = "WAIT_PAY";//等待付款; 
+		String WAIT_ACCEPT_CONFIRM = "WAIT_ACCEPT_CONFIRM";//已支付,待接单确认
+		String WAIT_CONFIRM_GOODS = "WAIT_CONFIRM_GOODS";//已接单,待确认消费, 
+		String REFUND_INPROCESS = "REFUND_INPROCESS";// 退款待处理,
+		String REFUND = "REFUND";//退款
+		String SUCCEED = "SUCCEED";// 交易成功    
+		String CLOSE = "CLOSE";//交易关闭
 	}
 	
 	public interface Payment {
