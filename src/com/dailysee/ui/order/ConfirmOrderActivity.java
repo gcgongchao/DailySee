@@ -41,7 +41,6 @@ import com.dailysee.util.Constants;
 import com.dailysee.util.Constants.Payment;
 import com.dailysee.util.Result;
 import com.dailysee.util.Utils;
-import com.dailysee.widget.ConfirmDialog;
 import com.dailysee.widget.SelectPaymentDialog;
 import com.google.gson.Gson;
 import com.unionpay.UPPayAssistEx;
