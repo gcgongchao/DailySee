@@ -1,7 +1,5 @@
 package com.dailysee.ui.order;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +39,6 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Constants.Payment;
-import com.dailysee.util.PayUtils;
 import com.dailysee.util.Result;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.ConfirmDialog;
@@ -494,9 +490,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
         dialog.show();
 	}
 
-	private void toUPPayment(String tn) {
-//		String tn = "ttyo" + Long.toString(mOrderId);
-		UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
+	private void toUPPayment(String params) {
+		if (!TextUtils.isEmpty(params) && params.startsWith("tn=")) {
+			String tn = params.substring(params.indexOf("tn="));
+			UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
+		} else {
+			showToast("银联交易流水号不正确");
+		}
 	}
 
 	private void toAlipayPayment(final String params) {
