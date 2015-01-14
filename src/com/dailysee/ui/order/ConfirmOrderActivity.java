@@ -476,24 +476,16 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	            msg = "用户取消了支付";
 	        }
 	
-	        showPayResult(msg);
+	        showToast(msg);
         }
-	}
-
-	private void showPayResult(String msg) {
-		ConfirmDialog dialog = new ConfirmDialog(this, msg, new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-			}
-		});
-        dialog.show();
 	}
 
 	private void toUPPayment(String params) {
 		if (!TextUtils.isEmpty(params) && params.startsWith("tn=")) {
-			String tn = params.substring(params.indexOf("tn="));
-			UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, "01");
+			String tn = params.substring(3);
+			// mode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
+			String mode = "01";
+			UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, mode);
 		} else {
 			showToast("银联交易流水号不正确");
 		}
