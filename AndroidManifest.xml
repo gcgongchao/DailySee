@@ -89,6 +89,7 @@
         
         <activity android:name=".ui.consultant.ConsultantActivity" />
         <activity android:name=".ui.consultant.ConsultantDetailActivity" />
+        <activity android:name=".ui.consultant.ConsultantPriceActivity" />
         
         <!-- 银联支付 -->
         <activity android:name="com.unionpay.uppay.PayActivity"/>

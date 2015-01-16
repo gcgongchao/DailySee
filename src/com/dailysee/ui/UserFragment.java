@@ -22,6 +22,7 @@ import com.dailysee.R;
 import com.dailysee.bean.Member;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.base.LoginActivity;
+import com.dailysee.ui.consultant.ConsultantPriceActivity;
 import com.dailysee.ui.order.OrderActivity;
 import com.dailysee.ui.user.AboutActivity;
 import com.dailysee.ui.user.EditProfileActivity;
@@ -157,7 +158,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void toConsultantPrice() {
-		
+		startActivity(new Intent(mContext, ConsultantPriceActivity.class));
 	}
 
 	private void toOrder(String filter) {

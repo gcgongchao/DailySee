@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include layout="@layout/item_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_gray"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/app_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@color/orange"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="服务时间"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="费用"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="3小时"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="¥399"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="4小时"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="¥499"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="5小时"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="¥599"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="6小时"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="¥699"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:id="@+id/ll_book_order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/item_selector"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="其他以此类推"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/text_input" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" /><TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/activity_margin"
+                android:paddingLeft="@dimen/activity_margin"
+                android:paddingRight="@dimen/activity_margin"
+                android:paddingTop="@dimen/activity_margin"
+                android:text="起始服务时间是3小时399元，每增加1小时加收100元。"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/caption" />
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_gray" />
+
+</LinearLayout>

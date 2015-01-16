@@ -148,15 +148,29 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_gift" />
 
-                <ImageView
-                    android:id="@+id/iv_sale"
+                <FrameLayout 
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/home_item_height"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/deep_orange"
-                    android:padding="10dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_sale" />
+                    android:layout_marginTop="10dp">
+                
+	                <ImageView
+	                    android:id="@+id/iv_sale"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="@dimen/home_item_height"
+	                    android:background="@color/deep_orange"
+	                    android:padding="10dp"
+	                    android:scaleType="centerInside"
+	                    android:src="@drawable/ic_sale" />
+	                
+	                <ImageView
+	                    android:id="@+id/iv_sale_coding"
+	                    android:layout_width="64dp"
+	                    android:layout_height="64dp"
+	                    android:scaleType="centerInside"
+	                    android:layout_gravity="bottom|right"
+	                    android:src="@drawable/ic_coding" />
+	                
+                </FrameLayout>
             </LinearLayout>
 
             <ImageView
