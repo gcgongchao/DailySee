@@ -45,7 +45,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private LinearLayout llAllOrder;
 	private LinearLayout llBookOrder;
 	private LinearLayout llUncommentOrder;
-	
+
+	private LinearLayout llConsultantPrice;
 	private LinearLayout llAbout;
 	
 	private UserReceiver mUserReceiver;
@@ -84,6 +85,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llBookOrder = (LinearLayout) v.findViewById(R.id.ll_book_order);
 		llUncommentOrder = (LinearLayout) v.findViewById(R.id.ll_uncomment_order);
 		
+		llConsultantPrice = (LinearLayout) v.findViewById(R.id.ll_consultant_price);
 		llAbout = (LinearLayout) v.findViewById(R.id.ll_about);
 	}
 
@@ -107,6 +109,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llBookOrder.setOnClickListener(this);
 		llUncommentOrder.setOnClickListener(this);
 		
+		llConsultantPrice.setOnClickListener(this);
 		llAbout.setOnClickListener(this);
 	}
 
@@ -144,10 +147,17 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				toOrder(Constants.OrderFilter.SUCCEED);
 			}
 			break;
+		case R.id.ll_consultant_price:
+			toConsultantPrice();
+			break;
 		case R.id.ll_about:
 			startActivity(new Intent(mContext, AboutActivity.class));
 			break;
 		}
+	}
+
+	private void toConsultantPrice() {
+		
 	}
 
 	private void toOrder(String filter) {
