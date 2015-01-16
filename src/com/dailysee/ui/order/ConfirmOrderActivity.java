@@ -170,7 +170,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mListView.setAdapter(mAdapter);
 			
 			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
-//			llRemark.setVisibility(View.GONE);
+			llRemark.setVisibility(View.GONE);
 			tvRemarkTitle.setText("留言");
 			break;
 		case Constants.From.GIFT:
