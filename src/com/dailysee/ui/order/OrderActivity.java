@@ -13,7 +13,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ExpandableListView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -28,6 +30,8 @@ import com.dailysee.net.response.OrderResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
+import com.dailysee.util.Utils;
+import com.dailysee.widget.ListViewDialog;
 import com.dailysee.widget.OrderFilterPopupWindow;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -53,6 +57,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	private Handler mHandler;
 	private ImageView btnFilter;
 	private OrderFilterPopupWindow mOrderFilterPopupWindow;
+	private ListViewDialog mCommentDialog;
 
 	public OrderActivity() {
 
@@ -227,6 +232,23 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				}
 				break;
 			case OrderAdapter.DEAL_ORDER:
+				Order order = (Order) msg.obj;
+				if (order != null && order.orderId > 0) {
+					/**
+					 * WAIT_PAY: 等待付款; 
+					 * WAIT_ACCEPT_CONFIRM:已支付,待接单确认
+					 * WAIT_CONFIRM_GOODS:已接单,待确认消费, 
+					 * REFUND_INPROCESS: 退款待处理,
+					 * REFUND:退款(退款成功)
+					 * SUCCEED: 交易成功    
+					 * CLOSE:交易关闭
+					 */
+					if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
+						toPayOrder(order);
+					} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+						showCommentDialog(order.orderId);
+					}
+				}
 				break;
 			default:
 				break;
@@ -245,6 +267,35 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			}
 		}
 		return false;
+	}
+
+	public void showCommentDialog(long orderId) {
+		final List<Object> items = new ArrayList<Object>();
+		items.add("非常满意");
+		items.add("满意");
+		items.add("不满意");
+		items.add("非常不满意");
+		
+		mCommentDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+				Utils.clossDialog(mCommentDialog);
+				
+				showToast(items.get(position).toString());
+				toCommitOrderComment(position);
+			}
+			
+		});
+		mCommentDialog.show();
+	}
+
+	protected void toCommitOrderComment(int position) {
+		
+	}
+
+	public void toPayOrder(Order order) {
+		
 	}
 
 	private void requestOrderItems(final Order order, final int groupPosition) {

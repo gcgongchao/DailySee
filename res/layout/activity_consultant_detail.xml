@@ -299,7 +299,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/btn_orange_selector"
         android:minWidth="@dimen/edittext_width"
-        android:text="需求顾问"
+        android:text="立刻预约公关服务"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

@@ -1,6 +1,8 @@
 package com.dailysee.ui.consultant;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -8,6 +10,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ import com.dailysee.ui.order.ConfirmOrderActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.ListViewDialog;
 
 public class ConsultantDetailActivity extends BaseActivity implements OnClickListener {
 
@@ -52,6 +57,8 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 
 	private int mFrom;
 	private Consultant consultant;
+	
+	private ListViewDialog mSelectServiceHoursDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -187,10 +194,38 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 			break;
 		case R.id.btn_commit:
 			if (consultant != null) {
-				showSelectBookingDateDialog();
+//				showSelectBookingDateDialog();
+				showSelectServiceHoursDialog();
 			}
 			break;
 		}
+	}
+
+	private void showSelectServiceHoursDialog() {
+		List<Object> items = new ArrayList<Object>();
+		items.add("3小时        ¥399");
+		items.add("4小时        ¥499");
+		items.add("5小时        ¥599");
+		items.add("6小时        ¥699");
+		items.add("7小时        ¥799");
+		items.add("8小时        ¥899");
+		items.add("9小时        ¥999");
+		items.add("10小时     ¥1099");
+		items.add("11小时     ¥1199");
+		items.add("12小时     ¥1299");
+		
+		mSelectServiceHoursDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+				Utils.clossDialog(mSelectServiceHoursDialog);
+				
+				int hours = position + 3;
+				toConfirmOrder(hours);
+			}
+			
+		});
+		mSelectServiceHoursDialog.show();
 	}
 
 	private void showSelectBookingDateDialog() {
@@ -226,6 +261,16 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 	
+	private void toConfirmOrder(int hours) {
+		Intent intent = new Intent();
+		intent.setClass(this, ConfirmOrderActivity.class);
+		intent.putExtra("consultant", consultant);
+		intent.putExtra("from", mFrom);
+		intent.putExtra("date", Integer.toString(hours));
+		intent.putExtra("totalPrice", hours * 399);
+		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

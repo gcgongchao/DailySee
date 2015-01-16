@@ -163,7 +163,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 				public void onClick(View arg0) {
 					Message msg = new Message();
 					msg.what = DEAL_ORDER;
-					msg.obj = orderItem;
+					msg.obj = order;
 					mHandler.sendMessage(msg);
 				}
 				

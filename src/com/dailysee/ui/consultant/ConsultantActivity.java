@@ -54,6 +54,12 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 
 	private LinearLayout llNearby;
 	private TextView tvNearby;
+	
+	private LinearLayout llSexBoy;
+	private TextView tvSexBoy;
+	
+	private LinearLayout llSexGirl;
+	private TextView tvSexGirl;
 
 	private LinearLayout llMore;
 	private TextView tvMore;
@@ -112,6 +118,12 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 		llNearby = (LinearLayout) findViewById(R.id.ll_nearby);
 		tvNearby = (TextView) findViewById(R.id.tv_nearby);
 
+		llSexBoy = (LinearLayout) findViewById(R.id.ll_sex_boy);
+		tvSexBoy = (TextView) findViewById(R.id.tv_sex_boy);
+
+		llSexGirl = (LinearLayout) findViewById(R.id.ll_sex_girl);
+		tvSexGirl = (TextView) findViewById(R.id.tv_sex_girl);
+
 		llMore = (LinearLayout) findViewById(R.id.ll_more);
 		tvMore = (TextView) findViewById(R.id.tv_more);
 		
@@ -146,6 +158,8 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 		llFilter.setOnClickListener(this);
 		llRecommented.setOnClickListener(this);
 		llNearby.setOnClickListener(this);
+		llSexBoy.setOnClickListener(this);
+		llSexGirl.setOnClickListener(this);
 		llMore.setOnClickListener(this);
 		
 		etSearch.addTextChangedListener(new TextWatcher() {
@@ -184,6 +198,7 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
 			if (filter != Constants.Filter.RECOMMEND) {
 				filter = Constants.Filter.RECOMMEND;
+				mIndex = 1;
 				startRefresh();
 			}
 			break;
@@ -192,6 +207,25 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 			tvNearby.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 			if (filter != Constants.Filter.NEARBY) {
 				filter = Constants.Filter.NEARBY;
+				mIndex = 1;
+				startRefresh();
+			}
+			break;
+		case R.id.ll_sex_boy:
+			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			if (!Constants.Sex.WOMEN.equals(sexFilter)) {
+				sexFilter = Constants.Sex.WOMEN;
+				mIndex = 1;
+				startRefresh();
+			}
+			break;
+		case R.id.ll_sex_girl:
+			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
+			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
+			if (!Constants.Sex.MEN.equals(sexFilter)) {
+				sexFilter = Constants.Sex.MEN;
+				mIndex = 1;
 				startRefresh();
 			}
 			break;
