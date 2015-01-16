@@ -157,13 +157,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			llOrderInfo.setBackgroundColor(getResources().getColor(R.color.white));
 			
 			String name = mConsultant.getName();
-			String orderInfo = "商务顾问" + name + "服务一次";
+			String orderInfo = "商务公共" + name + "服务一次";
 			SpannableStringBuilder builder = new SpannableStringBuilder(orderInfo);
 			builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + name.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 			
 			tvRoom.setText(builder);
 			tvRoom.setTextColor(getResources().getColor(R.color.deep_gray));
-			tvTime.setText("时间: " + mDate);
+			tvTime.setText("服务时长: " + mDate + "小时");
 			tvTime.setTextColor(getResources().getColor(R.color.gray));
 			
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
