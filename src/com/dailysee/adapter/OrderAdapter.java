@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -97,7 +98,13 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 
     	holder.llOrderInfo.setBackgroundColor(isExpanded ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.app_gray));
     	
-    	holder.tvName.setText(order.sellerName);
+    	if ("CONSUME".equals(order.businessType)) {
+    		holder.tvName.setText("(商家)" + order.sellerName);
+    	} else if ("SERVICE".equals(order.businessType)) {
+    		holder.tvName.setText("(公关)" + order.sellerName);
+    	} else {
+    		holder.tvName.setText(order.sellerName);
+    	}
     	holder.tvName.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.black));
     	
     	holder.tvOrderStatus.setText(order.orderSelStatusName);
@@ -131,9 +138,23 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder.llOrderItemInfo.setVisibility(View.VISIBLE);
 			holder.llOrderItemFooter.setVisibility(View.GONE);
 			holder.divider.setVisibility(View.GONE);
-			holder.count.setText("X" + orderItem.quantity);
-			holder.name.setText(orderItem.name);
-			holder.price.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
+			if ("ROOM".equals(orderItem.proType)) {
+				if (!TextUtils.isEmpty(order.roomNo)) {
+					holder.name.setText(orderItem.name + "(" + order.roomNo + ")");
+				} else {
+					holder.name.setText(orderItem.name);
+				}
+				holder.count.setText("");
+				holder.price.setText("");
+			} else if ("Consultant".equals(orderItem.proType)) {
+				holder.name.setText(orderItem.name);
+				holder.count.setText(orderItem.quantity + "小时");
+				holder.price.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
+			} else {
+				holder.count.setText("X" + orderItem.quantity);
+				holder.name.setText(orderItem.name);
+				holder.price.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
+			}
 		} else {
 			holder.llOrderItemInfo.setVisibility(View.GONE);
 			holder.llOrderItemFooter.setVisibility(View.VISIBLE);

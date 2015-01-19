@@ -34,11 +34,13 @@
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:gravity="top"
-        android:minWidth="40dp"
+        android:minWidth="64dp"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:text="¥16"
         android:textColor="@color/deep_gray"
         android:textSize="@dimen/body"

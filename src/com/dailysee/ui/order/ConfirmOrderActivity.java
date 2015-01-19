@@ -342,12 +342,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public Map<String, String> getParams() {
+				String name = mSpUtil.getName();
+				
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("memberId", mSpUtil.getMemberIdStr());
-				params.put("buyerName", mSpUtil.getName());
-				params.put("bookDate", mDate);
+				params.put("buyerName", name);
 				params.put("mobile", getPhone());
-				params.put("remark", getRemark());
 
 				switch (mFrom) {
 				case Constants.From.GIFT:
@@ -355,6 +355,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
 					params.put("merchantId", Long.toString(mMerchant.merchantId));
 					params.put("sellerName", mMerchant.name);
+					params.put("bookDate", mDate);
+					params.put("remark", getRemark());
 					if (mFrom == Constants.From.GIFT && mRoom != null) {
 						params.put("roomId", Long.toString(mRoom.roomId));
 					} 
@@ -373,7 +375,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveServiceOrder");
 					params.put("sellerName", mConsultant.getName());
 					params.put("merchantId", Long.toString(mConsultant.counselorId));
-					params.put("amount", Double.toString(mConsultant.worth));
+					params.put("amount", Double.toString(mTotalPrice));
+					params.put("buyHours", mDate);
 					break;
 				}
 				return params;
@@ -464,6 +467,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				mDesc = data.getStringExtra("desc");
 				tvRemark.setText(mDesc);
 			} else if (requestCode == REQUEST_LOGIN) {
+				etPhone.setText(mSpUtil.getLoginId());
 				toCommitOrder();
 			}
 		}

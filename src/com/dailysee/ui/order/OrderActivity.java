@@ -142,6 +142,17 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						}
 						
 						if (order != null) {
+							if ("CONSUME".equals(order.businessType)) {
+					    	} else if ("SERVICE".equals(order.businessType)) {
+					    		OrderItem consultant = new OrderItem();
+					    		consultant.itemId = Long.MAX_VALUE;
+					    		consultant.proType = "Consultant";
+					    		consultant.name = "公关服务";//+ order.buyHours + "小时";
+					    		consultant.quantity = order.buyHours;
+					    		consultant.price = order.amount;
+								items.add(consultant);
+					    	}
+							
 							OrderItem itemFooter = new OrderItem();
 							itemFooter.price = order.amount;
 							items.add(itemFooter);
