@@ -429,6 +429,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				params.put("mtd", "com.guocui.tty.api.web.ProductController.getProductTypes");
 //				params.put("merchantId", mSpUtil.getBelongObjIdStr());
 				params.put("merchantId", Long.toString(mMerchant.merchantId));
+				params.put("useStatus", "ENABLE");
 				params.put("parentId", Integer.toString(productTopType));
 				return params;
 			}
@@ -503,6 +504,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 //				params.put("merchantId", mSpUtil.getBelongObjIdStr());
 				params.put("merchantId", Long.toString(mMerchant.merchantId));
 				params.put("productType", Integer.toString(productType.productTypeId));
+				params.put("status", "UP");
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
 				return params;
