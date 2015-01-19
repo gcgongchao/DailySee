@@ -363,6 +363,11 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			@Override
 			public void onSuccess(BaseResponse response) {
 				showToast("结束服务成功");
+
+				mIndex = 1;
+				mRefreshDataRequired = true;
+				onRefreshData();
+				
 				showCommentDialog(orderId);
 			}
 
@@ -383,7 +388,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.OrderController.completeOrder");
+				params.put("mtd", "com.guocui.tty.api.web.OrderController.completeAOrder");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				params.put("orderId", Long.toString(orderId));
 				return params;
@@ -455,7 +460,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 				Utils.clossDialog(mCommentDialog);
 				
-				showToast(items.get(position).toString());
+//				showToast(items.get(position).toString());
 				toCommitOrderComment(orderId, position);
 			}
 			
