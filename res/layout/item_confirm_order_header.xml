@@ -22,9 +22,9 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="top|left"
-            android:text="您将成功预订: "
+            android:text="您将成功预定: "
             android:textColor="@color/deep_gray"
-            android:textSize="@dimen/title" />
+            android:textSize="@dimen/body" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +47,7 @@
             android:singleLine="true"
             android:text="豪华包间"
             android:textColor="@color/white"
-            android:textSize="@dimen/subhead" />
+            android:textSize="@dimen/subtitle" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -59,7 +59,7 @@
             android:singleLine="true"
             android:text="时间: 2014-12-13"
             android:textColor="@color/white"
-            android:textSize="@dimen/body" />
+            android:textSize="@dimen/subhead" />
     </LinearLayout>
 
 </LinearLayout>

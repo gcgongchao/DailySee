@@ -22,6 +22,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Consultant;
+import com.dailysee.bean.ServiceHour;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.order.ConfirmOrderActivity;
 import com.dailysee.util.Constants;
@@ -203,16 +204,16 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 
 	private void showSelectServiceHoursDialog() {
 		List<Object> items = new ArrayList<Object>();
-		items.add("3小时        ¥399");
-		items.add("4小时        ¥499");
-		items.add("5小时        ¥599");
-		items.add("6小时        ¥699");
-		items.add("7小时        ¥799");
-		items.add("8小时        ¥899");
-		items.add("9小时        ¥999");
-		items.add("10小时     ¥1099");
-		items.add("11小时     ¥1199");
-		items.add("12小时     ¥1299");
+		items.add(new ServiceHour(3, 399));
+		items.add(new ServiceHour(4, 499));
+		items.add(new ServiceHour(5, 599));
+		items.add(new ServiceHour(6, 699));
+		items.add(new ServiceHour(7, 799));
+		items.add(new ServiceHour(8, 899));
+		items.add(new ServiceHour(9, 999));
+		items.add(new ServiceHour(10, 1099));
+		items.add(new ServiceHour(11, 1199));
+		items.add(new ServiceHour(12, 1299));
 		
 		mSelectServiceHoursDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
 

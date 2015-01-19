@@ -55,6 +55,7 @@
         android:background="@color/orange" />
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_margin"
         android:background="@color/app_gray" />
@@ -101,6 +102,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/divider_remark_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_line"
         android:background="@color/line" />
@@ -154,6 +156,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/divider_remark_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_line"
         android:background="@color/line" />

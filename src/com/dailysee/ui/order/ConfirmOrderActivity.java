@@ -67,11 +67,16 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private TextView tvRoom;
 	private TextView tvTime;
 
+	private View divider;
 	private TextView tvTotalPrice;
 	private TextView etPhone;
+
+	private View dividerRemarkTop;
 	private LinearLayout llRemark;
 	private TextView tvRemarkTitle;
 	private TextView tvRemark;
+	private View dividerRemarkBottom;
+	
 	private Button mBtnCommit;
 
 	private RoomType mRoomType;
@@ -135,11 +140,14 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		tvTime = (TextView) header.findViewById(R.id.tv_time);
 		
 		View footer = mInflater.inflate(R.layout.item_confirm_order_footer, null);
+		divider = footer.findViewById(R.id.divider);
 		tvTotalPrice = (TextView) footer.findViewById(R.id.tv_total_price);
 		etPhone = (TextView) footer.findViewById(R.id.et_phone);
+		dividerRemarkTop = footer.findViewById(R.id.divider_remark_top);
 		llRemark = (LinearLayout) footer.findViewById(R.id.ll_remark);
 		tvRemarkTitle = (TextView) footer.findViewById(R.id.tv_remark_title);
 		tvRemark = (TextView) footer.findViewById(R.id.tv_remark);
+		dividerRemarkBottom = footer.findViewById(R.id.divider_remark_bottom);
 		mBtnCommit = (Button) footer.findViewById(R.id.btn_commit);
 
 		mListView = (ListView) findViewById(R.id.list_view);
@@ -157,7 +165,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			llOrderInfo.setBackgroundColor(getResources().getColor(R.color.white));
 			
 			String name = mConsultant.getName();
-			String orderInfo = "商务公共" + name + "服务一次";
+			String orderInfo = "商务公关" + name + "服务一次";
 			SpannableStringBuilder builder = new SpannableStringBuilder(orderInfo);
 			builder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + name.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 			
@@ -170,7 +178,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mListView.setAdapter(mAdapter);
 			
 			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
-			llRemark.setVisibility(View.GONE);
+			hideRemark();
 			tvRemarkTitle.setText("留言");
 			break;
 		case Constants.From.GIFT:
@@ -185,7 +193,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 			etPhone.setText(mSpUtil.getLoginId());
 			
-//			showRemarkIfFromGift();
+			showRemark();
 			if (mFrom == Constants.From.GIFT) {
 				tvRemarkTitle.setText("留言");
 			} else {
@@ -209,12 +217,18 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		return items;
 	}
 
-	private void showRemarkIfFromGift() {
-		if (mFrom == Constants.From.GIFT) {
-			llRemark.setVisibility(View.VISIBLE);
-		} else {
-			llRemark.setVisibility(View.GONE);
-		}
+	private void showRemark() {
+		llRemark.setVisibility(View.VISIBLE);
+		divider.setVisibility(View.VISIBLE);
+		dividerRemarkTop.setVisibility(View.VISIBLE);
+		dividerRemarkBottom.setVisibility(View.VISIBLE);
+	}
+
+	private void hideRemark() {
+		llRemark.setVisibility(View.GONE);
+		divider.setVisibility(View.GONE);
+		dividerRemarkTop.setVisibility(View.GONE);
+		dividerRemarkBottom.setVisibility(View.GONE);
 	}
 	
 	@Override

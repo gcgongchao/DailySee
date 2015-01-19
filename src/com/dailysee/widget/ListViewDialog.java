@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.bean.Room;
+import com.dailysee.bean.ServiceHour;
 
 public class ListViewDialog extends Dialog implements android.view.View.OnClickListener {
 	
@@ -126,24 +127,30 @@ public class ListViewDialog extends Dialog implements android.view.View.OnClickL
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = mInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+				convertView = mInflater.inflate(R.layout.item_dialog_list_view, parent, false);
 				holder = new ViewHolder(convertView);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			
 			String text = null;
+			String content = null;
 			
 			Object obj = (Object) getItem(position);
 			if (obj != null) {
 				if (obj instanceof Room) {
 					Room room = (Room) obj;
 					text = room.name;
+				} else if (obj instanceof ServiceHour) {
+					ServiceHour hour = (ServiceHour) obj;
+					text = hour.hour + "小时";
+					content = "¥" + hour.price;
 				} else if (obj instanceof String) {
 					text = (String) obj;
 				}
 			}
 			holder.text.setText(text);
+			holder.content.setText(content);
 			
 			return convertView;
 		}
@@ -153,9 +160,11 @@ public class ListViewDialog extends Dialog implements android.view.View.OnClickL
 	private class ViewHolder {
 
 		public TextView text;
+		public TextView content;
 
 		public ViewHolder(View convertView) {
-			text = (TextView) convertView.findViewById(android.R.id.text1);
+			text = (TextView) convertView.findViewById(R.id.tv_name);
+			content = (TextView) convertView.findViewById(R.id.tv_content);
 			convertView.setTag(this);
 		}
 		

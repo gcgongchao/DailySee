@@ -11,7 +11,7 @@
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/white"
+        android:background="@color/app_gray"
         android:cacheColorHint="#00000000"
         android:divider="@color/gray"
         android:dividerHeight="1px"

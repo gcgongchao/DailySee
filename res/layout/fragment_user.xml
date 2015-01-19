@@ -219,7 +219,7 @@
                     android:paddingRight="@dimen/space"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="预订订单"
+                    android:text="预定订单"
                     android:textColor="@color/black"
                     android:textColorHint="@color/login_hint"
                     android:textSize="@dimen/text_input" />
@@ -335,7 +335,6 @@
                     android:textSize="@dimen/text_input" />
 
                 <TextView
-                    android:id="@+id/tv_about"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
