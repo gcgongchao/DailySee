@@ -167,7 +167,7 @@
 	                    android:layout_width="64dp"
 	                    android:layout_height="64dp"
 	                    android:scaleType="centerInside"
-	                    android:layout_gravity="bottom|right"
+	                    android:layout_gravity="bottom|left"
 	                    android:src="@drawable/ic_coding" />
 	                
                 </FrameLayout>

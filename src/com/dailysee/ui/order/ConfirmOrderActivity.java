@@ -413,6 +413,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private void toLogin() {
 		Intent intent = new Intent();
 		intent.setClass(this, LoginActivity.class);
+		intent.putExtra("from", "confirmOrder");
 		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 

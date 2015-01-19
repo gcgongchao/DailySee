@@ -264,7 +264,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 
 			private void dispatchResult() {
-				if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
+				if ("confirmOrder".equals(from)) {
+					setResult(RESULT_OK);
+				} if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), EditProfileActivity.class);
 					startActivity(intent);

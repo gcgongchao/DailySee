@@ -97,7 +97,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 
     	holder.llOrderInfo.setBackgroundColor(isExpanded ? context.getResources().getColor(R.color.orange) : context.getResources().getColor(R.color.app_gray));
     	
-    	holder.tvName.setText(order.buyerName);
+    	holder.tvName.setText(order.sellerName);
     	holder.tvName.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.black));
     	
     	holder.tvOrderStatus.setText(order.orderSelStatusName);
