@@ -269,7 +269,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		return false;
 	}
 
-	public void showCommentDialog(long orderId) {
+	public void showCommentDialog(final long orderId) {
 		final List<Object> items = new ArrayList<Object>();
 		items.add("非常满意");
 		items.add("满意");
@@ -283,15 +283,47 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				Utils.clossDialog(mCommentDialog);
 				
 				showToast(items.get(position).toString());
-				toCommitOrderComment(position);
+				toCommitOrderComment(orderId, position);
 			}
 			
 		});
 		mCommentDialog.show();
 	}
 
-	protected void toCommitOrderComment(int position) {
-		
+	protected void toCommitOrderComment(final long orderId, final int position) {
+		// Tag used to cancel the request
+		String tag = "tag_request_comment_order";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				showToast("评论成功");
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.OrderController.addCriticism");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("orderId", Long.toString(orderId));
+				params.put("rate", Integer.toString(position));
+				return params;
+			}
+		}, tag);
 	}
 
 	public void toPayOrder(Order order) {
