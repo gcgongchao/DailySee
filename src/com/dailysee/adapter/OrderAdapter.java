@@ -171,10 +171,22 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			 * CLOSE:交易关闭
 			 */
 			holder.btnDeal.setVisibility(View.GONE);
+			holder.btnDeal2.setVisibility(View.GONE);
 			if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
 				holder.btnDeal.setText("去付款");
 				holder.btnDeal.setVisibility(View.VISIBLE);
-			} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
+				// 只有顾问订单才可以开始服务
+				holder.btnDeal.setText("开始服务");
+				holder.btnDeal.setVisibility(View.VISIBLE);
+			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
+				// 只有顾问订单才可以结束服务，续费服务
+				holder.btnDeal.setText("结束服务");
+				holder.btnDeal.setVisibility(View.VISIBLE);
+				holder.btnDeal2.setText("续费");
+				holder.btnDeal2.setVisibility(View.VISIBLE);
+			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+				// 只有顾问订单才可以评论订单
 				holder.btnDeal.setText("去评价");
 				holder.btnDeal.setVisibility(View.VISIBLE);
 			}
@@ -185,6 +197,18 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 					Message msg = new Message();
 					msg.what = DEAL_ORDER;
 					msg.obj = order;
+					mHandler.sendMessage(msg);
+				}
+				
+			});
+			holder.btnDeal2.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					Message msg = new Message();
+					msg.what = DEAL_ORDER;
+					msg.obj = order;
+					msg.arg1 = 1;
 					mHandler.sendMessage(msg);
 				}
 				
@@ -231,6 +255,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 		public LinearLayout llOrderItemFooter;
 		public TextView totalPrice;
 		public Button btnDeal;
+		public Button btnDeal2;
 		
 		public View divider;
 
@@ -243,6 +268,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			llOrderItemFooter = (LinearLayout) convertView.findViewById(R.id.ll_order_item_footer);
 			totalPrice = (TextView) convertView.findViewById(R.id.tv_total_price);
 			btnDeal = (Button) convertView.findViewById(R.id.btn_deal);
+			btnDeal2 = (Button) convertView.findViewById(R.id.btn_deal2);
 			
 			divider = convertView.findViewById(R.id.divider);
 

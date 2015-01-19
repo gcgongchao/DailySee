@@ -119,6 +119,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mDate = intent.getStringExtra("date");
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 			mConsultant = (Consultant) intent.getSerializableExtra("consultant");
+			mOrderId = intent.getLongExtra("orderId", 0);
 		}
 		
 		if (((mFrom == Constants.From.GIFT || mFrom == Constants.From.MERCHANT) && (mRoomType == null || mMerchant == null))

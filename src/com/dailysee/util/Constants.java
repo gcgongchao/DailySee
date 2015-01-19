@@ -61,6 +61,7 @@ public class Constants {
 		String WAIT_PAY = "WAIT_PAY";//等待付款; 
 		String WAIT_ACCEPT_CONFIRM = "WAIT_ACCEPT_CONFIRM";//已支付,待接单确认
 		String WAIT_CONFIRM_GOODS = "WAIT_CONFIRM_GOODS";//已接单,待确认消费, 
+		String WAIT_COMPLETE = "WAIT_COMPLETE";// 服务进行中
 		String REFUND_INPROCESS = "REFUND_INPROCESS";// 退款待处理,
 		String REFUND = "REFUND";//退款
 		String SUCCEED = "SUCCEED";// 交易成功    

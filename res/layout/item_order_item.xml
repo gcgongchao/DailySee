@@ -83,7 +83,7 @@
             android:textColor="@color/orange"
             android:textSize="@dimen/body"
             android:visibility="visible" />
-
+        
         <Button
             android:id="@+id/btn_deal"
             android:layout_width="wrap_content"
@@ -93,6 +93,18 @@
             android:text="处理订单"
             android:textColor="@color/white"
             android:textSize="@dimen/body" />
+
+        <Button
+            android:id="@+id/btn_deal2"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/btn_orange_selector"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:text="处理订单"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body" 
+            android:visibility="gone"/>
     </LinearLayout>
 
     <View

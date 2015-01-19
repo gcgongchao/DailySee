@@ -12,17 +12,21 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ExpandableListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dailysee.R;
 import com.dailysee.adapter.OrderAdapter;
+import com.dailysee.bean.Consultant;
+import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Order;
 import com.dailysee.bean.OrderItem;
+import com.dailysee.bean.RoomType;
+import com.dailysee.bean.ServiceHour;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
@@ -31,6 +35,7 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.ConfirmDialog;
 import com.dailysee.widget.ListViewDialog;
 import com.dailysee.widget.OrderFilterPopupWindow;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +47,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 public class OrderActivity extends BaseActivity implements OnRefreshListener<ExpandableListView>, OnLastItemVisibleListener, OnGroupClickListener, OnClickListener {
 
 	protected static final String TAG = OrderActivity.class.getSimpleName();
+
+	private static final int REQUEST_CONFIRM_ORDER = 1000;
+	
 	private PullToRefreshExpandableListView mPullRefreshListView;
 	private ExpandableListView mExpandableListView;
 	
@@ -58,6 +66,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	private ImageView btnFilter;
 	private OrderFilterPopupWindow mOrderFilterPopupWindow;
 	private ListViewDialog mCommentDialog;
+	private ListViewDialog mContinueServiceDialog;
 
 	public OrderActivity() {
 
@@ -256,7 +265,18 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					 */
 					if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
 						toPayOrder(order);
-					} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
+						// 只有顾问订单才可以开始服务
+						showStartServiceDialog(order);
+					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
+						// 只有顾问订单才可以结束服务，续费服务
+						if (msg.arg1 == 1) {
+							showContinueServiceDialog(order);
+						} else {
+							showEndServiceDialog(order);
+						}
+					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+						// 只有顾问订单才可以评论订单
 						showCommentDialog(order.orderId);
 					}
 				}
@@ -266,6 +286,93 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			}
 			
 		}
+	}
+	
+	private void showContinueServiceDialog(final Order order) {
+		List<Object> items = new ArrayList<Object>();
+		items.add(new ServiceHour(1, 100));
+		items.add(new ServiceHour(2, 200));
+		items.add(new ServiceHour(3, 300));
+		items.add(new ServiceHour(4, 400));
+		items.add(new ServiceHour(5, 500));
+		items.add(new ServiceHour(6, 600));
+		items.add(new ServiceHour(7, 700));
+		items.add(new ServiceHour(8, 800));
+		items.add(new ServiceHour(9, 900));
+		items.add(new ServiceHour(10, 1000));
+		items.add(new ServiceHour(11, 1100));
+		items.add(new ServiceHour(12, 1200));
+		
+		mContinueServiceDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+				Utils.clossDialog(mContinueServiceDialog);
+				
+				int hours = position + 1;
+//				requestExtraServiceHours(order.orderId, hours);
+				
+				Consultant consultant = new Consultant();
+				consultant.counselorId = order.merchantId;
+				consultant.name = order.sellerName;
+				
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), ConfirmOrderActivity.class);
+				intent.putExtra("consultant", consultant);
+				intent.putExtra("from", Constants.From.CONSULTANT);
+				intent.putExtra("date", Integer.toString(hours));
+				intent.putExtra("totalPrice", (double)(hours * 100));
+				startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+			}
+			
+		});
+		mContinueServiceDialog.show();
+	}
+
+	protected void requestExtraServiceHours(final long orderId, final int hours) {
+		// Tag used to cancel the request
+		String tag = "tag_request_start_service";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+//				showToast("续费服务"+hours+"小时成功");
+//				toConfirmOrder();
+//				Intent intent = new Intent();
+//				intent.setClass(getActivity(), ConfirmOrderActivity.class);
+//				intent.putExtra("consultant", consultant);
+//				intent.putExtra("from", Constants.From.CONSULTANT);
+//				intent.putExtra("date", Integer.toString(hours));
+//				intent.putExtra("totalPrice", (double)(399 + (hours - 3) * 100));
+//				startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.order.service.extra");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("orderId", Long.toString(orderId));
+				params.put("amount", Integer.toString(hours * 100));
+				params.put("buyHours", Integer.toString(hours));
+				params.put("mobile", mSpUtil.getLoginId());
+				return params;
+			}
+		}, tag);
 	}
 
 	@Override
@@ -278,6 +385,101 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			}
 		}
 		return false;
+	}
+	
+	public void showEndServiceDialog(final Order order) {
+		ConfirmDialog dialog = new ConfirmDialog(getActivity(), "确定结束服务？", new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				requestEndService(order.orderId);
+			}
+			
+		});
+		dialog.show();
+	}
+
+	protected void requestEndService(final long orderId) {
+		// Tag used to cancel the request
+		String tag = "tag_request_start_service";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				showToast("结束服务成功");
+				showCommentDialog(orderId);
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.OrderController.completeOrder");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("orderId", Long.toString(orderId));
+				return params;
+			}
+		}, tag);
+	}
+	
+	public void showStartServiceDialog(final Order order) {
+		ConfirmDialog dialog = new ConfirmDialog(getActivity(), "确定开始服务？", new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				requestStartService(order.orderId);
+			}
+			
+		});
+		dialog.show();
+	}
+
+	protected void requestStartService(final long orderId) {
+		// Tag used to cancel the request
+		String tag = "tag_request_start_service";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				showToast("开始服务成功");
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.order.service.start");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("orderId", Long.toString(orderId));
+				return params;
+			}
+		}, tag);
 	}
 
 	public void showCommentDialog(final long orderId) {
@@ -309,6 +511,10 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			@Override
 			public void onSuccess(BaseResponse response) {
 				showToast("评论成功");
+
+				mIndex = 1;
+				mRefreshDataRequired = true;
+				onRefreshData();
 			}
 
 			@Override
@@ -338,7 +544,41 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	}
 
 	public void toPayOrder(Order order) {
-		
+		if ("SERVICE".equals(order.businessType)) {
+			Consultant consultant = new Consultant();
+			consultant.counselorId = order.merchantId;
+			consultant.name = order.sellerName;
+			
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), ConfirmOrderActivity.class);
+			intent.putExtra("consultant", consultant);
+			intent.putExtra("from", Constants.From.CONSULTANT);
+			intent.putExtra("date", Integer.toString(order.buyHours));
+			intent.putExtra("totalPrice", order.amount);
+			intent.putExtra("orderId", order.orderId);
+			startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+		} else if ("CONSUME".equals(order.businessType)) {
+			OrderItem orderItem = order.items.get(0);
+			
+			RoomType mRoomType = new RoomType();
+			mRoomType.roomTypeId = orderItem.proObjId;
+			mRoomType.name = orderItem.name;
+			
+			Merchant mMerchant = new Merchant();
+			mMerchant.merchantId = order.merchantId;
+			mMerchant.name = order.sellerName;
+					
+			Intent intent = new Intent();
+			intent.setClass(this, ConfirmOrderActivity.class);
+			intent.putExtra("roomType", mRoomType);
+//			intent.putExtra("room", mRoom);
+			intent.putExtra("merchant", mMerchant);
+			intent.putExtra("totalPrice", order.amount);
+			intent.putExtra("date", order.bookDate);
+			intent.putExtra("from", Constants.From.MERCHANT);
+			intent.putExtra("orderId", order.orderId);
+			startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
+		}
 	}
 
 	private void requestOrderItems(final Order order, final int groupPosition) {
@@ -422,7 +662,15 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		}
 		mOrderFilterPopupWindow.showAsDropDown(btnFilter, 0, mOrderFilterPopupWindow.getHeight());
 	}
-	
-	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (REQUEST_CONFIRM_ORDER == requestCode && resultCode == RESULT_OK) {
+			mIndex = 1;
+			mRefreshDataRequired = true;
+			onRefreshData();
+		}
+	}
 
 }
