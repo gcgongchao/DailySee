@@ -181,6 +181,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				if (roomResponse != null && roomResponse.rows != null && roomResponse.rows.size() > 0) {
 					List<Room> roomList = roomResponse.rows;
 					mChildrenList.put(roomType.roomTypeId, roomList);
+				} else {
+					showToast("该房型暂无房间可赠送");
 				}
 				mAdapter.notifyDataSetChanged();
 			}

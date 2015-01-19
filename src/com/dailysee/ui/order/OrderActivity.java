@@ -26,6 +26,7 @@ import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Order;
 import com.dailysee.bean.OrderItem;
 import com.dailysee.bean.Product;
+import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
 import com.dailysee.bean.ServiceHour;
 import com.dailysee.net.BaseResponse;
@@ -529,6 +530,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			mRoomType.roomTypeId = orderItem.proObjId;
 			mRoomType.name = orderItem.name;
 			
+			Room mRoom = new Room();
+			mRoom.name = order.roomNo;
+			
 			Merchant mMerchant = new Merchant();
 			mMerchant.merchantId = order.merchantId;
 			mMerchant.name = order.sellerName;
@@ -545,7 +549,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			Intent intent = new Intent();
 			intent.setClass(this, ConfirmOrderActivity.class);
 			intent.putExtra("roomType", mRoomType);
-//			intent.putExtra("room", mRoom);
+			intent.putExtra("room", mRoom);
 			intent.putExtra("merchant", mMerchant);
 			intent.putExtra("items", list);
 			intent.putExtra("totalPrice", order.amount);

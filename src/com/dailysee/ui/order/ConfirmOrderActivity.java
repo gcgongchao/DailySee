@@ -189,7 +189,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			break;
 		case Constants.From.GIFT:
 		case Constants.From.MERCHANT:
-			tvRoom.setText(mRoomType.name);
+			if (mRoom != null && !TextUtils.isEmpty(mRoom.name)) {
+				tvRoom.setText(mRoomType.name + "("+mRoom.name+")");
+			} else {
+				tvRoom.setText(mRoomType.name);
+			}
 			tvTime.setText("时间: " + mDate);
 			
 			if (mOrderId == 0) {// 非订单列表进入
@@ -214,6 +218,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private ArrayList<Product> getShoppingCartItems() {
 		Collection<Product> collection = AppController.getInstance().getShoppingCart().values();
 		
+		items = new ArrayList<Product>();
 		if (collection != null && collection.size() > 0) {
 			List<Product> list = new ArrayList<Product>();
 			for (Product product : collection) {
@@ -415,13 +420,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private void toCommitOrder() {
 		if (!TextUtils.isEmpty(mStatus) && mStatus.equals("extra")) {
+			requestExtraServiceHours(mOrderId, mBuyHours);
+		} else {
 			if (mOrderId > 0) {
 				showSelectPaymentDialog();
 			} else {
 				requestCreateOrder();
 			}
-		} else {
-			requestExtraServiceHours(mOrderId, mBuyHours);
 		}
 	}
 
