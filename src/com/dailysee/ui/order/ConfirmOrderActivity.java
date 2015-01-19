@@ -56,7 +56,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private static final int SDK_PAY_FLAG = 20001;
 	
 	private ListView mListView;
-	private List<Product> items = new ArrayList<Product>();
+	private ArrayList<Product> items = new ArrayList<Product>();
 	private ConfirmOrderAdapter mAdapter;
 	
 	private LayoutInflater mInflater;
@@ -85,6 +85,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private int mShoppingCount;
 	private double mTotalPrice;
 	private String mDate;
+	private int mBuyHours;
 
 	private int mFrom;
 	
@@ -97,6 +98,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	private Room mRoom;
 
 	private Consultant mConsultant;
+	private String mStatus;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -117,9 +119,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mMerchant = (Merchant) intent.getSerializableExtra("merchant");
 			mTotalPrice = intent.getDoubleExtra("totalPrice", 0);
 			mDate = intent.getStringExtra("date");
+			mBuyHours = intent.getIntExtra("buyHours", 0);
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 			mConsultant = (Consultant) intent.getSerializableExtra("consultant");
 			mOrderId = intent.getLongExtra("orderId", 0);
+			mStatus = intent.getStringExtra("status");
+			items = (ArrayList<Product>)intent.getSerializableExtra("items");
 		}
 		
 		if (((mFrom == Constants.From.GIFT || mFrom == Constants.From.MERCHANT) && (mRoomType == null || mMerchant == null))
@@ -172,7 +177,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			
 			tvRoom.setText(builder);
 			tvRoom.setTextColor(getResources().getColor(R.color.deep_gray));
-			tvTime.setText("服务时长: " + mDate + "小时");
+			tvTime.setText("服务时长: " + mBuyHours + "小时");
 			tvTime.setTextColor(getResources().getColor(R.color.gray));
 			
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
@@ -187,7 +192,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			tvRoom.setText(mRoomType.name);
 			tvTime.setText("时间: " + mDate);
 			
-			items = getShoppingCartItems();
+			if (mOrderId == 0) {// 非订单列表进入
+				items = getShoppingCartItems();
+			}
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
 			mListView.setAdapter(mAdapter);
 			
@@ -204,7 +211,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		}
 	}
 
-	private List<Product> getShoppingCartItems() {
+	private ArrayList<Product> getShoppingCartItems() {
 		Collection<Product> collection = AppController.getInstance().getShoppingCart().values();
 		
 		if (collection != null && collection.size() > 0) {
@@ -377,7 +384,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("sellerName", mConsultant.getName());
 					params.put("merchantId", Long.toString(mConsultant.counselorId));
 					params.put("amount", Double.toString(mTotalPrice));
-					params.put("buyHours", mDate);
+					params.put("buyHours", Integer.toString(mBuyHours));
 					break;
 				}
 				return params;
@@ -407,11 +414,55 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void toCommitOrder() {
-		if (mOrderId > 0) {
-			showSelectPaymentDialog();
+		if (!TextUtils.isEmpty(mStatus) && mStatus.equals("extra")) {
+			if (mOrderId > 0) {
+				showSelectPaymentDialog();
+			} else {
+				requestCreateOrder();
+			}
 		} else {
-			requestCreateOrder();
+			requestExtraServiceHours(mOrderId, mBuyHours);
 		}
+	}
+
+	protected void requestExtraServiceHours(final long orderId, final int hours) {
+		// Tag used to cancel the request
+		String tag = "tag_request_start_service";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				mStatus = "extraSuccess";
+				mOrderId = Long.parseLong(response.getSimpleDataStr());
+				showSelectPaymentDialog();
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.order.service.extra");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("orderId", Long.toString(orderId));
+				params.put("amount", Integer.toString(hours * 100));
+				params.put("buyHours", Integer.toString(hours));
+				params.put("mobile", mSpUtil.getLoginId());
+				return params;
+			}
+		}, tag);
 	}
 
 	private void toLogin() {

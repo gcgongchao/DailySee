@@ -1,5 +1,6 @@
 package com.dailysee.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -17,9 +18,9 @@ public class ConfirmOrderAdapter extends BaseAdapter {
 	
 	private Context context;
 	private LayoutInflater mInflater;
-	private List<Product> items;
+	private ArrayList<Product> items;
 
-	public ConfirmOrderAdapter(Context context, List<Product> items) {
+	public ConfirmOrderAdapter(Context context, ArrayList<Product> items) {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		this.items = items;

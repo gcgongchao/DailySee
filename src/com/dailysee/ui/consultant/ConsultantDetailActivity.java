@@ -267,7 +267,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		intent.setClass(this, ConfirmOrderActivity.class);
 		intent.putExtra("consultant", consultant);
 		intent.putExtra("from", mFrom);
-		intent.putExtra("date", Integer.toString(hours));
+		intent.putExtra("buyHours", hours);
 		intent.putExtra("totalPrice", (double)(399 + (hours - 3) * 100));
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}

@@ -25,6 +25,7 @@ import com.dailysee.bean.Consultant;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Order;
 import com.dailysee.bean.OrderItem;
+import com.dailysee.bean.Product;
 import com.dailysee.bean.RoomType;
 import com.dailysee.bean.ServiceHour;
 import com.dailysee.net.BaseResponse;
@@ -320,59 +321,14 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				intent.setClass(getActivity(), ConfirmOrderActivity.class);
 				intent.putExtra("consultant", consultant);
 				intent.putExtra("from", Constants.From.CONSULTANT);
-				intent.putExtra("date", Integer.toString(hours));
+				intent.putExtra("status", "extra");
+				intent.putExtra("buyHours", hours);
 				intent.putExtra("totalPrice", (double)(hours * 100));
 				startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 			}
 			
 		});
 		mContinueServiceDialog.show();
-	}
-
-	protected void requestExtraServiceHours(final long orderId, final int hours) {
-		// Tag used to cancel the request
-		String tag = "tag_request_start_service";
-		NetRequest.getInstance(getActivity()).post(new Callback() {
-
-			@Override
-			public void onSuccess(BaseResponse response) {
-//				showToast("续费服务"+hours+"小时成功");
-//				toConfirmOrder();
-//				Intent intent = new Intent();
-//				intent.setClass(getActivity(), ConfirmOrderActivity.class);
-//				intent.putExtra("consultant", consultant);
-//				intent.putExtra("from", Constants.From.CONSULTANT);
-//				intent.putExtra("date", Integer.toString(hours));
-//				intent.putExtra("totalPrice", (double)(399 + (hours - 3) * 100));
-//				startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
-			}
-
-			@Override
-			public void onPreExecute() {
-				toShowProgressMsg("正在提交...");
-			}
-
-			@Override
-			public void onFinished() {
-				toCloseProgressMsg();
-			}
-
-			@Override
-			public void onFailed(String msg) {
-			}
-
-			@Override
-			public Map<String, String> getParams() {
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "tty.order.service.extra");
-				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
-				params.put("orderId", Long.toString(orderId));
-				params.put("amount", Integer.toString(hours * 100));
-				params.put("buyHours", Integer.toString(hours));
-				params.put("mobile", mSpUtil.getLoginId());
-				return params;
-			}
-		}, tag);
 	}
 
 	@Override
@@ -553,7 +509,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			intent.setClass(getActivity(), ConfirmOrderActivity.class);
 			intent.putExtra("consultant", consultant);
 			intent.putExtra("from", Constants.From.CONSULTANT);
-			intent.putExtra("date", Integer.toString(order.buyHours));
+			intent.putExtra("buyHours", order.buyHours);
 			intent.putExtra("totalPrice", order.amount);
 			intent.putExtra("orderId", order.orderId);
 			startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
@@ -567,12 +523,22 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			Merchant mMerchant = new Merchant();
 			mMerchant.merchantId = order.merchantId;
 			mMerchant.name = order.sellerName;
+			
+			ArrayList<Product> list = new ArrayList<Product>();
+			for (int i = 1; i < order.items.size(); i++) {
+				OrderItem item = order.items.get(i);
+				Product product = new Product();
+				product.name = item.name;
+				product.count = item.quantity;
+				product.price = item.price;
+			}
 					
 			Intent intent = new Intent();
 			intent.setClass(this, ConfirmOrderActivity.class);
 			intent.putExtra("roomType", mRoomType);
 //			intent.putExtra("room", mRoom);
 			intent.putExtra("merchant", mMerchant);
+			intent.putExtra("items", list);
 			intent.putExtra("totalPrice", order.amount);
 			intent.putExtra("date", order.bookDate);
 			intent.putExtra("from", Constants.From.MERCHANT);
