@@ -411,6 +411,10 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			@Override
 			public void onSuccess(BaseResponse response) {
 				showToast("开始服务成功");
+
+				mIndex = 1;
+				mRefreshDataRequired = true;
+				onRefreshData();
 			}
 
 			@Override
