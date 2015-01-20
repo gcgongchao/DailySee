@@ -3,9 +3,8 @@ DailySee
 
 This is example shows how to code in android.
 
-1、选择商品列表，无商品时，显示为空
-2、提交订单没有计算服务费率
-3、广告
+1、提交订单没有计算服务费率
+2、广告
 
 后台问题：
 1、订单列表 顾问订单的时间没有，排序不对
