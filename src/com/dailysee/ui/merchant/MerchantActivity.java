@@ -79,6 +79,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	private String mSearch = "";
 	private int mFrom = Constants.From.MERCHANT;
 
+	private LinearLayout emptyView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -134,7 +136,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		etSearch = (EditText) findViewById(R.id.et_search);
 		ivSearch = (ImageView) findViewById(R.id.iv_search);
 		
-		LinearLayout emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
+		emptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
 		// Set a listener to be invoked when the list should be refreshed.
@@ -143,7 +145,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		mPullRefreshListView.setOnLastItemVisibleListener(this);
 		
 		mListView = mPullRefreshListView.getRefreshableView();
-		mListView.setEmptyView(emptyView);
 	}
 
 	@Override
@@ -326,6 +327,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				List<Merchant> list = merchantResponse.rows;
 				if (list != null && list.size() > 0) {
 					merchantList.addAll(list);
+				} else {
+					mListView.setEmptyView(emptyView);
 				}
 				mAdatper.notifyDataSetChanged();
 			}

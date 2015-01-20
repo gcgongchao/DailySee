@@ -458,10 +458,16 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 					ProductResponse productResponse = (ProductResponse) response.getResponse(new TypeToken<ProductResponse>() {});
 					if (productResponse != null && productResponse.rows != null && productResponse.rows.size() > 0) {
 						mDrinkList.addAll(productResponse.rows);
-					} else {
-						mDrinkListView.setEmptyView(mDrinkEmptyView);
 					}
 					mDrinkAdapter.notifyDataSetChanged();
+					
+					if (mDrinkList.size() > 0) {
+						mPullRefreshDrinkListView.setVisibility(View.VISIBLE);
+						mDrinkEmptyView.setVisibility(View.GONE);
+					} else {
+						mPullRefreshDrinkListView.setVisibility(View.GONE);
+						mDrinkEmptyView.setVisibility(View.VISIBLE);
+					}
 				} else {
 					if (mIndex == 1) {
 						mSnackList.clear();
@@ -469,10 +475,16 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 					ProductResponse productResponse = (ProductResponse) response.getResponse(new TypeToken<ProductResponse>() {});
 					if (productResponse != null && productResponse.rows != null && productResponse.rows.size() > 0) {
 						mSnackList.addAll(productResponse.rows);
-					} else {
-						mSnackListView.setEmptyView(mSnackEmptyView);
 					}
 					mSnackAdapter.notifyDataSetChanged();
+					
+					if (mSnackList.size() > 0) {
+						mPullRefreshSnackListView.setVisibility(View.VISIBLE);
+						mSnackEmptyView.setVisibility(View.GONE);
+					} else {
+						mPullRefreshSnackListView.setVisibility(View.GONE);
+						mSnackEmptyView.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 
