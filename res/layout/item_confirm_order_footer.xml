@@ -23,19 +23,32 @@
             android:gravity="center_vertical"
             android:paddingBottom="5dp"
             android:paddingLeft="@dimen/activity_margin"
-            android:paddingRight="@dimen/space"
+            android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:singleLine="true"
-            android:text="合计: "
+            android:text="合计:"
             android:textColor="@color/black"
-            android:textColorHint="@color/login_hint"
             android:textSize="@dimen/text_input" />
 
         <TextView
             android:id="@+id/tv_total_price"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/deep_gray"
+            android:textSize="@dimen/text_input" />
+
+        <TextView
+            android:id="@+id/tv_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/transparent"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -45,8 +58,8 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/deep_gray"
-            android:textColorHint="@color/login_hint"
-            android:textSize="@dimen/text_input" />
+            android:textSize="@dimen/caption" />
+        
     </LinearLayout>
 
     <View

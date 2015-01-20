@@ -69,6 +69,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private View divider;
 	private TextView tvTotalPrice;
+	private TextView tvFee;
 	private TextView etPhone;
 
 	private View dividerRemarkTop;
@@ -148,6 +149,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		View footer = mInflater.inflate(R.layout.item_confirm_order_footer, null);
 		divider = footer.findViewById(R.id.divider);
 		tvTotalPrice = (TextView) footer.findViewById(R.id.tv_total_price);
+		tvFee = (TextView) footer.findViewById(R.id.tv_fee);
 		etPhone = (TextView) footer.findViewById(R.id.et_phone);
 		dividerRemarkTop = footer.findViewById(R.id.divider_remark_top);
 		llRemark = (LinearLayout) footer.findViewById(R.id.ll_remark);
@@ -202,6 +204,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
 			mListView.setAdapter(mAdapter);
 			
+			if (mMerchant != null && mMerchant.feeRate > 0) {
+//				if (mOrderId == 0) {// 未创建的订单计算服务费
+					mTotalPrice = mTotalPrice + mTotalPrice * mMerchant.feeRate / 100;// 服务费率
+//				}
+				tvFee.setText("(含"+Utils.formatTwoFractionDigits(mMerchant.feeRate)+"%服务费)");
+			}
 			tvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 			etPhone.setText(mSpUtil.getLoginId());
 			
