@@ -21,6 +21,7 @@ public class Order implements Serializable {
 	public double fee;//			小费	元
 	public String roomNo;//			房号	赠送单时候才有
 	public String mobile;//			接收短信手机	
+	public long createDate;
 	public long bookDate;//			预定日期	
 	public String remark;//			下单备注/赠送备注	
 	public int buyHours;

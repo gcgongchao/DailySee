@@ -113,7 +113,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
     	holder.tvOrderId.setText("NO." + order.orderId);
     	holder.tvOrderId.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.deep_gray));
     	
-    	holder.tvTime.setText(Utils.formatTime(order.bookDate, Utils.DATE_FORMAT_YMD));
+    	holder.tvTime.setText(Utils.formatTime(order.createDate, Utils.DATE_FORMAT_YMD));
     	holder.tvTime.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.deep_gray));
     	
     	holder.ivExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);

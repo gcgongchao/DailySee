@@ -553,7 +553,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			intent.putExtra("merchant", mMerchant);
 			intent.putExtra("items", list);
 			intent.putExtra("totalPrice", order.amount);
-			intent.putExtra("date", order.bookDate);
+			intent.putExtra("date", Utils.formatTime(order.bookDate, Utils.DATE_FORMAT_YMD));
 			intent.putExtra("from", Constants.From.MERCHANT);
 			intent.putExtra("orderId", order.orderId);
 			startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
