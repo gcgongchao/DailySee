@@ -538,12 +538,13 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			mMerchant.name = order.sellerName;
 			
 			ArrayList<Product> list = new ArrayList<Product>();
-			for (int i = 1; i < order.items.size(); i++) {
+			for (int i = 1; i < order.items.size() - 1; i++) {// 排除：第一项是房间类型，最后一项是合计
 				OrderItem item = order.items.get(i);
 				Product product = new Product();
 				product.name = item.name;
 				product.count = item.quantity;
 				product.price = item.price;
+				list.add(product);
 			}
 					
 			Intent intent = new Intent();
