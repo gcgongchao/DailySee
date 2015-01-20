@@ -18,6 +18,7 @@ public class CityAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater mInflater;
 	private List<CityEntity> items;
+	private int mSelectedItem = -1;
 
 	public CityAdapter(Context context, List<CityEntity> items) {
 		this.context = context;
@@ -53,7 +54,21 @@ public class CityAdapter extends BaseAdapter {
 		final CityEntity city = (CityEntity) getItem(position);
 		holder.name.setText(city.name);
 		
+		if (mSelectedItem >= 0) {
+			if (mSelectedItem == position) {
+				convertView.setBackgroundResource(R.drawable.item_selector);
+			} else {
+				convertView.setBackgroundResource(R.drawable.item_gray_to_white_selector);
+			}
+		} else {
+			convertView.setBackgroundResource(R.drawable.item_selector);
+		}
+		
 		return convertView;
+	}
+	
+	public void setSelectedItem(int item) {
+		this.mSelectedItem = item;
 	}
 
 	private static class ViewHolder {
