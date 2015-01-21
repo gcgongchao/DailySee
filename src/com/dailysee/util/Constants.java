@@ -35,6 +35,8 @@ public class Constants {
 		public static final int ROOM = 1001;
 		public static final int DRINKS = 10001;
 		public static final int SNACK = 20001;
+		public static final int SMOKE_TEA = 30001;
+		public static final int RECOMMEND = 40001;
 	}
 	
 	public interface Sex {

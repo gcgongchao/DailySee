@@ -73,7 +73,6 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	
 	protected ProductType mDrinkType;
 	
-
 	private LinearLayout mLlSnackTitle;
 	private TextView mTvSnackTitle;
 	private ImageView mIvSnackExpand;
@@ -90,6 +89,36 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private ProductAdapter mSnackAdapter;
 	
 	protected ProductType mSnackType;
+	
+	private LinearLayout mLlSmokeTeaTitle;
+	private TextView mTvSmokeTeaTitle;
+	private ImageView mIvSmokeTeaExpand;
+	private LinearLayout mLlSmokeTeaContent;
+	private HorizontalListView mHlvSmokeTeaTab;
+	private PullToRefreshListView mPullRefreshSmokeTeaListView;
+	private ListView mSmokeTeaListView;
+	private LinearLayout mSmokeTeaEmptyView;
+
+	private ArrayList<Object> mSmokeTeaTypeList = new ArrayList<Object>();
+	private GroupAdapter mSmokeTeaTypeAdapter;
+	
+	private ArrayList<Product> mSmokeTeaList = new ArrayList<Product>();
+	private ProductAdapter mSmokeTeaAdapter;
+	
+	protected ProductType mSmokeTeaType;
+	
+	private LinearLayout mLlRecommendTitle;
+	private TextView mTvRecommendTitle;
+	private ImageView mIvRecommendExpand;
+	private LinearLayout mLlRecommendContent;
+	private PullToRefreshListView mPullRefreshRecommendListView;
+	private ListView mRecommendListView;
+	private LinearLayout mRecommendEmptyView;
+
+	private ArrayList<Product> mRecommendList = new ArrayList<Product>();
+	private ProductAdapter mRecommendAdapter;
+	
+	protected ProductType mRecommendType;
 
 	private View mEmptyView;
 	
@@ -181,6 +210,25 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mSnackListView = mPullRefreshSnackListView.getRefreshableView();
 		mSnackEmptyView = (LinearLayout) findViewById(R.id.ll_snack_no_data);
 		
+		mLlSmokeTeaTitle = (LinearLayout) findViewById(R.id.ll_smoke_tea_title);
+		mTvSmokeTeaTitle = (TextView) findViewById(R.id.tv_smoke_tea_title);
+		mIvSmokeTeaExpand = (ImageView) findViewById(R.id.iv_smoke_tea_expand);
+		mLlSmokeTeaContent = (LinearLayout) findViewById(R.id.ll_smoke_tea_content);
+		mHlvSmokeTeaTab = (HorizontalListView) findViewById(R.id.hlv_smoke_tea_tab);
+		mPullRefreshSmokeTeaListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_smoke_tea_list);
+//		mPullRefreshSmokeTeaListView.setMode(Mode.PULL_FROM_END);
+		mSmokeTeaListView = mPullRefreshSmokeTeaListView.getRefreshableView();
+		mSmokeTeaEmptyView = (LinearLayout) findViewById(R.id.ll_smoke_tea_no_data);
+		
+		mLlRecommendTitle = (LinearLayout) findViewById(R.id.ll_recommend_title);
+		mTvRecommendTitle = (TextView) findViewById(R.id.tv_recommend_title);
+		mIvRecommendExpand = (ImageView) findViewById(R.id.iv_recommend_expand);
+		mLlRecommendContent = (LinearLayout) findViewById(R.id.ll_recommend_content);
+		mPullRefreshRecommendListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_recommend_list);
+//		mPullRefreshRecommendListView.setMode(Mode.PULL_FROM_END);
+		mRecommendListView = mPullRefreshRecommendListView.getRefreshableView();
+		mRecommendEmptyView = (LinearLayout) findViewById(R.id.ll_recommend_no_data);
+		
 		mEmptyView = findViewById(R.id.empty_view);
 		
 		mLlBottomBar = (LinearLayout) findViewById(R.id.ll_bottom_bar);
@@ -214,6 +262,18 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mSnackAdapter = new ProductAdapter(this, mSnackList, mHandler);
 		mSnackListView.setAdapter(mSnackAdapter);
 		
+		mSmokeTeaTypeAdapter = new GroupAdapter(this, mSmokeTeaTypeList);
+		mHlvSmokeTeaTab.setAdapter(mSmokeTeaTypeAdapter);
+
+		mSmokeTeaAdapter = new ProductAdapter(this, mSmokeTeaList, mHandler);
+		mSmokeTeaListView.setAdapter(mSmokeTeaAdapter);
+		
+		mRecommendAdapter = new ProductAdapter(this, mRecommendList, mHandler);
+		mRecommendListView.setAdapter(mRecommendAdapter);
+		
+		mRecommendType = new ProductType();
+		mRecommendType.productTypeId = Constants.Type.RECOMMEND;
+		
 		mEmptyView.setVisibility(View.GONE);
 		
 		hideBottomBar();
@@ -242,6 +302,17 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mPullRefreshSnackListView.setOnRefreshListener(this);
 		mPullRefreshSnackListView.setOnLastItemVisibleListener(this);
 //		mSnackListView.setOnItemClickListener(this);
+		
+		mLlSmokeTeaTitle.setOnClickListener(this);
+		mHlvSmokeTeaTab.setOnItemClickListener(this);
+		mPullRefreshSmokeTeaListView.setOnRefreshListener(this);
+		mPullRefreshSmokeTeaListView.setOnLastItemVisibleListener(this);
+//		mSmokeTeaListView.setOnItemClickListener(this);
+		
+		mLlRecommendTitle.setOnClickListener(this);
+		mPullRefreshRecommendListView.setOnRefreshListener(this);
+		mPullRefreshRecommendListView.setOnLastItemVisibleListener(this);
+//		mRecommendListView.setOnItemClickListener(this);
 		
 		mBtnToPayment.setOnClickListener(this);
 	}
@@ -341,6 +412,22 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				onLoadProductListByType(mSnackType);
 			}
 			break;
+		case R.id.ll_smoke_tea_title:
+			onGroupItemClick(Constants.Type.SMOKE_TEA);
+			if (mSmokeTeaType == null) {
+				onLoadProductType();
+			} else if (mSmokeTeaList == null || mSmokeTeaList.size() == 0) {
+				onLoadProductListByType(mSmokeTeaType);
+			}
+			break;
+		case R.id.ll_recommend_title:
+			onGroupItemClick(Constants.Type.RECOMMEND);
+			if (mRecommendType == null) {
+				onLoadProductType();
+			} else if (mRecommendList == null || mRecommendList.size() == 0) {
+				onLoadProductListByType(mRecommendType);
+			}
+			break;
 		case R.id.btn_to_payment:
 			if (mRoomType != null && mMerchant != null) {
 				if (mTotalPrice >= mRoomType.ttAmt) {
@@ -376,6 +463,18 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mLlSnackTitle.setBackgroundColor(isSnackExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
 		mIvSnackExpand.setImageResource(isSnackExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 		
+		boolean isSmokeTeaExpanded = item == Constants.Type.SMOKE_TEA;
+		mLlSmokeTeaContent.setVisibility(isSmokeTeaExpanded ? View.VISIBLE : View.GONE);
+		mTvSmokeTeaTitle.setTextColor(isSmokeTeaExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+		mLlSmokeTeaTitle.setBackgroundColor(isSmokeTeaExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+		mIvSmokeTeaExpand.setImageResource(isSmokeTeaExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+		
+		boolean isRecommendExpanded = item == Constants.Type.RECOMMEND;
+		mLlRecommendContent.setVisibility(isRecommendExpanded ? View.VISIBLE : View.GONE);
+		mTvRecommendTitle.setTextColor(isRecommendExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+		mLlRecommendTitle.setBackgroundColor(isRecommendExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+		mIvRecommendExpand.setImageResource(isRecommendExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+		
 		mEmptyView.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
 	}
 	
@@ -397,14 +496,24 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 						mHlvDrinkTab.setSelection(mDrinkTypeList.size() - 1);
 						mDrinkType = list.get(0);
 						onLoadProductListByType(mDrinkType);
-					} else {
+					} else if (productTopType == Constants.Type.SNACK) {
 						mSnackTypeList.clear();
 						mSnackTypeList.addAll(list);
 						mSnackTypeAdapter.notifyDataSetChanged();
 						
-						mHlvDrinkTab.setSelection(mSnackTypeList.size() - 1);
+						mHlvSnackTab.setSelection(mSnackTypeList.size() - 1);
 						mSnackType = list.get(0);
 						onLoadProductListByType(mSnackType);
+					} else if (productTopType == Constants.Type.SMOKE_TEA) {
+						mSmokeTeaTypeList.clear();
+						mSmokeTeaTypeList.addAll(list);
+						mSmokeTeaTypeAdapter.notifyDataSetChanged();
+						
+						mHlvSmokeTeaTab.setSelection(mSmokeTeaTypeList.size() - 1);
+						mSmokeTeaType = list.get(0);
+						onLoadProductListByType(mSmokeTeaType);
+					} else if (productTopType == Constants.Type.RECOMMEND) {
+						// 无子分类
 					}
 				}
 			}
@@ -468,7 +577,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 						mPullRefreshDrinkListView.setVisibility(View.GONE);
 						mDrinkEmptyView.setVisibility(View.VISIBLE);
 					}
-				} else {
+				} else if (productTopType == Constants.Type.SNACK) {
 					if (mIndex == 1) {
 						mSnackList.clear();
 					}
@@ -485,6 +594,40 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 						mPullRefreshSnackListView.setVisibility(View.GONE);
 						mSnackEmptyView.setVisibility(View.VISIBLE);
 					}
+				} else if (productTopType == Constants.Type.SMOKE_TEA) {
+					if (mIndex == 1) {
+						mSmokeTeaList.clear();
+					}
+					ProductResponse productResponse = (ProductResponse) response.getResponse(new TypeToken<ProductResponse>() {});
+					if (productResponse != null && productResponse.rows != null && productResponse.rows.size() > 0) {
+						mSmokeTeaList.addAll(productResponse.rows);
+					}
+					mSmokeTeaAdapter.notifyDataSetChanged();
+					
+					if (mSmokeTeaList.size() > 0) {
+						mPullRefreshSmokeTeaListView.setVisibility(View.VISIBLE);
+						mSmokeTeaEmptyView.setVisibility(View.GONE);
+					} else {
+						mPullRefreshSmokeTeaListView.setVisibility(View.GONE);
+						mSmokeTeaEmptyView.setVisibility(View.VISIBLE);
+					}
+				} else if (productTopType == Constants.Type.RECOMMEND) {
+					if (mIndex == 1) {
+						mRecommendList.clear();
+					}
+					ProductResponse productResponse = (ProductResponse) response.getResponse(new TypeToken<ProductResponse>() {});
+					if (productResponse != null && productResponse.rows != null && productResponse.rows.size() > 0) {
+						mRecommendList.addAll(productResponse.rows);
+					}
+					mRecommendAdapter.notifyDataSetChanged();
+					
+					if (mRecommendList.size() > 0) {
+						mPullRefreshRecommendListView.setVisibility(View.VISIBLE);
+						mRecommendEmptyView.setVisibility(View.GONE);
+					} else {
+						mPullRefreshRecommendListView.setVisibility(View.GONE);
+						mRecommendEmptyView.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 
@@ -500,8 +643,12 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				toCloseProgressMsg();
 				if (productTopType == Constants.Type.DRINKS) {
 					mPullRefreshDrinkListView.onRefreshComplete();
-				} else {
+				} else if (productTopType == Constants.Type.SNACK) {
 					mPullRefreshSnackListView.onRefreshComplete();
+				} else if (productTopType == Constants.Type.SMOKE_TEA) {
+					mPullRefreshSmokeTeaListView.onRefreshComplete();
+				} else if (productTopType == Constants.Type.RECOMMEND) {
+					mPullRefreshRecommendListView.onRefreshComplete();
 				}
 			}
 
@@ -605,8 +752,12 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		ProductType productType = null;
 		if (productTopType == Constants.Type.DRINKS) {
 			productType = mDrinkType;
-		} else {
+		} else if (productTopType == Constants.Type.SNACK) {
 			productType = mSnackType;
+		} else if (productTopType == Constants.Type.SMOKE_TEA) {
+			productType = mSmokeTeaType;
+		} else if (productTopType == Constants.Type.RECOMMEND) {
+			productType = mRecommendType;
 		}
 		onLoadProductListByType(productType, true);
 	}
@@ -617,8 +768,12 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		ProductType productType = null;
 		if (productTopType == Constants.Type.DRINKS) {
 			productType = mDrinkType;
-		} else {
+		} else if (productTopType == Constants.Type.SNACK) {
 			productType = mSnackType;
+		} else if (productTopType == Constants.Type.SMOKE_TEA) {
+			productType = mSmokeTeaType;
+		} else if (productTopType == Constants.Type.RECOMMEND) {
+			productType = mRecommendType;
 		}
 		onLoadProductListByType(productType, true);
 	}
@@ -632,11 +787,18 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				mDrinkTypeAdapter.notifyDataSetChanged();
 				
 				mDrinkType = productType;
-			} else {
+			} else if (productTopType == Constants.Type.SNACK) {
 				mSnackTypeAdapter.setSelectedItem(position);
 				mSnackTypeAdapter.notifyDataSetChanged();
 				
 				mSnackType = productType;
+			} else if (productTopType == Constants.Type.SMOKE_TEA) {
+				mSmokeTeaTypeAdapter.setSelectedItem(position);
+				mSmokeTeaTypeAdapter.notifyDataSetChanged();
+				
+				mSmokeTeaType = productType;
+			} else if (productTopType == Constants.Type.RECOMMEND) {
+				// 无子分类
 			}
 			mIndex = 1;
 			onLoadProductListByType(productType);
