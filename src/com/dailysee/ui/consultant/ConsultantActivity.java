@@ -214,8 +214,8 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 		case R.id.ll_sex_boy:
 			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
 			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
-			if (!Constants.Sex.WOMEN.equals(sexFilter)) {
-				sexFilter = Constants.Sex.WOMEN;
+			if (!Constants.Sex.MEN.equals(sexFilter)) {
+				sexFilter = Constants.Sex.MEN;
 				mIndex = 1;
 				startRefresh();
 			}
@@ -223,8 +223,8 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 		case R.id.ll_sex_girl:
 			tvSexBoy.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_off, 0, 0, 0);
 			tvSexGirl.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_circle_on, 0, 0, 0);
-			if (!Constants.Sex.MEN.equals(sexFilter)) {
-				sexFilter = Constants.Sex.MEN;
+			if (!Constants.Sex.WOMEN.equals(sexFilter)) {
+				sexFilter = Constants.Sex.WOMEN;
 				mIndex = 1;
 				startRefresh();
 			}
