@@ -60,6 +60,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 	protected RoomType mRoomType;
 
+	private View emptyView;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,6 +86,11 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			finish();
 		}
 
+		onRefreshTitle();
+		setUp();
+	}
+
+	private void onRefreshTitle() {
 		String title = null;
 		if (mMerchant != null) {
 			title = mMerchant.name;
@@ -92,7 +99,6 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			title = "商家详情";
 		}
 		setTitle(title);
-		setUp();
 	}
 
 	@Override
@@ -110,6 +116,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		mListView = (ExpandableListView) findViewById(R.id.list_view);
 		mListView.addHeaderView(header);
 		mListView.setGroupIndicator(null);
+		
+		emptyView = findViewById(R.id.ll_no_data);
 	}
 
 	@Override
@@ -117,10 +125,14 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		mAdapter = new RoomAdapter(getActivity(), mGroupList, mChildrenList , this);
 		mListView.setAdapter(mAdapter);
 
+		onRefreshMerchant();
+	}
+
+	private void onRefreshMerchant() {
 		if (mMerchant != null) {
 			if (!TextUtils.isEmpty(mMerchant.logoUrl)) {
 				AppController.getInstance().getImageLoader()
-						.get(mMerchant.logoUrl, ImageLoader.getImageListener(mIvImage, R.drawable.ic_merchant_avatar, R.drawable.ic_merchant_avatar));
+						.get(mMerchant.logoUrl, ImageLoader.getImageListener(mIvImage, R.drawable.ic_noimage, R.drawable.ic_noimage));
 			}
 
 			String desc = mMerchant.introduction;
@@ -275,8 +287,10 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				mMerchant = (Merchant) response.getResponse(new TypeToken<Member>() {});
+				mMerchant = (Merchant) response.getResponse(new TypeToken<Merchant>() {});
 				if (mMerchant != null) {
+					onRefreshTitle();
+					onRefreshMerchant();
 					onLoadMerchantRoomList();
 				} else {
 					showToast("商家信息不存在");
@@ -295,6 +309,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
 				params.put("belongObjId", Long.toString(mMerchantId));
+				params.put("memberType", "MERCHANT");
 				return params;
 			}
 		}, tag);
@@ -307,12 +322,14 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 			@Override
 			public void onSuccess(BaseResponse response) {
+				mGroupList.clear();
 				ArrayList<RoomType> list = response.getListResponse(new TypeToken<ArrayList<RoomType>>() {});
 				if (list != null && list.size() > 0) {
-					mGroupList.clear();
 					mGroupList.addAll(list);
-					mAdapter.notifyDataSetChanged();
+				} else {
+					mListView.setEmptyView(emptyView);
 				}
+				mAdapter.notifyDataSetChanged();
 			}
 
 			@Override

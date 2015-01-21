@@ -50,7 +50,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_merchant_avatar" />
+            android:src="@drawable/ic_noimage" />
 
         <TextView
             android:id="@+id/tv_merchant_desc"
@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="top|left"
-            android:text="商家介绍"
+            android:text=""
             android:textColor="@color/deep_gray"
             android:textSize="@dimen/body" />
     </LinearLayout>
