@@ -45,10 +45,6 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	
 	private boolean mLoadAdRequired = true;
 
-	public HomeFragment() {
-
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,14 +54,6 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);		
 		return v;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	public void request() {
 	}
 
 	@Override
