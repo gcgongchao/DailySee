@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -92,7 +93,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 		tvTime.setText(mTip.createDate);
 		
 		onLoadImage(mTip.logoUrl);
-		tvContent.setText(mTip.content);
+		tvContent.setText(Html.fromHtml(mTip.content));
 		
 		if (mTip.merchantId > 0) {
 			btnEnterMerchant.setVisibility(View.VISIBLE);

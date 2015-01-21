@@ -22,6 +22,7 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.RoomAdapter;
 import com.dailysee.adapter.RoomAdapter.OnRoomClickListener;
+import com.dailysee.bean.Member;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
@@ -79,8 +80,9 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			mFrom = intent.getIntExtra("from", Constants.From.MERCHANT);
 		}
 
-		if (mMerchant == null || mMerchantId == 0)
+		if (mMerchant == null && mMerchantId == 0) {// 商家信息不存在，直接退出
 			finish();
+		}
 
 		String title = null;
 		if (mMerchant != null) {
@@ -259,6 +261,46 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	}
 
 	private void onLoad() {
+		if (mMerchant == null) {
+			onLoadMerchantInfo();
+		} else {
+			onLoadMerchantRoomList();
+		}
+	}
+	
+	private void onLoadMerchantInfo() {
+		// Tag used to cancel the request
+		String tag = "tag_request_get_member_detail";
+		NetRequest.getInstance(this).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				mMerchant = (Merchant) response.getResponse(new TypeToken<Member>() {});
+				if (mMerchant != null) {
+					onLoadMerchantRoomList();
+				} else {
+					showToast("商家信息不存在");
+					finish();
+				}
+			}
+			
+			@Override
+			public void onFailed(String msg) {
+				super.onFailed(msg);
+				finish();
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
+				params.put("belongObjId", Long.toString(mMerchantId));
+				return params;
+			}
+		}, tag);
+	}
+
+	private void onLoadMerchantRoomList() {
 		// Tag used to cancel the request
 		String tag = "tag_request_merchant_room_list";
 		NetRequest.getInstance(getActivity()).post(new Callback() {
