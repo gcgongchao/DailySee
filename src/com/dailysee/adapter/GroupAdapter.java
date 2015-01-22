@@ -6,12 +6,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dailysee.R;
 import com.dailysee.bean.ProductType;
 import com.dailysee.bean.RoomType;
+import com.dailysee.util.UiHelper;
 
 public class GroupAdapter extends BaseAdapter {
 
@@ -21,16 +23,16 @@ public class GroupAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private int colorTabNormal;
 	private int colorTabPressed;
-//	private AbsListView.LayoutParams params;
-//	private int width;
+	private AbsListView.LayoutParams params;
+	private int width;
 
 	public GroupAdapter(Context context, ArrayList<Object> list) {
 		this.context = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
-//		width = UiHelper.getDisplayMetrics(context).widthPixels / 4;
+		width = UiHelper.getDisplayMetrics(context).widthPixels / 6;
 
-//		params = new AbsListView.LayoutParams(width, AbsListView.LayoutParams.WRAP_CONTENT);
+		params = new AbsListView.LayoutParams(width, AbsListView.LayoutParams.WRAP_CONTENT);
 
 		colorTabNormal = context.getResources().getColor(R.color.light_gray);
 		colorTabPressed = context.getResources().getColor(R.color.white);
@@ -61,7 +63,7 @@ public class GroupAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (arg1 == null) {
 			arg1 = inflater.inflate(R.layout.item_group, arg2, false);
-//			arg1.setLayoutParams(params);
+			arg1.setLayoutParams(params);
 			holder = new ViewHolder(arg1);
 		} else {
 			holder = (ViewHolder) arg1.getTag();

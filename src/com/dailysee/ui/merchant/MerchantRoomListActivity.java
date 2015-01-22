@@ -22,7 +22,6 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.adapter.RoomAdapter;
 import com.dailysee.adapter.RoomAdapter.OnRoomClickListener;
-import com.dailysee.bean.Member;
 import com.dailysee.bean.Merchant;
 import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;

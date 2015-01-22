@@ -18,14 +18,14 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:paddingBottom="8dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="@dimen/space"
-            android:paddingTop="8dp"
+            android:paddingTop="10dp"
             android:singleLine="true"
             android:text="商家介绍"
             android:textColor="@color/white"
-            android:textSize="@dimen/subhead" />
+            android:textSize="@dimen/subtitle" />
 
         <ImageView
             android:id="@+id/iv_expand"
@@ -81,14 +81,14 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:paddingBottom="8dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="@dimen/space"
-            android:paddingTop="8dp"
+            android:paddingTop="10dp"
             android:singleLine="true"
             android:text="选择房型"
             android:textColor="@color/deep_gray"
-            android:textSize="@dimen/subhead" />
+            android:textSize="@dimen/subtitle" />
     </LinearLayout>
 
 </LinearLayout>

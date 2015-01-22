@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:gravity="center">
     
     <TextView 
         android:id="@+id/tv_group"
@@ -14,7 +15,7 @@
         android:ellipsize="end"
         android:padding="8dp"
         android:maxWidth="120dp"
-        android:textSize="@dimen/subhead"
+        android:textSize="@dimen/subtitle"
         android:textColor="@color/light_gray"/>
     
 </LinearLayout>

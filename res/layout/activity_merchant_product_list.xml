@@ -28,14 +28,14 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="@dimen/space"
-                android:paddingTop="8dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text="房间介绍"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
 
             <ImageView
                 android:id="@+id/iv_room_expand"
@@ -87,14 +87,14 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="@dimen/space"
-                android:paddingTop="8dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text="酒水"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
 
             <ImageView
                 android:id="@+id/iv_drink_expand"
@@ -118,7 +118,7 @@
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_drink_tab"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:background="@color/deep_gray"
                 android:divider="@null"
                 android:fadingEdgeLength="5dp"
@@ -176,14 +176,14 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="@dimen/space"
-                android:paddingTop="8dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text="食品"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
 
             <ImageView
                 android:id="@+id/iv_snack_expand"
@@ -212,7 +212,7 @@
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_snack_tab"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:background="@color/deep_gray"
                 android:divider="@null"
                 android:fadingEdgeLength="5dp"
@@ -268,14 +268,14 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="@dimen/space"
-                android:paddingTop="8dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text="烟茶"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
 
             <ImageView
                 android:id="@+id/iv_smoke_tea_expand"
@@ -304,7 +304,7 @@
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_smoke_tea_tab"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:background="@color/deep_gray"
                 android:divider="@null"
                 android:fadingEdgeLength="5dp"
@@ -360,14 +360,14 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="@dimen/space"
-                android:paddingTop="8dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text="推荐"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
 
             <ImageView
                 android:id="@+id/iv_recommend_expand"
@@ -434,7 +434,7 @@
         <LinearLayout
             android:id="@+id/ll_bottom_bar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:alpha="0.8"
             android:background="@color/black"
@@ -472,13 +472,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:background="@drawable/btn_orange_selector"
-                android:paddingBottom="5dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:paddingTop="5dp"
+                android:gravity="center"
                 android:text="去结算"
                 android:textColor="@color/white"
-                android:textSize="@dimen/subhead" />
+                android:textSize="@dimen/subtitle" />
         </LinearLayout>
     </LinearLayout>
 
