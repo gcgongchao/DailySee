@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.dailysee.R;
 import com.dailysee.bean.Tip;
 import com.dailysee.util.TipSpUtil;
+import com.dailysee.util.Utils;
 
 public class TipAdapter extends BaseAdapter {
 
@@ -62,7 +63,7 @@ public class TipAdapter extends BaseAdapter {
 		}
 		holder.tvName.setText(entity.title);
 		holder.tvFrom.setText("来自" + entity.companyName);
-		holder.tvTime.setText(entity.createDate);
+		holder.tvTime.setText(Utils.formatTime(entity.createDate, Utils.DATE_FORMAT_YMD));
 		
 		return convertView;
 	}

@@ -113,7 +113,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
     	holder.tvOrderId.setText("NO." + order.orderId);
     	holder.tvOrderId.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.deep_gray));
     	
-    	holder.tvTime.setText(Utils.formatTime(order.createDate, Utils.DATE_FORMAT_YMD));
+    	holder.tvTime.setText(Utils.formatTime(order.createDate, Utils.DATE_FORMAT_YMDMH));
     	holder.tvTime.setTextColor(isExpanded ? context.getResources().getColor(R.color.white) : context.getResources().getColor(R.color.deep_gray));
     	
     	holder.ivExpand.setImageResource(isExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
@@ -175,20 +175,33 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
 				holder.btnDeal.setText("去付款");
 				holder.btnDeal.setVisibility(View.VISIBLE);
-			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
-				// 只有顾问订单才可以开始服务
-				holder.btnDeal.setText("开始服务");
-				holder.btnDeal.setVisibility(View.VISIBLE);
-			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
-				// 只有顾问订单才可以结束服务，续费服务
-				holder.btnDeal.setText("结束服务");
-				holder.btnDeal.setVisibility(View.VISIBLE);
-				holder.btnDeal2.setText("续费");
-				holder.btnDeal2.setVisibility(View.VISIBLE);
-			} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
-				// 只有顾问订单才可以评论订单
-				holder.btnDeal.setText("去评价");
-				holder.btnDeal.setVisibility(View.VISIBLE);
+			} else if ("SERVICE".equals(order.businessType)) { 
+				if (Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)) {
+					holder.btnDeal2.setText("申请退款");
+					holder.btnDeal2.setVisibility(View.VISIBLE);
+				} else if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
+					// 只有顾问订单才可以开始服务
+					holder.btnDeal.setText("开始服务");
+					holder.btnDeal.setVisibility(View.VISIBLE);
+					holder.btnDeal2.setText("申请退款");
+					holder.btnDeal2.setVisibility(View.VISIBLE);
+				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
+					// 只有顾问订单才可以结束服务，续费服务
+					holder.btnDeal.setText("结束服务");
+					holder.btnDeal.setVisibility(View.VISIBLE);
+					holder.btnDeal2.setText("续费");
+					holder.btnDeal2.setVisibility(View.VISIBLE);
+				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+					// 只有顾问订单才可以评论订单
+					holder.btnDeal.setText("去评价");
+					holder.btnDeal.setVisibility(View.VISIBLE);
+				}
+			} else if ("CONSUME".equals(order.businessType)) {
+				if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)
+						|| Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)) {
+					holder.btnDeal2.setText("申请退款");
+					holder.btnDeal2.setVisibility(View.VISIBLE);
+				}
 			}
 			holder.btnDeal.setOnClickListener(new OnClickListener() {
 				

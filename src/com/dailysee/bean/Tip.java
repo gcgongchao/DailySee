@@ -16,7 +16,7 @@ public class Tip implements Serializable {
 	public String beginDate;//			生效日期	
 	public int validDays;//			生效天数	
 	public long createUser	;//		创建者	
-	public String createDate;//			创建时间	
+	public long createDate;//			创建时间	
 	public String logoUrl;//			头像	
 	public List<Image> imgs;//（相册类图片）			讯息图片	
 }

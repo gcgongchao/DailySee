@@ -25,6 +25,7 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.ui.merchant.MerchantRoomListActivity;
 import com.dailysee.util.TipSpUtil;
 import com.dailysee.util.UiHelper;
+import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 
 public class TipDetailActivity extends BaseActivity implements OnClickListener {
@@ -90,7 +91,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 		
 		tvName.setText(mTip.title);
 		tvFrom.setText("来自" + mTip.companyName);
-		tvTime.setText(mTip.createDate);
+		tvTime.setText(Utils.formatTime(mTip.createDate, Utils.DATE_FORMAT_YMD));
 		
 		onLoadImage(mTip.logoUrl);
 		tvContent.setText(Html.fromHtml(mTip.content));

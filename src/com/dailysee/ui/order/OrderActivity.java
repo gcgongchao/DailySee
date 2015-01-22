@@ -267,19 +267,32 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					 */
 					if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
 						toPayOrder(order);
-					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
-						// 只有顾问订单才可以开始服务
-						showStartServiceDialog(order);
-					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
-						// 只有顾问订单才可以结束服务，续费服务
-						if (msg.arg1 == 1) {
-							showContinueServiceDialog(order);
-						} else {
-							showEndServiceDialog(order);
+					} else if ("SERVICE".equals(order.businessType)){ 
+						if (Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)) {
+							showConfirmRefundOrderDialog(order);
+						} else if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
+							if (msg.arg1 == 1) {
+								showConfirmRefundOrderDialog(order);
+							} else {
+								// 只有顾问订单才可以开始服务
+								showStartServiceDialog(order);
+							}
+						} else if (Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
+							// 只有顾问订单才可以结束服务，续费服务
+							if (msg.arg1 == 1) {
+								showContinueServiceDialog(order);
+							} else {
+								showEndServiceDialog(order);
+							}
+						} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+							// 只有顾问订单才可以评论订单
+							showCommentDialog(order.orderId);
+						} 
+					}else if ("CONSUME".equals(order.businessType)) {
+						if (Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)
+								|| Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
+							showConfirmRefundOrderDialog(order);
 						}
-					} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
-						// 只有顾问订单才可以评论订单
-						showCommentDialog(order.orderId);
 					}
 				}
 				break;
@@ -288,6 +301,61 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			}
 			
 		}
+	}
+	
+	public void showConfirmRefundOrderDialog(final Order order) {
+		String msg = "确定申请退款？";
+		ConfirmDialog dialog = new ConfirmDialog(this, msg, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				requestRefundOrder(order);
+			}
+		});
+		dialog.show();
+	}
+	
+	public void requestRefundOrder(final Order order) {
+		// Tag used to cancel the request
+		String tag = "tag_request_refund_order";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				showToast("申请退款提交成功");
+				mIndex = 1;
+				
+				mRefreshDataRequired = true;
+				onRefreshData();
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.order.refund.req");
+				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("memberId", mSpUtil.getMemberIdStr());
+				params.put("orderId", Long.toString(order.orderId));
+				params.put("refundFee", Double.toString(order.fee));
+				params.put("refundReason", "");
+				return params;
+			}
+		}, tag);
 	}
 	
 	private void showContinueServiceDialog(final Order order) {
