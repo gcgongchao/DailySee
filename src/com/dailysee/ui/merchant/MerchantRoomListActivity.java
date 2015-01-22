@@ -326,10 +326,14 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				ArrayList<RoomType> list = response.getListResponse(new TypeToken<ArrayList<RoomType>>() {});
 				if (list != null && list.size() > 0) {
 					mGroupList.addAll(list);
-				} else {
-					mListView.setEmptyView(emptyView);
 				}
 				mAdapter.notifyDataSetChanged();
+				
+				if (mGroupList.size() > 0) {
+					emptyView.setVisibility(View.GONE);
+				} else {
+					emptyView.setVisibility(View.VISIBLE);
+				}
 			}
 
 			@Override

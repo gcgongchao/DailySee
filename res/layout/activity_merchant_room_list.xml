@@ -7,32 +7,40 @@
 
     <include layout="@layout/item_header" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/list_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/gray"
-        android:dividerHeight="1px"
-        android:footerDividersEnabled="true"
-        android:headerDividersEnabled="true" />
+        android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/ll_no_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone" >
+        <ExpandableListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:cacheColorHint="#00000000"
+            android:divider="@color/gray"
+            android:dividerHeight="1px"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true" />
 
-        <TextView
-            android:id="@+id/tv_no_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂无数据"
-            android:textColor="@color/deep_gray"
-            android:textSize="@dimen/subhead" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible" 
+            android:background="@color/transparent">
+
+            <TextView
+                android:id="@+id/tv_no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无数据"
+                android:textColor="@color/deep_gray"
+                android:textSize="@dimen/subhead"
+                android:layout_marginTop="72dp"
+                android:background="@color/background" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
