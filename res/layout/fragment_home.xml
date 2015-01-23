@@ -26,7 +26,7 @@
                 android:id="@+id/ll_ad_dots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
+                android:layout_gravity="bottom|right"
                 android:layout_marginBottom="5dip"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
