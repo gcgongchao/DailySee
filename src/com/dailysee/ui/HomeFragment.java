@@ -27,7 +27,6 @@ import com.dailysee.net.response.AdResponse;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.consultant.ConsultantActivity;
 import com.dailysee.ui.merchant.MerchantActivity;
-import com.dailysee.ui.sale.SaleActivity;
 import com.dailysee.util.Constants;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,12 +37,16 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	private ViewPager mViewPager;
 	private ImageView[] mAdDots;
 	
+	private List<Ad> mAdList = new ArrayList<Ad>();
+	
 	private ImageView ivMerchant;
 	private ImageView ivSale;
 	private ImageView ivGift;
 	private ImageView ivConsultant;
 	
 	private boolean mLoadAdRequired = true;
+
+	private int mSelectedAd = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 	
 	private void setAdDotSelected(int pos) {
+		mSelectedAd = pos;
+		
 		for (int i = 0; i < mAdDots.length; i++) {
 			mAdDots[i].setSelected(false);
 		}
@@ -144,10 +149,11 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 
 	private void toSale() {
-		Intent intent = new Intent();
-		intent.setClass(mContext, SaleActivity.class);
-		intent.putExtra("from", Constants.From.SALE);
-		startActivity(intent);
+		showToast("敬请期待");
+//		Intent intent = new Intent();
+//		intent.setClass(mContext, SaleActivity.class);
+//		intent.putExtra("from", Constants.From.SALE);
+//		startActivity(intent);
 	}
 
 	private void toGift() {
@@ -171,7 +177,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 	
 	private void onLoadAd() {
-		if (!mLoadAdRequired) {
+		if (!mLoadAdRequired && mAdList != null && mAdList.size() > 0) {
+			onRefreshAd();
 			return;
 		}
 
@@ -182,10 +189,12 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 			@Override
 			public void onSuccess(BaseResponse response) {
 				mLoadAdRequired = false;
+				mAdList.clear();
 				
 				AdResponse adResponse = (AdResponse) response.getResponse(new TypeToken<AdResponse>() {});
 				if (adResponse != null && adResponse.rows != null && adResponse.rows.size() > 0) {
-					onRefreshAd(adResponse.rows);
+					mAdList.addAll(adResponse.rows);
+					onRefreshAd();
 				}
 			}
 			
@@ -212,20 +221,20 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 		}, tag);
 	}
 	
-	private void onRefreshAd(List<Ad> adList) {
+	private void onRefreshAd() {
 		ArrayList<View> imageViewList = new ArrayList<View>();
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		for (int i = 0; i < adList.size(); i++) {
+		for (int i = 0; i < mAdList.size(); i++) {
 			LinearLayout view = (LinearLayout) inflater.inflate(R.layout.item_ad, null);
 			ImageView imageView = (ImageView) view.getChildAt(0);
 			imageView.setScaleType(ScaleType.CENTER_CROP);
 			imageViewList.add(view);
 		}
-		mViewPager.setAdapter(new AdAdapter(adList, imageViewList));
+		mViewPager.setAdapter(new AdAdapter(mContext, mAdList, imageViewList));
 		mViewPager.setOnPageChangeListener(this);
 		
-		setAdDotVisibile(adList.size());
-		setAdDotSelected(0);
+		setAdDotVisibile(mAdList.size());
+		setAdDotSelected(mSelectedAd);
 	}
 
 	@Override

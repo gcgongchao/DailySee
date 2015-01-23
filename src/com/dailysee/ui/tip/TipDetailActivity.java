@@ -44,6 +44,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 	private Button btnEnterMerchant;
 
 	private Tip mTip;
+	private long mTipId;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,17 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 		Intent intent = getIntent();
 		if (intent != null) {
 			mTip = (Tip) intent.getSerializableExtra("tip");
+			mTipId = intent.getLongExtra("tipId", 0);
 		}
 		
-		if (mTip == null) {
+		if (mTip == null && mTipId == 0) {
 			finish();
 		} else {
-			TipSpUtil.getInstance(getActivity()).setRead(mTip.tipId);
+			if (mTip != null) {
+				TipSpUtil.getInstance(getActivity()).setRead(mTip.tipId);
+			} else {
+				TipSpUtil.getInstance(getActivity()).setRead(mTipId);
+			}
 		}
 		
 		setTitle("讯息详情");
@@ -89,17 +95,23 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 		btnShare.setText("分享");
 		btnShare.setVisibility(View.VISIBLE);
 		
-		tvName.setText(mTip.title);
-		tvFrom.setText("来自" + mTip.companyName);
-		tvTime.setText(Utils.formatTime(mTip.createDate, Utils.DATE_FORMAT_YMD));
-		
-		onLoadImage(mTip.logoUrl);
-		tvContent.setText(Html.fromHtml(mTip.content));
-		
-		if (mTip.merchantId > 0) {
-			btnEnterMerchant.setVisibility(View.VISIBLE);
-		} else {
-			btnEnterMerchant.setVisibility(View.GONE);
+		onRefreshTip();
+	}
+
+	private void onRefreshTip() {
+		if (mTip != null) {
+			tvName.setText(mTip.title);
+			tvFrom.setText("来自" + mTip.companyName);
+			tvTime.setText(Utils.formatTime(mTip.createDate, Utils.DATE_FORMAT_YMD));
+			
+			onLoadImage(mTip.logoUrl);
+			tvContent.setText(Html.fromHtml(mTip.content));
+			
+			if (mTip.merchantId > 0) {
+				btnEnterMerchant.setVisibility(View.VISIBLE);
+			} else {
+				btnEnterMerchant.setVisibility(View.GONE);
+			}
 		}
 	}
 
@@ -164,6 +176,9 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 				if (tip != null) {
 					mTip = tip;
 					onInitViewData();
+				} else {
+					showToast("讯息不存在");
+					finish();
 				}
 			}
 
@@ -179,14 +194,18 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onFailed(String msg) {
-
+				finish();
 			}
 
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.TipController.getTipDetail");
-				params.put("tipId", Long.toString(mTip.tipId));
+				if (mTip != null) {
+					params.put("tipId", Long.toString(mTip.tipId));
+				} else {
+					params.put("tipId", Long.toString(mTipId));
+				}
 				return params;
 			}
 		}, tag);
