@@ -235,6 +235,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 		
 		setAdDotVisibile(mAdList.size());
 		setAdDotSelected(mSelectedAd);
+		mViewPager.setCurrentItem(mSelectedAd);
 	}
 
 	@Override

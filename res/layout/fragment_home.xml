@@ -31,7 +31,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal"
-                android:visibility="visible" >
+                android:visibility="visible" 
+                android:background="@drawable/btn_gray_frame">
 
                 <ImageView
                     android:id="@+id/iv_dot1"
