@@ -1,8 +1,8 @@
 <resources>
     
     <dimen name="home_ad_height">160dp</dimen>
-    <dimen name="home_item_height">100dp</dimen>
-    <dimen name="home_item_height_l">210dp</dimen>
+    <dimen name="home_item_height">96dp</dimen>
+    <dimen name="home_item_height_l">202dp</dimen>
 
     <dimen name="image_width">72dp</dimen>
     <dimen name="image_height">72dp</dimen>
