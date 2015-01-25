@@ -107,7 +107,7 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 		}
 
 		holder.name.setText(roomType.name);
-		holder.desc.setText(roomType.name);
+		holder.desc.setText(roomType.useDesc);
 		
 		return convertView;
 	}
