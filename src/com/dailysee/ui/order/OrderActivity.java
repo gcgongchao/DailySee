@@ -351,7 +351,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("orderId", Long.toString(order.orderId));
-				params.put("refundFee", Double.toString(order.fee));
+				params.put("refundFee", Double.toString(order.amount));
 				params.put("refundReason", "");
 				return params;
 			}

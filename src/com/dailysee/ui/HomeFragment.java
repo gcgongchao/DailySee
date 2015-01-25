@@ -177,8 +177,10 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 	
 	private void onLoadAd() {
-		if (!mLoadAdRequired && mAdList != null && mAdList.size() > 0) {
-			onRefreshAd();
+		if (!mLoadAdRequired) {
+			if (mAdList != null && mAdList.size() > 0) {
+				onRefreshAd();
+			}
 			return;
 		}
 

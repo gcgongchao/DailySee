@@ -41,6 +41,8 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	private ListView mListView;
 	private TipAdapter mAdapter;
 	
+	private LinearLayout emptyView;
+	
 	private int mIndex = 1;
 	private ArrayList<Tip> tipList = new ArrayList<Tip>();
 
@@ -97,7 +99,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 		llAll = (LinearLayout) v.findViewById(R.id.ll_all);
 		tvAll = (TextView) v.findViewById(R.id.tv_all);
 		
-		LinearLayout emptyView = (LinearLayout) v.findViewById(R.id.ll_no_data);
+		emptyView = (LinearLayout) v.findViewById(R.id.ll_no_data);
 
 		mPullRefreshListView = (PullToRefreshListView) v.findViewById(R.id.pull_refresh_list);
 		// Set a listener to be invoked when the list should be refreshed.
@@ -191,6 +193,8 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 				TipResponse tipResponse =(TipResponse) response.getResponse(new TypeToken<TipResponse>(){});
 				if (tipResponse != null && tipResponse.rows != null && tipResponse.rows.size() > 0) {
 					tipList.addAll(tipResponse.rows);
+				} else {
+					mListView.setEmptyView(emptyView);
 				}
 				mAdapter.notifyDataSetChanged();
 			}
