@@ -21,7 +21,6 @@
             android:layout_centerVertical="true"
             android:background="@color/transparent"
             android:gravity="top"
-            android:maxLength="30"
             android:minLines="6"
             android:paddingRight="20dp"
             android:singleLine="false" />

@@ -95,6 +95,7 @@ public class WriteDescActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void showTextSize() {
+		tvSize.setVisibility(View.GONE);
 		if (desc != null)
 			tvSize.setText((800 - desc.length()) + "");
 		else
