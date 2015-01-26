@@ -158,6 +158,7 @@
 	                    android:layout_height="@dimen/home_item_height"
 	                    android:background="@color/deep_orange"
 	                    android:padding="10dp"
+	                    android:layout_gravity="top|right"
 	                    android:scaleType="centerInside"
 	                    android:src="@drawable/ic_sale" 
 	                    android:layout_marginLeft="10dp"
