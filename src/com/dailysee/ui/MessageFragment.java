@@ -115,6 +115,10 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 	public void onInitViewData() {
 		mAdapter = new TipAdapter(mContext, tipList);
 		mListView.setAdapter(mAdapter);
+
+		if (!mRefreshDataRequired) {
+			mListView.setEmptyView(emptyView);
+		}
 	}
 
 	@Override
