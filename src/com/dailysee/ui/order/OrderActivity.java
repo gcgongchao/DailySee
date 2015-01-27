@@ -392,6 +392,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				intent.putExtra("from", Constants.From.CONSULTANT);
 				intent.putExtra("status", "extra");
 				intent.putExtra("buyHours", hours);
+				intent.putExtra("orderId", order.orderId);
 				intent.putExtra("totalPrice", (double)(hours * 100));
 				startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 			}
