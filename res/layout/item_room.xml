@@ -1,13 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center">
     
     <TextView
         android:id="@+id/tv_room_1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="32dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center"
@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/tv_room_2"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="32dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center"
@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/tv_room_3"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="32dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center"
@@ -43,6 +43,7 @@
         android:textSize="@dimen/body" 
     	android:background="@drawable/btn_light_gray_rect_selector"/>
     
+    <!-- 
     <TextView
         android:id="@+id/tv_room_4"
         android:layout_width="0dp"
@@ -55,8 +56,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/body" 
     	android:background="@drawable/btn_light_gray_rect_selector"/>
-    
-    <!-- <TextView
+    <TextView
         android:id="@+id/tv_room_5"
         android:layout_width="0dp"
         android:layout_height="match_parent"

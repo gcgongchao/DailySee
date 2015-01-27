@@ -47,7 +47,8 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 		int size = 0;
 		if (roomList != null && roomList.size() > 0 ) {
 			size = roomList.size();
-			size = size % 4 == 0 ? (size / 4) : (size / 4 + 1);
+//			size = size % 4 == 0 ? (size / 4) : (size / 4 + 1);
+			size = size % 3 == 0 ? (size / 3) : (size / 3 + 1);
 		}
 		return size;
 	}
@@ -122,20 +123,20 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 			holder = (ChildrenViewHolder) convertView.getTag();
 		}
 
-		final Room room1 = (Room) getChild(groupPosition, childPosition * 4);
-		final Room room2 = (Room) getChild(groupPosition, childPosition * 4 + 1);
-		final Room room3 = (Room) getChild(groupPosition, childPosition * 4 + 2);
-		final Room room4 = (Room) getChild(groupPosition, childPosition * 4 + 3);
+		final Room room1 = (Room) getChild(groupPosition, childPosition * 3);
+		final Room room2 = (Room) getChild(groupPosition, childPosition * 3 + 1);
+		final Room room3 = (Room) getChild(groupPosition, childPosition * 3 + 2);
+//		final Room room4 = (Room) getChild(groupPosition, childPosition * 4 + 3);
 
 		setRoomName(holder.room1, room1);
 		setRoomName(holder.room2, room2);
 		setRoomName(holder.room3, room3);
-		setRoomName(holder.room4, room4);
+//		setRoomName(holder.room4, room4);
 		
 		holder.room1.setOnClickListener(this);
 		holder.room2.setOnClickListener(this);
 		holder.room3.setOnClickListener(this);
-		holder.room4.setOnClickListener(this);
+//		holder.room4.setOnClickListener(this);
 		
         return convertView;
 	}
@@ -179,13 +180,13 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 		public TextView room1;
 		public TextView room2;
 		public TextView room3;
-		public TextView room4;
+//		public TextView room4;
 
 		public ChildrenViewHolder(View convertView) {
 			room1 = (TextView) convertView.findViewById(R.id.tv_room_1);
 			room2 = (TextView) convertView.findViewById(R.id.tv_room_2);
 			room3 = (TextView) convertView.findViewById(R.id.tv_room_3);
-			room4 = (TextView) convertView.findViewById(R.id.tv_room_4);
+//			room4 = (TextView) convertView.findViewById(R.id.tv_room_4);
 
 			convertView.setTag(this);
 		}

@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
@@ -40,6 +42,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	
 	private ExpandableListView mListView;
 	private ArrayList<RoomType> mGroupList = new ArrayList<RoomType>();
+	private Map<Long, List<Room>> mChildrenList = new HashMap<Long, List<Room>>();
 	private RoomAdapter mAdapter;
 
 	private LinearLayout mLlMerchantTitle;
@@ -54,10 +57,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	protected String mDate;
 
 	private int mFrom;
-
-	private Map<Long, List<Room>> mChildrenList = new HashMap<Long, List<Room>>();
-
 	protected RoomType mRoomType;
+	private int mLastGroupClick = -1;
 
 	private View emptyView;
 
@@ -147,25 +148,47 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		mLlMerchantTitle.setOnClickListener(this);
 		mIvImage.setOnClickListener(this);
 		
+//		mListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				
+//			}
+//		});
 		mListView.setOnGroupClickListener(new OnGroupClickListener() {
 			
 			@Override
 			public boolean onGroupClick(ExpandableListView parent, View arg1, int groupPositiion, long arg3) {
-				RoomType roomType = (RoomType) parent.getAdapter().getItem(groupPositiion + 1);
-				if (roomType != null) {
-					mRoomType = roomType;
+				if (mLastGroupClick == -1) {
+					parent.expandGroup(groupPositiion);
+				} else if (mLastGroupClick != groupPositiion) {
+					parent.collapseGroup(mLastGroupClick);
+					parent.expandGroup(groupPositiion);
+				} else if (mLastGroupClick == groupPositiion) {
+					if (parent.isGroupExpanded(groupPositiion)) {
+						parent.collapseGroup(groupPositiion);
+					} else {
+						parent.expandGroup(groupPositiion);
+					}
+				}
+				
+				mLastGroupClick = groupPositiion;
+				
+				Object obj = parent.getAdapter().getItem(groupPositiion + 1);
+				if (obj != null && obj instanceof RoomType) {
+					mRoomType = (RoomType) obj;
 					switch (mFrom) {
 					case Constants.From.MERCHANT:
-						toMerchantProductList(roomType);
+						toMerchantProductList(mRoomType);
 						break;
 					case Constants.From.GIFT:
-						toSelectRoom(roomType);
+						toSelectRoom(mRoomType);
 						break;
 					default:
 						break;
 					}
 				}
-				return false;
+				return true;
 			}
 		});
 	}
@@ -194,6 +217,10 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				if (roomResponse != null && roomResponse.rows != null && roomResponse.rows.size() > 0) {
 					List<Room> roomList = roomResponse.rows;
 					mChildrenList.put(roomType.roomTypeId, roomList);
+					
+					if (!mListView.isGroupExpanded(mLastGroupClick)) {
+						mListView.expandGroup(mLastGroupClick);
+					}
 				} else {
 					showToast("该房型暂无房间可赠送");
 				}
@@ -202,7 +229,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				toShowProgressMsg("正在加载房间...");
 			}
 
 			@Override
@@ -329,6 +356,11 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				mAdapter.notifyDataSetChanged();
 				
 				if (mGroupList.size() > 0) {
+					if (mFrom == Constants.From.GIFT) {
+						mLastGroupClick = 0;
+						mRoomType = mGroupList.get(0);
+						toSelectRoom(mRoomType);
+					}
 					emptyView.setVisibility(View.GONE);
 				} else {
 					emptyView.setVisibility(View.VISIBLE);
@@ -337,7 +369,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 			@Override
 			public void onPreExecute() {
-				toShowProgressMsg("正在加载...");
+				toShowProgressMsg("正在加载房间类型...");
 			}
 
 			@Override

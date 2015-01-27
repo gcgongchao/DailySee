@@ -430,7 +430,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			break;
 		case R.id.btn_to_payment:
 			if (mRoomType != null && mMerchant != null) {
-				if (mTotalPrice >= mRoomType.ttAmt) {
+				if (mFrom == Constants.From.GIFT || mTotalPrice >= mRoomType.ttAmt) {
 					toConfirmOrder();
 				} else {
 					showToast("您选购的商品没有达到该商家的最低消费: ¥" + Utils.formatTwoFractionDigits(mRoomType.ttAmt));
