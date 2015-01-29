@@ -2,15 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_list_selector"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/ll_order_item_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="visible" 
-    	android:padding="10dp" >
+        android:padding="10dp"
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/tv_name"
@@ -20,7 +20,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="可可鱼店可可鱼店可可鱼店可可鱼店"
+            android:text="服务费"
             android:textColor="@color/deep_gray"
             android:textSize="@dimen/subhead" />
 
@@ -42,12 +42,12 @@
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="64dp"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:layout_marginLeft="8dp"
+            android:ellipsize="end"
             android:gravity="top"
-            android:text="¥16"
+            android:minWidth="64dp"
+            android:singleLine="true"
+            android:text="10%"
             android:textColor="@color/deep_gray"
             android:textSize="@dimen/body"
             android:visibility="visible" />
@@ -57,54 +57,124 @@
         android:id="@+id/ll_order_item_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-    	android:padding="10dp" >
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:text="合计: "
-            android:textColor="@color/deep_gray"
-            android:textSize="@dimen/subhead" />
+            android:orientation="horizontal" 
+            android:layout_margin="10dp">
 
-        <TextView
-            android:id="@+id/tv_total_price"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="合计: "
+                android:textColor="@color/deep_gray"
+                android:textSize="@dimen/subhead" />
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="¥123"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/body"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="(含服务费10%)"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/deep_gray"
+                android:textSize="@dimen/body" />
+        </LinearLayout>
+
+	    <View
+	        android:id="@+id/divider_remark"
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/gray" />
+
+        <LinearLayout
+            android:id="@+id/ll_remark"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:text="¥123"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/body"
-            android:visibility="visible" />
-        
-        <Button
-            android:id="@+id/btn_deal"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:background="@drawable/btn_orange_selector"
-            android:gravity="center"
-            android:text="处理订单"
-            android:textColor="@color/white"
-            android:textSize="@dimen/body" />
+            android:orientation="horizontal" 
+            android:layout_margin="10dp">
 
-        <Button
-            android:id="@+id/btn_deal2"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:background="@drawable/btn_orange_selector"
-            android:layout_marginLeft="8dp"
-            android:gravity="center"
-            android:text="处理订单"
-            android:textColor="@color/white"
-            android:textSize="@dimen/body" 
-            android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="备注: "
+                android:textColor="@color/deep_gray"
+                android:textSize="@dimen/subhead" />
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="3"
+                android:text=""
+                android:textColor="@color/deep_gray"
+                android:textSize="@dimen/body"
+                android:visibility="visible" />
+        </LinearLayout>
+
+	    <View
+	        android:id="@+id/divider_bottom"
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/gray" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:layout_margin="10dp"
+            android:gravity="center_vertical|right">
+
+            <Button
+                android:id="@+id/btn_deal"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/btn_orange_selector"
+                android:gravity="center"
+                android:text="处理订单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body" />
+
+            <Button
+                android:id="@+id/btn_deal2"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/btn_orange_selector"
+                android:gravity="center"
+                android:text="处理订单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 
     <View

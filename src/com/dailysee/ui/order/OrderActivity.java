@@ -69,6 +69,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	private OrderFilterPopupWindow mOrderFilterPopupWindow;
 	private ListViewDialog mCommentDialog;
 	private ListViewDialog mContinueServiceDialog;
+	private int mLastGroupClick = -1;
 
 	public OrderActivity() {
 
@@ -138,6 +139,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					
 					mGroupList.clear();
 					mChildrenList.clear();
+					
+					mExpandableListView.collapseGroup(mLastGroupClick);
+					mLastGroupClick = 0;
 				}
 				
 				OrderResponse orderResponse = (OrderResponse) response.getResponse(new TypeToken<OrderResponse>(){});
@@ -154,6 +158,15 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						
 						if (order != null) {
 							if ("CONSUME".equals(order.businessType)) {
+								if (order.fee > 0) {
+									OrderItem feeItem = new OrderItem();
+									feeItem.itemId = Long.MAX_VALUE;
+									feeItem.price = order.fee;
+									feeItem.name = "服务费";
+									feeItem.quantity = 1;
+									feeItem.proType = "Fee";
+									items.add(feeItem);
+								}
 					    	} else if ("SERVICE".equals(order.businessType)) {
 					    		OrderItem consultant = new OrderItem();
 					    		consultant.itemId = Long.MAX_VALUE;
@@ -176,6 +189,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					mExpandableListView.setEmptyView(emptyView);
 				}
 				mAdapter.notifyDataSetChanged();
+				mExpandableListView.expandGroup(mLastGroupClick);
 			}
 
 			@Override
@@ -403,6 +417,21 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 
 	@Override
 	public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+		if (mLastGroupClick == -1) {
+			parent.expandGroup(groupPosition);
+		} else if (mLastGroupClick != groupPosition) {
+			parent.collapseGroup(mLastGroupClick);
+			parent.expandGroup(groupPosition);
+		} else if (mLastGroupClick == groupPosition) {
+			if (parent.isGroupExpanded(groupPosition)) {
+				parent.collapseGroup(groupPosition);
+			} else {
+				parent.expandGroup(groupPosition);
+			}
+		}
+		
+		mLastGroupClick = groupPosition;
+		
 		Order order = mGroupList.get(groupPosition);
 		if (order != null && groupPosition < mChildrenList.size()) {
 			List<OrderItem> list = mChildrenList.get(groupPosition);
@@ -410,7 +439,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				requestOrderItems(order, groupPosition);
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public void showEndServiceDialog(final Order order) {

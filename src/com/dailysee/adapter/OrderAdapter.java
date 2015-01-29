@@ -150,9 +150,13 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 				holder.name.setText(orderItem.name);
 				holder.count.setText(orderItem.quantity + "小时");
 				holder.price.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
-			} else {
-				holder.count.setText("X" + orderItem.quantity);
+			} else if ("Fee".equals(orderItem.proType)){
 				holder.name.setText(orderItem.name);
+				holder.count.setText("X" + orderItem.quantity);
+				holder.price.setText(Utils.formatTwoFractionDigits(orderItem.price) + "%");
+			} else {
+				holder.name.setText(orderItem.name);
+				holder.count.setText("X" + orderItem.quantity);
 				holder.price.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
 			}
 		} else {
@@ -160,6 +164,20 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder.llOrderItemFooter.setVisibility(View.VISIBLE);
 			holder.divider.setVisibility(View.VISIBLE);
 			holder.totalPrice.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
+			if (order.fee > 0) {
+				holder.tvFee.setText("(含服务费" + Utils.formatTwoFractionDigits(order.fee) + "%)");
+			} else {
+				holder.tvFee.setText("");
+			}
+			
+			if (!TextUtils.isEmpty(order.remark)) {
+				holder.llRemark.setVisibility(View.VISIBLE);
+				holder.dividerRemark.setVisibility(View.VISIBLE);
+				holder.tvRemark.setText(order.remark);
+			} else {
+				holder.llRemark.setVisibility(View.GONE);
+				holder.dividerRemark.setVisibility(View.GONE);
+			}
 			
 			/**
 			 * WAIT_PAY: 等待付款; 
@@ -170,37 +188,51 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			 * SUCCEED: 交易成功    
 			 * CLOSE:交易关闭
 			 */
+			holder.llBottom.setVisibility(View.GONE);
+			holder.dividerBottom.setVisibility(View.GONE);
 			holder.btnDeal.setVisibility(View.GONE);
 			holder.btnDeal2.setVisibility(View.GONE);
 			if (Constants.OrderFilter.WAIT_PAY.equals(order.orderStatus)) {
 				holder.btnDeal.setText("去付款");
 				holder.btnDeal.setVisibility(View.VISIBLE);
+				holder.llBottom.setVisibility(View.VISIBLE);
+				holder.dividerBottom.setVisibility(View.VISIBLE);
 			} else if ("SERVICE".equals(order.businessType)) { 
 				if (Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)) {
 					holder.btnDeal2.setText("申请退款");
 					holder.btnDeal2.setVisibility(View.VISIBLE);
+					holder.llBottom.setVisibility(View.VISIBLE);
+					holder.dividerBottom.setVisibility(View.VISIBLE);
 				} else if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
 					// 只有顾问订单才可以开始服务
 					holder.btnDeal.setText("开始服务");
 					holder.btnDeal.setVisibility(View.VISIBLE);
 					holder.btnDeal2.setText("申请退款");
 					holder.btnDeal2.setVisibility(View.VISIBLE);
+					holder.llBottom.setVisibility(View.VISIBLE);
+					holder.dividerBottom.setVisibility(View.VISIBLE);
 				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
 					// 只有顾问订单才可以结束服务，续费服务
 					holder.btnDeal.setText("结束服务");
 					holder.btnDeal.setVisibility(View.VISIBLE);
 					holder.btnDeal2.setText("续费");
 					holder.btnDeal2.setVisibility(View.VISIBLE);
+					holder.llBottom.setVisibility(View.VISIBLE);
+					holder.dividerBottom.setVisibility(View.VISIBLE);
 				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
 					// 只有顾问订单才可以评论订单
 					holder.btnDeal.setText("去评价");
 					holder.btnDeal.setVisibility(View.VISIBLE);
+					holder.llBottom.setVisibility(View.VISIBLE);
+					holder.dividerBottom.setVisibility(View.VISIBLE);
 				}
 			} else if ("CONSUME".equals(order.businessType)) {
 				if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)
 						|| Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)) {
 					holder.btnDeal2.setText("申请退款");
 					holder.btnDeal2.setVisibility(View.VISIBLE);
+					holder.llBottom.setVisibility(View.VISIBLE);
+					holder.dividerBottom.setVisibility(View.VISIBLE);
 				}
 			}
 			holder.btnDeal.setOnClickListener(new OnClickListener() {
@@ -267,6 +299,12 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 		
 		public LinearLayout llOrderItemFooter;
 		public TextView totalPrice;
+		public TextView tvFee;
+		public LinearLayout llRemark;
+		public TextView tvRemark;
+		public View dividerRemark;
+		public LinearLayout llBottom;
+		public View dividerBottom;
 		public Button btnDeal;
 		public Button btnDeal2;
 		
@@ -280,6 +318,12 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 
 			llOrderItemFooter = (LinearLayout) convertView.findViewById(R.id.ll_order_item_footer);
 			totalPrice = (TextView) convertView.findViewById(R.id.tv_total_price);
+			tvFee = (TextView) convertView.findViewById(R.id.tv_fee);
+			llRemark = (LinearLayout) convertView.findViewById(R.id.ll_remark);
+			tvRemark = (TextView) convertView.findViewById(R.id.tv_remark);
+			dividerRemark = convertView.findViewById(R.id.divider_remark);
+			llBottom = (LinearLayout) convertView.findViewById(R.id.ll_bottom);
+			dividerBottom = convertView.findViewById(R.id.divider_bottom);
 			btnDeal = (Button) convertView.findViewById(R.id.btn_deal);
 			btnDeal2 = (Button) convertView.findViewById(R.id.btn_deal2);
 			
