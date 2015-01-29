@@ -433,13 +433,13 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		
 		mLastGroupClick = groupPosition;
 		
-		Order order = mGroupList.get(groupPosition);
-		if (order != null && groupPosition < mChildrenList.size()) {
-			List<OrderItem> list = mChildrenList.get(groupPosition);
-			if (list == null) {
-				requestOrderItems(order, groupPosition);
-			}
-		}
+//		Order order = mGroupList.get(groupPosition);
+//		if (order != null && groupPosition < mChildrenList.size()) {
+//			List<OrderItem> list = mChildrenList.get(groupPosition);
+//			if (list == null) {
+//				requestOrderItems(order, groupPosition);
+//			}
+//		}
 		return true;
 	}
 	

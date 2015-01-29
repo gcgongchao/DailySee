@@ -145,7 +145,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 					holder.name.setText(orderItem.name);
 				}
 				holder.count.setText("");
-				holder.price.setText("");
+				holder.price.setText("预定日期：" + Utils.formatTime(order.bookDate, Utils.DATE_FORMAT_YMD));
 			} else if ("Consultant".equals(orderItem.proType)) {
 				holder.name.setText(orderItem.name);
 				holder.count.setText(orderItem.quantity + "小时");
