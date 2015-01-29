@@ -139,9 +139,6 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					
 					mGroupList.clear();
 					mChildrenList.clear();
-					
-					mExpandableListView.collapseGroup(mLastGroupClick);
-					mLastGroupClick = 0;
 				}
 				
 				OrderResponse orderResponse = (OrderResponse) response.getResponse(new TypeToken<OrderResponse>(){});
@@ -189,7 +186,11 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					mExpandableListView.setEmptyView(emptyView);
 				}
 				mAdapter.notifyDataSetChanged();
-				mExpandableListView.expandGroup(mLastGroupClick);
+				
+				if (mLastGroupClick == -1) {
+					mLastGroupClick = 0;
+					mExpandableListView.expandGroup(mLastGroupClick);
+				}
 			}
 
 			@Override
