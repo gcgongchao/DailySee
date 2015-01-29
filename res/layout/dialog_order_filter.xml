@@ -48,7 +48,7 @@
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="10dp"
             android:singleLine="true"
-            android:text="未付款"
+            android:text="未付款订单"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
@@ -69,7 +69,7 @@
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="10dp"
             android:singleLine="true"
-            android:text="已预订"
+            android:text="预定订单"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
@@ -90,7 +90,7 @@
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="10dp"
             android:singleLine="true"
-            android:text="未评论"
+            android:text="未评论订单"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
