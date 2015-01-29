@@ -636,14 +636,20 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			Merchant mMerchant = new Merchant();
 			mMerchant.merchantId = order.merchantId;
 			mMerchant.name = order.sellerName;
+			mMerchant.feeRate = order.rate;
+			
+			int count = order.items.size() - 1;
+			if (order.rate > 0) {
+				count = count - 1;
+			}
 			
 			ArrayList<Product> list = new ArrayList<Product>();
-			for (int i = 1; i < order.items.size() - 1; i++) {// 排除：第一项是房间类型，最后一项是合计
+			for (int i = 1; i < count; i++) {// 排除：第一项是房间类型，最后一项是合计
 				OrderItem item = order.items.get(i);
 				Product product = new Product();
 				product.name = item.name;
 				product.count = item.quantity;
-				product.price = item.price;
+				product.ttPrice = item.price;
 				list.add(product);
 			}
 					
