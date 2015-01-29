@@ -531,14 +531,14 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				Utils.clossDialog(mCommentDialog);
 				
 //				showToast(items.get(position).toString());
-				toCommitOrderComment(orderId, position);
+				requestCommitOrderComment(orderId, position);
 			}
 			
 		});
 		mCommentDialog.show();
 	}
 
-	protected void toCommitOrderComment(final long orderId, final int position) {
+	protected void requestCommitOrderComment(final long orderId, final int position) {
 		// Tag used to cancel the request
 		String tag = "tag_request_comment_order";
 		NetRequest.getInstance(getActivity()).post(new Callback() {
