@@ -169,15 +169,15 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void toProfile() {
-		if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
-			Intent intent = new Intent();
-			intent.setClass(getActivity(), EditProfileActivity.class);
-			startActivity(intent);
-		} else {
+//		if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
+//			Intent intent = new Intent();
+//			intent.setClass(getActivity(), EditProfileActivity.class);
+//			startActivity(intent);
+//		} else {
 			Intent intent = new Intent();
 			intent.setClass(mContext, ProfileActivity.class);
 			startActivityForResult(intent, REQUEST_PROFILE);
-		}
+//		}
 	}
 
 	private void toLogin() {
