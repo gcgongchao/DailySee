@@ -27,6 +27,7 @@ public class BrowseImageActivity extends BaseActivity implements OnClickListener
 	public static final String EXTRA_IMAGW_FROM = "image_from";
 	public static final String EXTRA_IMAGW_INDEX = "image_index";
 	public static final String EXTRA_IMAGW_ARRAY = "image_array";
+	public static final String EXTRA_IMAGW_ALLOW_DELETE = "image_allow_delete";
 
 	private RelativeLayout rlTitleBar;
 	private ScrollView svDesc;
@@ -37,6 +38,7 @@ public class BrowseImageActivity extends BaseActivity implements OnClickListener
 	protected Integer mIndex;
 	private ArrayList<String> mImages = new ArrayList<String>();
 	private ImageView ivDelete;
+	private boolean mAllowDelete = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class BrowseImageActivity extends BaseActivity implements OnClickListener
 		if (intent != null) {
 			mIndex = intent.getIntExtra(EXTRA_IMAGW_INDEX, 0);
 			mImages = (ArrayList<String>) intent.getSerializableExtra(EXTRA_IMAGW_ARRAY);
+			mAllowDelete  = intent.getBooleanExtra(EXTRA_IMAGW_ALLOW_DELETE, false);
 		}
 		setUp();
 	}
@@ -80,6 +83,9 @@ public class BrowseImageActivity extends BaseActivity implements OnClickListener
 		} else {
 			tvIndex.setText("1/" + mImages.size());
 //			tvDesc.setText(((ImageVo) mImages.get(index)).getDescripe());
+		}
+		if (mAllowDelete) {
+			ivDelete.setVisibility(View.VISIBLE);
 		}
 	}
 

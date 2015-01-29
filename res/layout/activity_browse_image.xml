@@ -44,6 +44,19 @@
             android:padding="5dp"
             android:text="1/10"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:minWidth="48dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="center"
+            android:src="@drawable/ic_clear"
+            android:visibility="gone" >
+        </ImageView>
     </RelativeLayout>
     
     <ScrollView
