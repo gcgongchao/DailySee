@@ -163,9 +163,9 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 			holder.llOrderItemInfo.setVisibility(View.GONE);
 			holder.llOrderItemFooter.setVisibility(View.VISIBLE);
 			holder.divider.setVisibility(View.VISIBLE);
-			holder.totalPrice.setText("¥" + Utils.formatTwoFractionDigits(orderItem.price));
-			if (order.fee > 0) {
-				holder.tvFee.setText("(含服务费" + Utils.formatTwoFractionDigits(order.fee) + "%)");
+			holder.totalPrice.setText("¥" + Utils.formatTwoFractionDigits(order.amount + order.fee));
+			if (order.rate > 0) {
+				holder.tvFee.setText("(含服务费" + Utils.formatTwoFractionDigits(order.rate) + "%)");
 			} else {
 				holder.tvFee.setText("");
 			}

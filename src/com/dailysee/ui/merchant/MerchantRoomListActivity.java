@@ -116,6 +116,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		mListView = (ExpandableListView) findViewById(R.id.list_view);
 		mListView.addHeaderView(header);
 		mListView.setGroupIndicator(null);
+		mListView.setChildDivider(getResources().getDrawable(R.color.gray));
 		
 		emptyView = findViewById(R.id.ll_no_data);
 	}

@@ -11,7 +11,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseActivity;
 
-public class BrowseImageActivity extends BaseActivity {
+public class BrowseImageActivity extends BaseActivity implements OnClickListener {
 	public static final String EXTRA_IMAGW_FROM = "image_from";
 	public static final String EXTRA_IMAGW_INDEX = "image_index";
 	public static final String EXTRA_IMAGW_ARRAY = "image_array";
@@ -34,6 +36,7 @@ public class BrowseImageActivity extends BaseActivity {
 	protected ViewPager vpImage;
 	protected Integer mIndex;
 	private ArrayList<String> mImages = new ArrayList<String>();
+	private ImageView ivDelete;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class BrowseImageActivity extends BaseActivity {
 		svDesc = (ScrollView) findViewById(R.id.sv_desc);
 		tvDesc = (TextView) findViewById(R.id.tv_desc);
 		tvIndex = (TextView) findViewById(R.id.tv_index);
+		ivDelete = (ImageView) findViewById(R.id.iv_delete);
 		
 		vpImage = (ViewPager) findViewById(R.id.vpImage);
 		vpImage.setOffscreenPageLimit(1);
@@ -81,6 +85,7 @@ public class BrowseImageActivity extends BaseActivity {
 
 	@Override
 	public void onBindListener() {
+		ivDelete.setOnClickListener(this);
 		vpImage.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
@@ -169,6 +174,17 @@ public class BrowseImageActivity extends BaseActivity {
 		if (!isCached) {
 			Toast.makeText(this, "保存图片未加载成功！", Toast.LENGTH_LONG).show();
 			return;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.iv_delete:
+			
+			break;
+		default:
+			break;
 		}
 	}
 

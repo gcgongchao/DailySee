@@ -113,6 +113,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		mAdapter = new OrderAdapter(getActivity(), mGroupList, mChildrenList, mHandler);
 		mExpandableListView.setAdapter(mAdapter);
 		mExpandableListView.setGroupIndicator(null);
+		mExpandableListView.setChildDivider(getResources().getDrawable(R.color.gray));
 	}
 
 	@Override
@@ -155,10 +156,10 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 						
 						if (order != null) {
 							if ("CONSUME".equals(order.businessType)) {
-								if (order.fee > 0) {
+								if (order.rate > 0) {
 									OrderItem feeItem = new OrderItem();
 									feeItem.itemId = Long.MAX_VALUE;
-									feeItem.price = order.fee;
+									feeItem.price = order.rate;
 									feeItem.name = "服务费";
 									feeItem.quantity = 1;
 									feeItem.proType = "Fee";

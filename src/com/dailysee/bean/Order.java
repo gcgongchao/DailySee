@@ -18,6 +18,7 @@ public class Order implements Serializable {
 	public String orderSelStatusName;//
 	public String orderBuyStatusName;//			订单状态名称	会员取orderBuyStatusName的值 商户和顾问取orderSelStatusName的值
 	public double amount;//			订单金额	元
+	public double rate;//			费率
 	public double fee;//			小费	元
 	public String roomNo;//			房号	赠送单时候才有
 	public String mobile;//			接收短信手机	
