@@ -30,7 +30,6 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 	private TextView btnGetCode;
 	protected String mCheckCode;
 	protected String mCheckKey;
-	private ImageView mIvUp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onFindViews() {
-		mIvUp = (ImageView) findViewById(R.id.iv_up);
 		etPhone = (EditText) findViewById(R.id.et_phone);
 		etCode = (EditText) findViewById(R.id.et_code);
 		btnCommit = (Button) findViewById(R.id.btn_commit);
@@ -55,12 +53,10 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onInitViewData() {
-		mIvUp.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void onBindListener() {
-		mIvUp.setOnClickListener(this);
 		btnCommit.setOnClickListener(this);
 		btnGetCode.setOnClickListener(this);
 	}

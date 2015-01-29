@@ -531,7 +531,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				Utils.clossDialog(mCommentDialog);
 				
 //				showToast(items.get(position).toString());
-				requestCommitOrderComment(orderId, position);
+				requestCommitOrderComment(orderId, position + 1);
 			}
 			
 		});

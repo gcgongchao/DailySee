@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +37,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private TextView btnGetCode;
 	protected String mCheckCode;
 	protected String mCheckKey;
-	private ImageView mIvUp;
 	private String from;
 
 	@Override
@@ -60,7 +58,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onFindViews() {
-		mIvUp = (ImageView) findViewById(R.id.iv_up);
 		etPhone = (EditText) findViewById(R.id.et_phone);
 		etCode = (EditText) findViewById(R.id.et_code);
 		btnCommit = (Button) findViewById(R.id.btn_commit);
@@ -70,12 +67,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onInitViewData() {
-		mIvUp.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void onBindListener() {
-		mIvUp.setOnClickListener(this);
 		btnCommit.setOnClickListener(this);
 		btnGetCode.setOnClickListener(this);
 		btnToRegister.setOnClickListener(this);
