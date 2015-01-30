@@ -241,7 +241,6 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	public void onInitViewData() {
 		mTvRoomTitle.setText("房间信息");
 		
-		hideBottomBar();
 		if (mRoomType != null) {
 			if (mRoomType.startAmt > 0) {
 				mTotalPrice = mRoomType.startAmt;
@@ -249,12 +248,16 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				mTvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
 				mEmptyView.setVisibility(View.VISIBLE);
 				showBottomBar();
+			} else {
+				hideBottomBar();
 			}
 			String desc = mRoomType.useDesc;
 			if (TextUtils.isEmpty(desc)) {
 				desc = "暂无介绍";
 			}
 			mTvRoomDesc.setText(desc);
+		} else {
+			hideBottomBar();
 		}
 		
 		onGroupItemClick(Constants.Type.ROOM);
@@ -282,9 +285,6 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		
 		mRecommendType = new ProductType();
 		mRecommendType.productTypeId = Constants.Type.RECOMMEND;
-		
-		mEmptyView.setVisibility(View.GONE);
-		
 	}
 
 	private void hideBottomBar() {
