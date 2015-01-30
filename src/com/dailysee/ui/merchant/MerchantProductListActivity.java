@@ -240,7 +240,16 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	@Override
 	public void onInitViewData() {
 		mTvRoomTitle.setText("房间信息");
+		
+		hideBottomBar();
 		if (mRoomType != null) {
+			if (mRoomType.startAmt > 0) {
+				mTotalPrice = mRoomType.startAmt;
+				mShoppingCount = 1;
+				mTvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));
+				mEmptyView.setVisibility(View.VISIBLE);
+				showBottomBar();
+			}
 			String desc = mRoomType.useDesc;
 			if (TextUtils.isEmpty(desc)) {
 				desc = "暂无介绍";
@@ -276,7 +285,6 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		
 		mEmptyView.setVisibility(View.GONE);
 		
-		hideBottomBar();
 	}
 
 	private void hideBottomBar() {

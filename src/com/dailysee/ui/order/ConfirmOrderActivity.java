@@ -202,6 +202,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			if (mOrderId == 0) {// 非订单列表进入
 				items = getShoppingCartItems();
 			}
+			if (items != null && mRoomType != null && mRoomType.startAmt > 0) {
+				Product startProduct = new Product();
+				startProduct.name = "开台一套";
+				startProduct.ttPrice = mRoomType.startAmt;
+				startProduct.count = 1;
+				items.add(0, startProduct);
+			}
 			mAdapter = new ConfirmOrderAdapter(getActivity(), items);
 			mListView.setAdapter(mAdapter);
 			
@@ -388,8 +395,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					orderList.add(roomOrder);
 					
 					for (Product product : items) {
-						ProductOrder productOrder = new ProductOrder(product);
-						orderList.add(productOrder);
+						if (product.productId > 0) {
+							ProductOrder productOrder = new ProductOrder(product);
+							orderList.add(productOrder);
+						}
 					}
 					params.put("items", new Gson().toJson(orderList));
 					break;

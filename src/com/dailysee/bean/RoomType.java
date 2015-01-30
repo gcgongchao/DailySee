@@ -13,6 +13,7 @@ public class RoomType implements Serializable {
 	public String useDesc;//			房间类型描述	
 	public float amt;//			原最低消费价	单位分
 	public float ttAmt;//			天天最低消费价	单位分
+	public float startAmt;// 开台一套
 	public String logoUrl;//			头像	
 	public List<Image> imgs;//（相册类图片）	
 	
