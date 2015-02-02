@@ -407,7 +407,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 	private void uploadImage(Uri cropUri, String uploadId) {
 		long belongObjId = mSpUtil.getBelongObjId();
 		
-		final String serverUrlString = NetRequest.SERVER_URL;
+		final String serverUrlString = NetRequest.UPLOAD_SERVER_URL;
 		final String fileToUploadPath = cropUri.getPath().toString();
 		final String paramNameString = "file";
 		final String fileName = Utils.getFileName(fileToUploadPath);
