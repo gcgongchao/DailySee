@@ -239,7 +239,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 	@Override
 	public void onInitViewData() {
-		mTvRoomTitle.setText("房间信息");
+		mTvRoomTitle.setText("您预定的房间信息");
 		
 		if (mRoomType != null) {
 			if (mRoomType.startAmt > 0 && mFrom == Constants.From.MERCHANT) {

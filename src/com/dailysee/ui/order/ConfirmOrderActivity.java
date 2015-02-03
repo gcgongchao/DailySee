@@ -381,14 +381,18 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				switch (mFrom) {
 				case Constants.From.GIFT:
 				case Constants.From.MERCHANT:
-					params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
+					if (mFrom == Constants.From.MERCHANT){
+						params.put("mtd", "com.guocui.tty.api.web.OrderController.saveConsumeOrder");
+					} else if (mFrom == Constants.From.GIFT) {
+						if (mRoom != null) {
+							params.put("roomId", Long.toString(mRoom.roomId));
+						}
+						params.put("mtd", "com.guocui.tty.api.web.OrderController.saveGiftOrder");
+					}
 					params.put("merchantId", Long.toString(mMerchant.merchantId));
 					params.put("sellerName", mMerchant.name);
 					params.put("bookDate", mDate);
 					params.put("remark", getRemark());
-					if (mFrom == Constants.From.GIFT && mRoom != null) {
-						params.put("roomId", Long.toString(mRoom.roomId));
-					} 
 					List<ProductOrder> orderList = new ArrayList<ProductOrder>();
 					
 					ProductOrder roomOrder = new ProductOrder(mRoomType);
