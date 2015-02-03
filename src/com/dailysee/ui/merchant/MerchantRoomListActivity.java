@@ -1,10 +1,14 @@
 package com.dailysee.ui.merchant;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +39,7 @@ import com.dailysee.net.response.RoomResponse;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
+import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener, OnRoomClickListener {
@@ -180,7 +186,8 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 					mRoomType = (RoomType) obj;
 					switch (mFrom) {
 					case Constants.From.MERCHANT:
-						toMerchantProductList(mRoomType);
+//						toMerchantProductList(mRoomType);
+						showSelectBookingDateDialog(mRoomType);
 						break;
 					case Constants.From.GIFT:
 						toSelectRoom(mRoomType);
@@ -192,6 +199,57 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				return true;
 			}
 		});
+	}
+	
+	private void showSelectBookingDateDialog(final RoomType mRoomType) {
+//		mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
+//			
+//			@Override
+//			public void onDateUnselected(Date date) {
+//				
+//			}
+//			
+//			@Override
+//			public void onDateSelected(Date date) {
+//				Utils.clossDialog(mSelectBookingDateDialog);
+//				
+//				String dateStr = Utils.formatDate(date, Utils.DATE_FORMAT_YMD);
+//				toMerchantRoomList(merchant, dateStr);
+//			}
+//		});
+//		mSelectBookingDateDialog.show();
+		
+		Calendar c = Calendar.getInstance();
+		final int year = c.get(Calendar.YEAR);
+		final int month = c.get(Calendar.MONTH);
+		final int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+		
+		final String curDate = year + "-" + (month+1) + "-" + dayOfMonth;
+		DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
+                    	if (!Utils.isFastDoubleClick()) {
+	                    	String dateStr = year + "-" + (month+1) + "-" + dayOfMonth;
+	                    	Date cur = Utils.formatDate(curDate, Utils.DATE_FORMAT_YMD);
+	                    	Date date = Utils.formatDate(dateStr, Utils.DATE_FORMAT_YMD);
+	                    	long offset = (date.getTime() - cur.getTime())/ 1000 / 60 / 60 / 24;
+	                    	if (offset >= 0 && offset <= 7) {
+		                    	mDate = dateStr;
+		                    	toMerchantProductList(mRoomType); 
+	                    	} else if (offset < 0) {
+	                    		showToast("仅可预定七日之内的日期");
+	                    	} else if (offset > 7) {
+	                    		showToast("仅可预定七日之内的日期");
+	                    	}
+                    	}
+                    }
+                }, 
+                year, // 传入年份
+                month, // 传入月份
+                dayOfMonth // 传入天数
+            );
+		dialog.show();
 	}
 
 	protected void toSelectRoom(RoomType roomType) {

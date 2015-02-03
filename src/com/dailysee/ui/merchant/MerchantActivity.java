@@ -380,7 +380,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Merchant merchant = (Merchant) parent.getAdapter().getItem(position);
 		if (merchant != null) {
-			showSelectBookingDateDialog(merchant);
+//			showSelectBookingDateDialog(merchant);
+			toMerchantRoomList(merchant);
 		}
 	}
 
@@ -430,6 +431,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		intent.putExtra("merchant", merchant);
 		intent.putExtra("merchantId", merchant.merchantId);
 		intent.putExtra("date", date);
+		intent.putExtra("from", mFrom);
+		startActivity(intent);
+	}
+
+	protected void toMerchantRoomList(Merchant merchant) {
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), MerchantRoomListActivity.class);
+		intent.putExtra("merchant", merchant);
+		intent.putExtra("merchantId", merchant.merchantId);
 		intent.putExtra("from", mFrom);
 		startActivity(intent);
 	}

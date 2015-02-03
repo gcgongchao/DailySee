@@ -442,6 +442,16 @@ public class Utils {
 	public static String formatTime(long time, String pattern) {
 		return formatDate(new Date(time), pattern);
 	}
+	
+	public static Date formatDate(String date, String pattern) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			return format.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static boolean checkEmail(String email) {
 		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
