@@ -242,7 +242,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mTvRoomTitle.setText("房间信息");
 		
 		if (mRoomType != null) {
-			if (mRoomType.startAmt > 0) {
+			if (mRoomType.startAmt > 0 && mFrom == Constants.From.MERCHANT) {
 				mTotalPrice = mRoomType.startAmt;
 				mShoppingCount = 1;
 				mTvTotalPrice.setText("¥" + Utils.formatTwoFractionDigits(mTotalPrice));

@@ -202,7 +202,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			if (mOrderId == 0) {// 非订单列表进入
 				items = getShoppingCartItems();
 			}
-			if (items != null && mRoomType != null && mRoomType.startAmt > 0) {
+			if (items != null && mRoomType != null && mRoomType.startAmt > 0 && mFrom == Constants.From.MERCHANT) {
 				Product startProduct = new Product();
 				startProduct.name = "开台一套";
 				startProduct.ttPrice = mRoomType.startAmt;
@@ -408,6 +408,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("merchantId", Long.toString(mConsultant.counselorId));
 					params.put("amount", Double.toString(mTotalPrice));
 					params.put("buyHours", Integer.toString(mBuyHours));
+					params.put("remark", getRemark());
 					break;
 				}
 				return params;

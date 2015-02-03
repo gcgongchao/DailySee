@@ -1,6 +1,5 @@
 package com.dailysee.ui.merchant;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,11 +14,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -202,6 +199,10 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	}
 	
 	private void showSelectBookingDateDialog(final RoomType mRoomType) {
+		showSelectBookingDateDialog(mRoomType, null);
+	}
+	
+	private void showSelectBookingDateDialog(final RoomType mRoomType, final Room room) {
 //		mSelectBookingDateDialog = new SelectBookingDateDialog(getActivity(), "选择预订日期", new OnDateSelectedListener() {
 //			
 //			@Override
@@ -236,7 +237,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	                    	long offset = (date.getTime() - cur.getTime())/ 1000 / 60 / 60 / 24;
 	                    	if (offset >= 0 && offset <= 7) {
 		                    	mDate = dateStr;
-		                    	toMerchantProductList(mRoomType); 
+		                    	toMerchantProductList(mRoomType, room); 
 	                    	} else if (offset < 0) {
 	                    		showToast("仅可预定七日之内的日期");
 	                    	} else if (offset > 7) {
@@ -313,11 +314,12 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		}, tag);
 	}
 
-	private void toMerchantProductList(RoomType roomType) {
+	private void toMerchantProductList(RoomType roomType, Room room) {
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), MerchantProductListActivity.class);
 		intent.putExtra("merchant", mMerchant);
 		intent.putExtra("roomType", roomType);
+		intent.putExtra("room", room);
 		intent.putExtra("date", mDate);
 		intent.putExtra("from", mFrom);
 		startActivityForResult(intent, REQUEST_SELECT_PRODUCT);
@@ -326,14 +328,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 	@Override
 	public void onRoomClick(Room room) {
 		if (mRoomType != null && room != null) {
-			Intent intent = new Intent();
-			intent.setClass(getActivity(), MerchantProductListActivity.class);
-			intent.putExtra("merchant", mMerchant);
-			intent.putExtra("roomType", mRoomType);
-			intent.putExtra("room", room);
-			intent.putExtra("date", mDate);
-			intent.putExtra("from", mFrom);
-			startActivityForResult(intent, REQUEST_SELECT_PRODUCT);
+			showSelectBookingDateDialog(mRoomType, room);
 		}
 	}
 
