@@ -51,10 +51,10 @@
             android:id="@+id/ll_room_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="64dp"
             android:orientation="horizontal"
             android:padding="10dp"
-            android:visibility="visible" 
-            android:minHeight="64dp">
+            android:visibility="visible" >
 
             <TextView
                 android:id="@+id/tv_room_desc"
@@ -74,36 +74,149 @@
             android:background="@color/line" />
 
         <LinearLayout
-            android:id="@+id/ll_drink_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:background="@color/app_gray">
 
-            <TextView
-                android:id="@+id/tv_drink_title"
+            <FrameLayout
+                android:id="@+id/ll_drink_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="@dimen/space"
-                android:paddingTop="10dp"
-                android:singleLine="true"
-                android:text="酒水"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subtitle" />
+                android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/iv_drink_expand"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_expand_off" />
+                <TextView
+                    android:id="@+id/tv_drink_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="酒水"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subtitle" />
+
+                <ImageView
+                    android:id="@+id/iv_drink_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"
+                    android:scaleType="centerInside"
+                    android:src="@color/orange"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+	        <View
+	            android:layout_width="@dimen/height_line"
+	            android:layout_height="match_parent"
+	            android:background="@color/line" />
+
+            <FrameLayout
+                android:id="@+id/ll_snack_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_snack_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="食品"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subtitle" />
+
+                <ImageView
+                    android:id="@+id/iv_snack_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"
+                    android:scaleType="centerInside"
+                    android:src="@color/orange"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+	        <View
+	            android:layout_width="@dimen/height_line"
+	            android:layout_height="match_parent"
+	            android:background="@color/line" />
+
+            <FrameLayout
+                android:id="@+id/ll_smoke_tea_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_smoke_tea_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="烟茶"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subtitle" />
+
+                <ImageView
+                    android:id="@+id/iv_smoke_tea_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"
+                    android:scaleType="centerInside"
+                    android:src="@color/orange"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+	        <View
+	            android:layout_width="@dimen/height_line"
+	            android:layout_height="match_parent"
+	            android:background="@color/line" />
+
+            <FrameLayout
+                android:id="@+id/ll_recommend_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_recommend_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="10dp"
+                    android:singleLine="true"
+                    android:text="推荐"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subtitle" />
+
+                <ImageView
+                    android:id="@+id/iv_recommend_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"
+                    android:scaleType="centerInside"
+                    android:src="@color/orange"
+                    android:visibility="gone" />
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -112,8 +225,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:orientation="vertical" 
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_drink_tab"
@@ -138,61 +251,23 @@
                 android:footerDividersEnabled="true"
                 android:headerDividersEnabled="true" />
 
-		    <LinearLayout
-		        android:id="@+id/ll_drink_no_data"
-		        android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/ll_drink_no_data"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-		        android:gravity="center"
-		        android:orientation="vertical"
-		        android:visibility="gone" >
-		
-		        <TextView
-		            android:id="@+id/tv_drink_no_data"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="暂无数据"
-		            android:textColor="@color/deep_gray"
-		            android:textSize="@dimen/subhead" />
-		    </LinearLayout>
-        </LinearLayout>
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_line"
-            android:background="@color/line" />
-
-        <LinearLayout
-            android:id="@+id/ll_snack_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tv_snack_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="@dimen/space"
-                android:paddingTop="10dp"
-                android:singleLine="true"
-                android:text="食品"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subtitle" />
-
-            <ImageView
-                android:id="@+id/iv_snack_expand"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_expand_on" />
+                <TextView
+                    android:id="@+id/tv_drink_no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无数据"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subhead" />
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -206,8 +281,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:orientation="vertical" 
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_snack_tab"
@@ -232,65 +307,24 @@
                 android:footerDividersEnabled="true"
                 android:headerDividersEnabled="true" />
 
-		    <LinearLayout
-		        android:id="@+id/ll_snack_no_data"
-		        android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/ll_snack_no_data"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-		        android:gravity="center"
-		        android:orientation="vertical"
-		        android:visibility="gone" >
-		
-		        <TextView
-		            android:id="@+id/tv_snack_no_data"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="暂无数据"
-		            android:textColor="@color/deep_gray"
-		            android:textSize="@dimen/subhead" />
-		    </LinearLayout>
-        </LinearLayout><View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_line"
-            android:background="@color/line" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-        <LinearLayout
-            android:id="@+id/ll_smoke_tea_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tv_smoke_tea_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="@dimen/space"
-                android:paddingTop="10dp"
-                android:singleLine="true"
-                android:text="烟茶"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subtitle" />
-
-            <ImageView
-                android:id="@+id/iv_smoke_tea_expand"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_expand_on" />
+                <TextView
+                    android:id="@+id/tv_snack_no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无数据"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subhead" />
+            </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_line"
-            android:background="@color/line" />
 
         <LinearLayout
             android:id="@+id/ll_smoke_tea_content"
@@ -298,8 +332,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:orientation="vertical" 
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <com.dailysee.widget.HorizontalListView
                 android:id="@+id/hlv_smoke_tea_tab"
@@ -324,65 +358,24 @@
                 android:footerDividersEnabled="true"
                 android:headerDividersEnabled="true" />
 
-		    <LinearLayout
-		        android:id="@+id/ll_smoke_tea_no_data"
-		        android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/ll_smoke_tea_no_data"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-		        android:gravity="center"
-		        android:orientation="vertical"
-		        android:visibility="gone" >
-		
-		        <TextView
-		            android:id="@+id/tv_smoke_tea_no_data"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="暂无数据"
-		            android:textColor="@color/deep_gray"
-		            android:textSize="@dimen/subhead" />
-		    </LinearLayout>
-        </LinearLayout><View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_line"
-            android:background="@color/line" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-        <LinearLayout
-            android:id="@+id/ll_recommend_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/tv_recommend_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="@dimen/space"
-                android:paddingTop="10dp"
-                android:singleLine="true"
-                android:text="推荐"
-                android:textColor="@color/white"
-                android:textSize="@dimen/subtitle" />
-
-            <ImageView
-                android:id="@+id/iv_recommend_expand"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_expand_on" />
+                <TextView
+                    android:id="@+id/tv_smoke_tea_no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无数据"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subhead" />
+            </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_line"
-            android:background="@color/line" />
 
         <LinearLayout
             android:id="@+id/ll_recommend_content"
@@ -390,8 +383,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:orientation="vertical" 
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <com.handmark.pulltorefresh.library.PullToRefreshListView
                 android:id="@+id/pull_refresh_recommend_list"
@@ -405,31 +398,31 @@
                 android:footerDividersEnabled="true"
                 android:headerDividersEnabled="true" />
 
-		    <LinearLayout
-		        android:id="@+id/ll_recommend_no_data"
-		        android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/ll_recommend_no_data"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-		        android:gravity="center"
-		        android:orientation="vertical"
-		        android:visibility="gone" >
-		
-		        <TextView
-		            android:id="@+id/tv_recommend_no_data"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="暂无数据"
-		            android:textColor="@color/deep_gray"
-		            android:textSize="@dimen/subhead" />
-		    </LinearLayout>
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/tv_recommend_no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无数据"
+                    android:textColor="@color/deep_gray"
+                    android:textSize="@dimen/subhead" />
+            </LinearLayout>
         </LinearLayout>
 
         <View
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" 
-            android:visibility="visible"/>
+            android:layout_weight="1"
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/ll_bottom_bar"
@@ -442,8 +435,8 @@
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingTop="8dp" 
-            android:visibility="visible">
+            android:paddingTop="8dp"
+            android:visibility="visible" >
 
             <ImageView
                 android:id="@+id/iv_shopping_cart"
@@ -473,9 +466,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:background="@drawable/btn_orange_selector"
+                android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:gravity="center"
                 android:text="去结算"
                 android:textColor="@color/white"
                 android:textSize="@dimen/subtitle" />

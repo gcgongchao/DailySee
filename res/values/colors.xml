@@ -36,4 +36,9 @@
     <color name="blue">#1185cb</color>
     <color name="app_blue">#359bea</color>
     
+    <color name="tab_bg">#3c3b3b</color>
+    <color name="tab_bg_pressed">#575757</color>
+    <color name="tab_text">#939393</color>
+    <color name="tab_text_pressed">@color/white</color>
+    
 </resources>

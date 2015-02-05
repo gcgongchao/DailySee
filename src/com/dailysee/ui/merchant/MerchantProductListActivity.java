@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -56,7 +57,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private LinearLayout mLlRoomContent;
 	private TextView mTvRoomDesc;
 
-	private LinearLayout mLlDrinkTitle;
+	private FrameLayout mLlDrinkTitle;
 	private TextView mTvDrinkTitle;
 	private ImageView mIvDrinkExpand;
 	private LinearLayout mLlDrinkContent;
@@ -73,7 +74,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	
 	protected ProductType mDrinkType;
 	
-	private LinearLayout mLlSnackTitle;
+	private FrameLayout mLlSnackTitle;
 	private TextView mTvSnackTitle;
 	private ImageView mIvSnackExpand;
 	private LinearLayout mLlSnackContent;
@@ -90,7 +91,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	
 	protected ProductType mSnackType;
 	
-	private LinearLayout mLlSmokeTeaTitle;
+	private FrameLayout mLlSmokeTeaTitle;
 	private TextView mTvSmokeTeaTitle;
 	private ImageView mIvSmokeTeaExpand;
 	private LinearLayout mLlSmokeTeaContent;
@@ -107,7 +108,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	
 	protected ProductType mSmokeTeaType;
 	
-	private LinearLayout mLlRecommendTitle;
+	private FrameLayout mLlRecommendTitle;
 	private TextView mTvRecommendTitle;
 	private ImageView mIvRecommendExpand;
 	private LinearLayout mLlRecommendContent;
@@ -190,7 +191,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mLlRoomContent = (LinearLayout) findViewById(R.id.ll_room_content);
 		mTvRoomDesc = (TextView) findViewById(R.id.tv_room_desc);
 		
-		mLlDrinkTitle = (LinearLayout) findViewById(R.id.ll_drink_title);
+		mLlDrinkTitle = (FrameLayout) findViewById(R.id.ll_drink_title);
 		mTvDrinkTitle = (TextView) findViewById(R.id.tv_drink_title);
 		mIvDrinkExpand = (ImageView) findViewById(R.id.iv_drink_expand);
 		mLlDrinkContent = (LinearLayout) findViewById(R.id.ll_drink_content);
@@ -200,7 +201,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mDrinkListView = mPullRefreshDrinkListView.getRefreshableView();
 		mDrinkEmptyView = (LinearLayout) findViewById(R.id.ll_drink_no_data);
 		
-		mLlSnackTitle = (LinearLayout) findViewById(R.id.ll_snack_title);
+		mLlSnackTitle = (FrameLayout) findViewById(R.id.ll_snack_title);
 		mTvSnackTitle = (TextView) findViewById(R.id.tv_snack_title);
 		mIvSnackExpand = (ImageView) findViewById(R.id.iv_snack_expand);
 		mLlSnackContent = (LinearLayout) findViewById(R.id.ll_snack_content);
@@ -210,7 +211,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mSnackListView = mPullRefreshSnackListView.getRefreshableView();
 		mSnackEmptyView = (LinearLayout) findViewById(R.id.ll_snack_no_data);
 		
-		mLlSmokeTeaTitle = (LinearLayout) findViewById(R.id.ll_smoke_tea_title);
+		mLlSmokeTeaTitle = (FrameLayout) findViewById(R.id.ll_smoke_tea_title);
 		mTvSmokeTeaTitle = (TextView) findViewById(R.id.tv_smoke_tea_title);
 		mIvSmokeTeaExpand = (ImageView) findViewById(R.id.iv_smoke_tea_expand);
 		mLlSmokeTeaContent = (LinearLayout) findViewById(R.id.ll_smoke_tea_content);
@@ -220,7 +221,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mSmokeTeaListView = mPullRefreshSmokeTeaListView.getRefreshableView();
 		mSmokeTeaEmptyView = (LinearLayout) findViewById(R.id.ll_smoke_tea_no_data);
 		
-		mLlRecommendTitle = (LinearLayout) findViewById(R.id.ll_recommend_title);
+		mLlRecommendTitle = (FrameLayout) findViewById(R.id.ll_recommend_title);
 		mTvRecommendTitle = (TextView) findViewById(R.id.tv_recommend_title);
 		mIvRecommendExpand = (ImageView) findViewById(R.id.iv_recommend_expand);
 		mLlRecommendContent = (LinearLayout) findViewById(R.id.ll_recommend_content);
