@@ -302,5 +302,21 @@ public class SpUtil {
 	public int getCityId(int defaultValue) {
 		return getSp().getInt("cityId", defaultValue);
 	}
+
+	public void setBDUserId(String userId) {
+		getEdit().putString("bdUserId", userId).commit();
+	}
+	
+	public String getBDUserId() {
+		return getSp().getString("bdUserId", "");
+	}
+
+	public void setBDChannelId(String channelId) {
+		getEdit().putString("bdChannelId", channelId).commit();
+	}
+	
+	public String getBDChannelId() {
+		return getSp().getString("bdChannelId", "");
+	}
 	
 }

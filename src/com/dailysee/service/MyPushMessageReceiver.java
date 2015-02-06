@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.baidu.frontia.api.FrontiaPushMessageReceiver;
 import com.dailysee.MainActivity;
+import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
 
 /**
@@ -72,6 +73,8 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 
         // 绑定成功，设置已绑定flag，可以有效的减少不必要的绑定请求
         if (errorCode == 0) {
+        	SpUtil.getInstance(context).setBDUserId(userId);
+        	SpUtil.getInstance(context).setBDChannelId(channelId);
             Utils.setBind(context, true);
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑

@@ -204,6 +204,8 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("loginId", phone);
 				params.put(mCheckKey, code);
+				params.put("userId", mSpUtil.getBDUserId());
+				params.put("channelId", mSpUtil.getBDChannelId());
 				return params;
 			}
 		}, tag);

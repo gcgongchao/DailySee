@@ -236,6 +236,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
 				params.put(mCheckKey, code);
+				params.put("userId", mSpUtil.getBDUserId());
+				params.put("channelId", mSpUtil.getBDChannelId());
 				return params;
 			}
 		}, tag);
