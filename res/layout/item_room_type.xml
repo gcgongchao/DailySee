@@ -15,16 +15,14 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginLeft="8dp"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
@@ -43,16 +41,40 @@
             android:maxLines="3"
             android:text="约30分钟送到"
             android:textColor="@color/gray"
-            android:textSize="14dp" />
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="原最低消费价:¥120"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/body" />
+
+        <TextView
+            android:id="@+id/tv_sale_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="天天最低消费价:¥120"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/body" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_arraw"
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
         android:src="@drawable/ic_arrow_right"
-        android:visibility="visible" 
-        android:layout_gravity="center_vertical"/>
+        android:visibility="visible" />
 
 </LinearLayout>

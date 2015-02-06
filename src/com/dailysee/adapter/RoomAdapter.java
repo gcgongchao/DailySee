@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +21,7 @@ import com.dailysee.R;
 import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
 import com.dailysee.util.UiHelper;
+import com.dailysee.util.Utils;
 
 public class RoomAdapter extends BaseExpandableListAdapter implements OnClickListener {
 
@@ -109,6 +113,11 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 
 		holder.name.setText(roomType.name);
 		holder.desc.setText(roomType.useDesc);
+		holder.price.setText("原最低消费价:    ¥" + Utils.formatTwoFractionDigits(roomType.amt));		
+		String title = "天天最低消费价:¥" + Utils.formatTwoFractionDigits(roomType.ttAmt);
+		SpannableStringBuilder style = new SpannableStringBuilder(title);
+		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 8, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
+		holder.salePrice.setText(style);
 		
 		return convertView;
 	}
@@ -164,11 +173,15 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 		public ImageView image;
 		public TextView name;
 		public TextView desc;
+		public TextView price;
+		public TextView salePrice;
 
 		public GroupViewHolder(View convertView) {
 			image = (ImageView) convertView.findViewById(R.id.iv_image);
 			name = (TextView) convertView.findViewById(R.id.tv_name);
 			desc = (TextView) convertView.findViewById(R.id.tv_desc);
+			price = (TextView) convertView.findViewById(R.id.tv_price);
+			salePrice = (TextView) convertView.findViewById(R.id.tv_sale_price);
 
 			convertView.setTag(this);
 		}
