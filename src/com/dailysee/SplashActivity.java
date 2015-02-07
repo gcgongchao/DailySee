@@ -1,14 +1,7 @@
 package com.dailysee;
 
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.dailysee.util.Utils;
-
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
