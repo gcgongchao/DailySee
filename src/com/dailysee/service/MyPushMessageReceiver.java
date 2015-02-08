@@ -268,10 +268,10 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 
         Utils.logStringCache = logText;
 
-        Intent intent = new Intent();
-        intent.setClass(context.getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.getApplicationContext().startActivity(intent);
+//        Intent intent = new Intent();
+//        intent.setClass(context.getApplicationContext(), MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.getApplicationContext().startActivity(intent);
     }
 
 }
