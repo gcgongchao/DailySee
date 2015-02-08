@@ -25,6 +25,7 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.ui.user.EditProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
+import com.dailysee.util.Utils;
 import com.google.gson.reflect.TypeToken;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -236,8 +237,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
 				params.put(mCheckKey, code);
-				params.put("userId", mSpUtil.getBDUserId());
-				params.put("channelId", mSpUtil.getBDChannelId());
+//				params.put("userId", mSpUtil.getBDUserId());
+//				params.put("channelId", mSpUtil.getBDChannelId());
+				params.put("userId", Utils.getBindUserId(getActivity()));
+				params.put("channelId", Utils.getBindChannelId(getActivity()));
 				return params;
 			}
 		}, tag);
@@ -269,6 +272,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					startActivity(intent);
 				} else if (Constants.LOGOUT.equals(from)) {
 					Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+					mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(mainIntent);
 				} else {
 					setResult(RESULT_OK);

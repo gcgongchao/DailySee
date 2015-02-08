@@ -75,7 +75,7 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
         if (errorCode == 0) {
         	SpUtil.getInstance(context).setBDUserId(userId);
         	SpUtil.getInstance(context).setBDChannelId(channelId);
-            Utils.setBind(context, true);
+            Utils.setBind(context, userId, channelId, true);
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
         updateContent(context, responseString);
@@ -248,7 +248,7 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 
         // 解绑定成功，设置未绑定flag，
         if (errorCode == 0) {
-            Utils.setBind(context, false);
+            Utils.setBind(context, null, null, false);
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
         updateContent(context, responseString);

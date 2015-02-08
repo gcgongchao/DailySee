@@ -146,15 +146,29 @@ public class Utils {
 		return false;
 	}
 
-	public static void setBind(Context context, boolean flag) {
+
+
+	public static void setBind(Context context, String userId, String channelId, boolean flag) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		Editor editor = sp.edit();
 		String flagStr = "not";
 		if (flag) {
 			flagStr = "ok";
+			editor.putString("bind_userId", userId);
+			editor.putString("bind_channelId", channelId);
 		}
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		Editor editor = sp.edit();
 		editor.putString("bind_flag", flagStr);
 		editor.commit();
+	}
+	
+	public static String getBindUserId(Context context) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		return sp.getString("bind_userId", "");
+	}
+	
+	public static String getBindChannelId(Context context) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		return sp.getString("bind_channelId", "");
 	}
 
 	public static List<String> getTagsList(String originalText) {
