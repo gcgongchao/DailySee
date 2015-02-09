@@ -1,6 +1,7 @@
 package com.dailysee.net;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class BaseResponse<T> {
+public class BaseResponse {
 
 	public String code;
 	
@@ -51,13 +52,13 @@ public class BaseResponse<T> {
 		return parent.optString("data");
 	}
 	
-	public T getResponse(TypeToken<T> token) {
+	public <T> T getResponse(TypeToken<T> token) {
 		Gson gson = new Gson();
 		String json = getDataStr();
 		return gson.fromJson(json, token.getType());
 	}
 	
-	public ArrayList<T> getListResponse(TypeToken<ArrayList<T>> token) {
+	public <T> List<T> getListResponse(TypeToken<List<T>> token) {
 		Gson gson = new Gson();
 		String json = getDataArrStr();
 		return gson.fromJson(json, token.getType());

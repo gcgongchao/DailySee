@@ -403,7 +403,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 			@Override
 			public void onSuccess(BaseResponse response) {
 				mGroupList.clear();
-				ArrayList<RoomType> list = response.getListResponse(new TypeToken<ArrayList<RoomType>>() {});
+				List<RoomType> list = response.getListResponse(new TypeToken<List<RoomType>>() {});
 				if (list != null && list.size() > 0) {
 					mGroupList.addAll(list);
 				}

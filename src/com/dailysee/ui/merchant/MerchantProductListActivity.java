@@ -2,6 +2,7 @@ package com.dailysee.ui.merchant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
@@ -495,7 +496,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				ArrayList<ProductType> list = response.getListResponse(new TypeToken<ArrayList<ProductType>>() {});
+				List<ProductType> list = response.getListResponse(new TypeToken<List<ProductType>>() {});
 				if (list != null && list.size() > 0) {
 					if (productTopType == Constants.Type.DRINKS) {
 						mDrinkTypeList.clear();

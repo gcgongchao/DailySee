@@ -45,8 +45,8 @@
 
         <ImageView
             android:id="@+id/iv_image"
-            android:layout_width="96dp"
-            android:layout_height="72dp"
+            android:layout_width="128dp"
+            android:layout_height="96dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="8dp"
             android:scaleType="centerCrop"

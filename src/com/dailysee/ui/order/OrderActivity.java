@@ -674,7 +674,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				Order order = (Order) response.getResponse(new TypeToken<OrderResponse>(){});
+				Order order = response.getResponse(new TypeToken<Order>(){});
 				if (order != null && order.items != null && order.items.size() > 0) {
 					mChildrenList.set(groupPosition, order.items);
 					mAdapter.notifyDataSetChanged();
