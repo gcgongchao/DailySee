@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dailysee.MainActivity.OnTabDoubleClickListener;
 import com.dailysee.R;
 import com.dailysee.adapter.TipAdapter;
 import com.dailysee.bean.Tip;
@@ -28,14 +29,13 @@ import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.TipResponse;
 import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.tip.TipDetailActivity;
-import com.dailysee.util.SpUtil;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-public class MessageFragment extends BaseFragment implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnItemClickListener {
+public class MessageFragment extends BaseFragment implements OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener, OnItemClickListener, OnTabDoubleClickListener {
 
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
@@ -149,13 +149,17 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			filter = 2;
 			break;
 		}
-		mPullRefreshListView.setRefreshing(false);
+		onTabDoubleClick();
 	}
 
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+		onRefreshData();
+	}
+
+	private void onRefreshData() {
 		mHander.sendEmptyMessageDelayed(DelayHandler.DELAY_AUTO_REFRESH, 0);
 	}
 	
@@ -190,7 +194,9 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			public void onSuccess(BaseResponse response) {
 				mRefreshDataRequired = false;
 				if (mIndex == 1) {
-					SpUtil.getInstance(mContext).setMessageRefreshTime();
+					mSpUtil.setMessageRefreshTime();
+					mSpUtil.setNewMsgCount(0);// 新消息数清零
+
 					tipList.clear();
 				}
 				
@@ -242,15 +248,12 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case DELAY_AUTO_REFRESH:
-				if (mRefreshDataRequired) {
-					onLoad(true);
+				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
+					mPullRefreshListView.demo();
+					mPullRefreshListView.setRefreshing(false);
 				} else if (mAdapter != null) {
 					mAdapter.notifyDataSetChanged();
 				}
-//				if (mRefreshDataRequired && !mPullRefreshListView.isRefreshing()) {
-////					mPullRefreshListView.demo();
-//					mPullRefreshListView.setRefreshing(false);
-//				}
 				break;
 			}
 			
@@ -266,6 +269,12 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 			intent.putExtra("tip", tip);
 			startActivity(intent);
 		}
+	}
+
+	@Override
+	public void onTabDoubleClick() {
+		mRefreshDataRequired = true;
+		onRefreshData();
 	}
 
 }

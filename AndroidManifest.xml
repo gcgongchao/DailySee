@@ -83,7 +83,8 @@
         
         <activity android:name=".ui.sale.SaleActivity" />
         
-        <activity android:name=".ui.order.OrderActivity" />
+        <activity android:name=".ui.order.OrderActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.order.ConfirmOrderActivity" />
         <activity android:name=".ui.order.WriteDescActivity" />
         

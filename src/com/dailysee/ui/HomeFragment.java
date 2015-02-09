@@ -28,6 +28,7 @@ import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.consultant.ConsultantActivity;
 import com.dailysee.ui.merchant.MerchantActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.widget.BadgeView;
 import com.google.gson.reflect.TypeToken;
 
 public class HomeFragment extends BaseFragment implements OnClickListener, OnPageChangeListener {
@@ -174,6 +175,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	public void onResume() {
 		super.onResume();
 		onLoadAd();
+		onRefreshNewMsgCount();
 	}
 	
 	private void onLoadAd() {
@@ -251,6 +253,12 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	@Override
 	public void onPageSelected(int pos) {
 		setAdDotSelected(pos);
+	}
+
+	public void onRefreshNewMsgCount() {
+//		BadgeView saleBadge = new BadgeView(mContext, ivSale);
+//		saleBadge.setText("10" + mSpUtil.getNewMsgCount());
+//		saleBadge.show();
 	}
 
 }

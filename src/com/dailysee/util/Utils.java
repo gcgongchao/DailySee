@@ -53,8 +53,6 @@ public class Utils {
 	public static final String DATE_FORMAT_YMDMH = "yyyy-MM-dd HH:mm";
 	public static final String DATE_FORMAT_YMD = "yyyy-MM-dd";
 
-	public static String logStringCache = "";
-
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	public static final int MEDIA_TYPE_VIDEO = 2;
 	

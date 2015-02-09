@@ -1,8 +1,10 @@
 package com.dailysee.util;
 
+import android.content.Intent;
+
 public class Constants {
 	
-	private static final String PREFIX = "com.dailysee.merchant.";
+	private static final String PREFIX = "com.dailysee.";
 	
 	public static final String REFRESH_MEMBER_DETAIL = PREFIX + "REFRESH_MEMBER_DETAIL";
 
@@ -14,6 +16,8 @@ public class Constants {
 	public static final int DEFAULT_CITY = 440300;// 深圳
 
 	public static final String LOGOUT = "logout";
+
+	public static final String ACTION_PUSH = PREFIX + "PUSH";
 
 	public interface Filter {
 		public static final int RECOMMEND = 10001;

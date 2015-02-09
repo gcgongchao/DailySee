@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.dailysee.ui.user.EditProfileActivity;
 import com.dailysee.ui.user.ProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
+import com.dailysee.widget.BadgeView;
 
 public class UserFragment extends BaseFragment implements OnClickListener {
 
@@ -44,13 +46,20 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private LinearLayout llUnlogin;
 
 	private LinearLayout llAllOrder;
+	private TextView tvAllOrder;
 	private LinearLayout llBookOrder;
+	private TextView tvBookOrder;
 	private LinearLayout llUncommentOrder;
+	private TextView tvUncommentOrder;
 
 	private LinearLayout llConsultantPrice;
 	private LinearLayout llAbout;
 	
 	private UserReceiver mUserReceiver;
+
+	private BadgeView allOrderBadge;
+	private BadgeView bookOrderBadge;
+	private BadgeView uncommentOrderBadge;
 
 	public UserFragment() {
 
@@ -83,8 +92,11 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llUnlogin = (LinearLayout) v.findViewById(R.id.ll_unlogin);
 
 		llAllOrder = (LinearLayout) v.findViewById(R.id.ll_all_order);
+		tvAllOrder = (TextView) v.findViewById(R.id.tv_all_order);
 		llBookOrder = (LinearLayout) v.findViewById(R.id.ll_book_order);
+		tvBookOrder = (TextView) v.findViewById(R.id.tv_book_order);
 		llUncommentOrder = (LinearLayout) v.findViewById(R.id.ll_uncomment_order);
+		tvUncommentOrder = (TextView) v.findViewById(R.id.tv_uncomment_order);
 		
 		llConsultantPrice = (LinearLayout) v.findViewById(R.id.ll_consultant_price);
 		llAbout = (LinearLayout) v.findViewById(R.id.ll_about);
@@ -92,6 +104,10 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 
 	@Override
 	public void onInitViewData() {
+		allOrderBadge = new BadgeView(mContext, tvAllOrder);
+		bookOrderBadge = new BadgeView(mContext, tvBookOrder);
+		uncommentOrderBadge = new BadgeView(mContext, tvUncommentOrder);
+		
 		mUserReceiver = new UserReceiver();
 		
 		IntentFilter filter = new IntentFilter();
@@ -190,6 +206,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		onRefreshUserInfo();
+		onRefreshNewMsgCount();
 	}
 	
 	public void onRefreshUserInfo() {
@@ -247,6 +264,33 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 					onRefreshUserInfo();
 				}
 			}
+		}
+	}
+
+	public void onRefreshNewMsgCount() {
+		int newCommentCount = mSpUtil.getNewCommentCount();
+		int newConfirmOrderCount = mSpUtil.getNewConfirmOrderCount();
+		
+		int newUserMsgCount = newCommentCount + newConfirmOrderCount + mSpUtil.getNewRefundResultCount();
+		allOrderBadge.setText(newUserMsgCount + "");
+		if (newUserMsgCount > 0) {
+			allOrderBadge.show();
+		} else {
+			allOrderBadge.hide();
+		}
+		
+		bookOrderBadge.setText(newConfirmOrderCount + "");
+		if (newConfirmOrderCount > 0) {
+			bookOrderBadge.show();
+		} else {
+			bookOrderBadge.hide();
+		}
+		
+		uncommentOrderBadge.setText(newCommentCount + "");
+		if (newCommentCount > 0) {
+			uncommentOrderBadge.show();
+		} else {
+			uncommentOrderBadge.hide();
 		}
 	}
 

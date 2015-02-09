@@ -318,5 +318,37 @@ public class SpUtil {
 	public String getBDChannelId() {
 		return getSp().getString("bdChannelId", "");
 	}
+
+	public void setNewCommentCount(int count) {
+		getEdit().putInt("newCommentCount", count).commit();
+	}
+	
+	public int getNewCommentCount() {
+		return getSp().getInt("newCommentCount", 0);
+	}
+
+	public void setNewConfirmOrderCount(int count) {
+		getEdit().putInt("newConfirmOrderCount", count).commit();
+	}
+	
+	public int getNewConfirmOrderCount() {
+		return getSp().getInt("newConfirmOrderCount", 0);
+	}
+
+	public void setNewMsgCount(int count) {
+		getEdit().putInt("newMsgCount", count).commit();
+	}
+	
+	public int getNewMsgCount() {
+		return getSp().getInt("newMsgCount", 0);
+	}
+
+	public void setNewRefundResultCount(int count) {
+		getEdit().putInt("newRefundResultCount", count).commit();
+	}
+	
+	public int getNewRefundResultCount() {
+		return getSp().getInt("newRefundResultCount", 0);
+	}
 	
 }

@@ -136,7 +136,14 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 			public void onSuccess(BaseResponse response) {
 				mRefreshDataRequired = false;
 				if (mIndex == 1) {
-					SpUtil.getInstance(getActivity()).setOrderRefreshTime();
+					mSpUtil.setOrderRefreshTime();
+					if (filter.equals(Constants.OrderFilter.ALL)) {
+						mSpUtil.setNewRefundResultCount(0);
+					} else if (filter.equals(Constants.OrderFilter.WAIT_ACCEPT_CONFIRM + ";" + Constants.OrderFilter.WAIT_CONFIRM_GOODS)) {
+						mSpUtil.setNewConfirmOrderCount(0);
+					} else if (filter.equals(Constants.OrderFilter.SUCCEED)) {
+						mSpUtil.setNewCommentCount(0);
+					}
 					
 					mGroupList.clear();
 					mChildrenList.clear();
