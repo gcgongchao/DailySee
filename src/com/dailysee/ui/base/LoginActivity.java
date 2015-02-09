@@ -266,14 +266,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			private void dispatchResult() {
 				if ("confirmOrder".equals(from)) {
 					setResult(RESULT_OK);
-				} if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), EditProfileActivity.class);
-					startActivity(intent);
 				} else if (Constants.LOGOUT.equals(from)) {
 					Intent mainIntent = new Intent(getActivity(), MainActivity.class);
 					mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(mainIntent);
+				} else if (TextUtils.isEmpty(mSpUtil.getName()) && TextUtils.isEmpty(mSpUtil.getAvatar())) {
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), EditProfileActivity.class);
+					startActivity(intent);
 				} else {
 					setResult(RESULT_OK);
 				}
