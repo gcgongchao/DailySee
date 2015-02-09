@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 		mPushReceiver = new PushReceiver();
 		
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Constants.REFRESH_MEMBER_DETAIL);
+		filter.addAction(Constants.ACTION_PUSH);
 		registerReceiver(mPushReceiver, filter);
 	}
 
