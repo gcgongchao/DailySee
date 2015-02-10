@@ -139,6 +139,8 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					mSpUtil.setOrderRefreshTime();
 					if (filter.equals(Constants.OrderFilter.ALL)) {
 						mSpUtil.setNewRefundResultCount(0);
+						mSpUtil.setNewConfirmOrderCount(0);
+						mSpUtil.setNewCommentCount(0);
 					} else if (filter.equals(Constants.OrderFilter.WAIT_ACCEPT_CONFIRM + ";" + Constants.OrderFilter.WAIT_CONFIRM_GOODS)) {
 						mSpUtil.setNewConfirmOrderCount(0);
 					} else if (filter.equals(Constants.OrderFilter.SUCCEED)) {

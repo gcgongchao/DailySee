@@ -108,7 +108,7 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 		}
 
 		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, messageString);
+		updateContent(context, message);
 	}
 
 	/**
@@ -240,6 +240,10 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 	private void updateContent(Context context, String msg) {
 		Log.d(TAG, "updateContent");
 		
+		if (TextUtils.isEmpty(msg) || !msg.startsWith("{")) {
+			return ;
+		}
+		
 		Push push = null;
 		try {
 			push = new Gson().fromJson(msg, Push.class);
@@ -286,10 +290,10 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 			
 			NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //			notificationManager.cancel(0);
-			Notification notification = new Notification(R.drawable.ic_launcher, msg, System.currentTimeMillis());
+			Notification notification = new Notification(R.drawable.ic_launcher, content, System.currentTimeMillis());
 			intent.putExtra("notify", 1);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-			notification.setLatestEventInfo(context, context.getResources().getString(R.string.app_name), msg, pendingIntent);
+			notification.setLatestEventInfo(context, context.getResources().getString(R.string.app_name), content, pendingIntent);
 			notificationManager.notify(0, notification);
 		}
 	}

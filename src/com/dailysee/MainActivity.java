@@ -243,14 +243,14 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 		mUserBadge.setText(newUserMsgCount + "");
 		if (newUserMsgCount > 0) {
 			mUserBadge.show();
-			if (TAB_USER.equals(mTabHost.getCurrentTabTag())) {
-				Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAB_USER);
-				if (fragment != null && fragment instanceof UserFragment) {
-					((UserFragment)fragment).onRefreshNewMsgCount();
-				}
-			}
 		} else {
 			mUserBadge.hide();
+		}
+		if (TAB_USER.equals(mTabHost.getCurrentTabTag())) {
+			Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAB_USER);
+			if (fragment != null && fragment instanceof UserFragment) {
+				((UserFragment)fragment).onRefreshNewMsgCount();
+			}
 		}
 	}
 
