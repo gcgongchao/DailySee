@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -149,6 +151,8 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 					} else if (filter.equals(Constants.OrderFilter.SUCCEED)) {
 						mSpUtil.setNewCommentCount(0);
 					}
+					
+					Utils.cancelNotify(getActivity());
 					
 					mGroupList.clear();
 					mChildrenList.clear();
