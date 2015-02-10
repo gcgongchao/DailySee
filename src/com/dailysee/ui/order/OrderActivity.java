@@ -86,6 +86,9 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		Intent intent = getIntent();
 		if (intent != null) {
 			filter = intent.getStringExtra("filter");
+			if (TextUtils.isEmpty(filter)) {
+				filter = Constants.OrderFilter.ALL;
+			}
 		}
 		
 		setTitle("订单");
