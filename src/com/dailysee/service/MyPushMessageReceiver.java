@@ -288,10 +288,17 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 				context.sendBroadcast(pushIntent);
 			}
 			
+			Notification notification = new Notification();
+            notification.icon = R.drawable.ic_launcher;
+            notification.defaults = Notification.DEFAULT_LIGHTS;
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notification.when = System.currentTimeMillis();
+            notification.tickerText = content;
+			
 			NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //			notificationManager.cancel(0);
-			Notification notification = new Notification(R.drawable.ic_launcher, content, System.currentTimeMillis());
-			intent.putExtra("notify", 1);
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 			notification.setLatestEventInfo(context, context.getResources().getString(R.string.app_name), content, pendingIntent);
 			notificationManager.notify(0, notification);
