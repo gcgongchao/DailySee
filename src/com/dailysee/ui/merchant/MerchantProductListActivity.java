@@ -730,7 +730,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				}
 				
 				Product product = (Product) msg.obj;
-				mTotalPrice = mTotalPrice - product.price;
+				mTotalPrice = mTotalPrice - product.ttPrice;
 				if (mTotalPrice < 0) {
 					mTotalPrice = 0;
 				}
