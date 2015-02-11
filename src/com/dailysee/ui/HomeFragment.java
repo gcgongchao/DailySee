@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 
 	protected static final String TAG = HomeFragment.class.getSimpleName();
 	
+	private static final int CAROUSEL = 1;
+	
 	private ViewPager mViewPager;
 	private ImageView[] mAdDots;
 	
@@ -48,6 +51,23 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	private boolean mLoadAdRequired = true;
 
 	private int mSelectedAd = 0;
+	
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case CAROUSEL:
+				int count = mViewPager.getAdapter().getCount();
+				int page = mViewPager.getCurrentItem();
+				page = page + 1;// 下一页
+				if (page >= count) {
+					page = 0;
+				}
+				mViewPager.setCurrentItem(page);
+				mHandler.sendEmptyMessageDelayed(CAROUSEL, 4 * 1000);
+				break;
+			}
+		};
+	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -240,6 +260,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 		setAdDotVisibile(mAdList.size());
 		setAdDotSelected(mSelectedAd);
 		mViewPager.setCurrentItem(mSelectedAd);
+		
+		mHandler.sendEmptyMessageDelayed(CAROUSEL, 4 * 1000);
 	}
 
 	@Override

@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 	@Override
 	public void onBindListener() {
 		mTabHost.setOnTabChangedListener(this);
-		View tab1 = mTabHost.getTabWidget().getChildAt(0);
+		View tab1 = mTabHost.getTabWidget().getChildAt(1);
 		if (tab1 != null) {
 			tab1.setOnTouchListener(new OnTouchListener() {
 				
@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_UP:
 					case MotionEvent.ACTION_CANCEL:
-						if (tabChanged) {
+						if (tabChanged || mSpUtil.getNewMsgCount() > 0) {
 							Object tag = v.getTag();
 							if (tag != null) {
 								String tab = tag.toString();
