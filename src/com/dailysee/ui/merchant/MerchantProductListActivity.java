@@ -241,8 +241,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 
 	@Override
 	public void onInitViewData() {
-		mTvRoomTitle.setText("您预定的房间信息");
-		
+		String desc = null;
 		if (mRoomType != null) {
 			if (mRoomType.startAmt > 0 && mFrom == Constants.From.MERCHANT) {
 				mTotalPrice = mRoomType.startAmt;
@@ -253,14 +252,21 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 			} else {
 				hideBottomBar();
 			}
-			String desc = mRoomType.useDesc;
-			if (TextUtils.isEmpty(desc)) {
-				desc = "暂无介绍";
-			}
-			mTvRoomDesc.setText(desc);
+			desc = mRoomType.useDesc;
 		} else {
 			hideBottomBar();
 		}
+		if (mFrom == Constants.From.GIFT) {
+			mTvRoomTitle.setText("您预定的赠送服务信息");
+			desc = "您预定的赠送服务，商家将即时完成！祝您生活愉快！";
+		} else {
+			mTvRoomTitle.setText("您预定的房间信息");
+		}
+
+		if (TextUtils.isEmpty(desc)) {
+			desc = "暂无介绍";
+		}
+		mTvRoomDesc.setText(desc);
 		
 		onGroupItemClick(Constants.Type.ROOM);
 		
