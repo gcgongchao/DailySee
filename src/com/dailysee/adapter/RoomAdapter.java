@@ -20,6 +20,7 @@ import com.dailysee.AppController;
 import com.dailysee.R;
 import com.dailysee.bean.Room;
 import com.dailysee.bean.RoomType;
+import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
 
@@ -30,9 +31,11 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 	private List<RoomType> mGroupList;
 	private Map<Long, List<Room>> mChildrenList;
 	private OnRoomClickListener listener;
+	private int from;
 
-	public RoomAdapter(Context context, List<RoomType> mGroupList, Map<Long, List<Room>> mChildrenList, OnRoomClickListener listener) {
+	public RoomAdapter(Context context, int from, List<RoomType> mGroupList, Map<Long, List<Room>> mChildrenList, OnRoomClickListener listener) {
 		this.context = context;
+		this.from = from;
 		mInflater = LayoutInflater.from(context);
 		this.mGroupList = mGroupList;
 		this.mChildrenList = mChildrenList;
@@ -113,11 +116,20 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 
 		holder.name.setText(roomType.name);
 		holder.desc.setText(roomType.useDesc);
-		holder.price.setText("原最低消费价    :¥" + Utils.formatTwoFractionDigits(roomType.amt));		
-		String title = "天天最低消费价:¥" + Utils.formatTwoFractionDigits(roomType.ttAmt);
-		SpannableStringBuilder style = new SpannableStringBuilder(title);
-		style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 8, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
-		holder.salePrice.setText(style);
+		if (from == Constants.From.GIFT) {
+			holder.desc.setMaxLines(4);
+			holder.price.setVisibility(View.GONE);
+			holder.salePrice.setVisibility(View.GONE);
+		} else {
+			holder.desc.setMaxLines(2);
+			holder.price.setVisibility(View.VISIBLE);
+			holder.salePrice.setVisibility(View.VISIBLE);
+			holder.price.setText("原最低消费价    :¥" + Utils.formatTwoFractionDigits(roomType.amt));		
+			String title = "天天最低消费价:¥" + Utils.formatTwoFractionDigits(roomType.ttAmt);
+			SpannableStringBuilder style = new SpannableStringBuilder(title);
+			style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 8, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
+			holder.salePrice.setText(style);
+		}
 		
 		return convertView;
 	}

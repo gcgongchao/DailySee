@@ -126,7 +126,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 
 	@Override
 	public void onInitViewData() {
-		mAdapter = new RoomAdapter(getActivity(), mGroupList, mChildrenList , this);
+		mAdapter = new RoomAdapter(getActivity(), mFrom, mGroupList, mChildrenList , this);
 		mListView.setAdapter(mAdapter);
 
 		onRefreshMerchant();
