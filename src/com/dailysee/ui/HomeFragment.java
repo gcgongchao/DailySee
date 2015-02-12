@@ -29,7 +29,6 @@ import com.dailysee.ui.base.BaseFragment;
 import com.dailysee.ui.consultant.ConsultantActivity;
 import com.dailysee.ui.merchant.MerchantActivity;
 import com.dailysee.util.Constants;
-import com.dailysee.widget.BadgeView;
 import com.google.gson.reflect.TypeToken;
 
 public class HomeFragment extends BaseFragment implements OnClickListener, OnPageChangeListener {
@@ -56,6 +55,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case CAROUSEL:
+				mHandler.removeMessages(CAROUSEL);
+				
 				int count = mViewPager.getAdapter().getCount();
 				int page = mViewPager.getCurrentItem();
 				page = page + 1;// 下一页
@@ -63,7 +64,8 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 					page = 0;
 				}
 				mViewPager.setCurrentItem(page);
-				mHandler.sendEmptyMessageDelayed(CAROUSEL, 4 * 1000);
+				
+				mHandler.sendEmptyMessageDelayed(CAROUSEL, 6 * 1000);
 				break;
 			}
 		};
