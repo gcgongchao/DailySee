@@ -145,7 +145,21 @@ public class Utils {
 		return false;
 	}
 
+	// 用share preference来实现是否绑定的开关。在ionBind且成功时设置true，unBind且成功时设置false
+	public static boolean hasBindTty(Context context) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean flag = sp.getBoolean("bind_tty", false);
+		return flag;
+	}
 
+	public static void setBindTty(Context context, boolean flag) {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		Editor editor = sp.edit();
+		if (flag) {
+			editor.putBoolean("bind_tty", flag);
+		}
+		editor.commit();
+	}
 
 	public static void setBind(Context context, String userId, String channelId, boolean flag) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

@@ -1,6 +1,8 @@
 package com.dailysee.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +18,11 @@ import android.util.Log;
 import com.baidu.frontia.api.FrontiaPushMessageReceiver;
 import com.dailysee.MainActivity;
 import com.dailysee.R;
+import com.dailysee.bean.Member;
 import com.dailysee.bean.Push;
+import com.dailysee.net.BaseResponse;
+import com.dailysee.net.Callback;
+import com.dailysee.net.NetRequest;
 import com.dailysee.ui.order.OrderActivity;
 import com.dailysee.ui.sale.SaleActivity;
 import com.dailysee.util.Constants;
@@ -24,6 +30,7 @@ import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Push消息处理receiver。请编写您需要的回调函数， 一般来说： onBind是必须的，用来处理startWork返回值；
@@ -72,9 +79,37 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 			SpUtil.getInstance(context).setBDUserId(userId);
 			SpUtil.getInstance(context).setBDChannelId(channelId);
 			Utils.setBind(context, userId, channelId, true);
+			
+			requestBindPush(context, userId, channelId);
 		}
 		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
 		updateContent(context, responseString);
+	}
+
+	private void requestBindPush(final Context context, final String userId, final String channelId) {
+		if (!SpUtil.getInstance(context).isLogin()) {
+			return;
+		}
+
+		// Tag used to cancel the request
+		String tag = "tag_request_bind_user";
+		NetRequest.getInstance(context).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				Utils.setBindTty(context, true);
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.member.bind.user");
+				params.put("memberId", SpUtil.getInstance(context).getMemberIdStr());
+				params.put("userId", userId);
+				params.put("channelId", channelId);
+				return params;
+			}
+		}, tag, true);
 	}
 
 	/**
