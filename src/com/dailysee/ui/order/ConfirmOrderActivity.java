@@ -579,10 +579,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void toUPPayment(String params) {
-		if (!TextUtils.isEmpty(params) && params.startsWith("tn=")) {
-			String tn = params.substring(3);
+		if (!TextUtils.isEmpty(params) && params.startsWith("mode=")) {
+			String[] args = params.split("&");
 			// mode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
-			String mode = "01";
+			String mode = "0" + args[0].substring(5);
+			String tn = args[1].substring(3);
 			UPPayAssistEx.startPayByJAR(getActivity(), PayActivity.class, null, null, tn, mode);
 		} else {
 			showToast("银联交易流水号不正确");
