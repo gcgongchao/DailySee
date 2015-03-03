@@ -91,6 +91,56 @@
                     android:background="@color/line" />
 
                 <LinearLayout
+                    android:id="@+id/ll_service_aim"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/item_selector"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="@dimen/activity_margin"
+                        android:paddingRight="@dimen/space"
+                        android:paddingTop="5dp"
+                        android:singleLine="true"
+                        android:text="服务宗旨"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/login_hint"
+                        android:textSize="@dimen/text_input" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="4dp"
+                        android:paddingTop="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/deep_gray"
+                        android:textColorHint="@color/login_hint"
+                        android:textSize="@dimen/text_input" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/activity_margin"
+                        android:src="@drawable/ic_arrow_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_line"
+                    android:background="@color/line" />
+
+                <LinearLayout
                     android:id="@+id/ll_check_update"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
@@ -213,6 +263,6 @@
         android:gravity="center"
         android:text="Copyright@2014-2018 TTYSW.All Rights Reserved"
         android:textColor="@color/deep_gray"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
 </LinearLayout>
