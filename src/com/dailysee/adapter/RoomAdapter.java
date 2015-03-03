@@ -125,9 +125,9 @@ public class RoomAdapter extends BaseExpandableListAdapter implements OnClickLis
 			holder.price.setVisibility(View.GONE);
 			holder.salePrice.setVisibility(View.VISIBLE);
 			holder.price.setText("原最低消费价    :¥" + Utils.formatTwoFractionDigits(roomType.amt));		
-			String title = "最低消费:¥" + Utils.formatTwoFractionDigits(roomType.ttAmt);
+			String title = "最低消费: ¥" + Utils.formatTwoFractionDigits(roomType.ttAmt);
 			SpannableStringBuilder style = new SpannableStringBuilder(title);
-			style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 8, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
+			style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.orange)), 6, title.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE); //设置指定位置文字的颜色
 			holder.salePrice.setText(style);
 		}
 		
