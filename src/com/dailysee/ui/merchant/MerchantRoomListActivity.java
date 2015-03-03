@@ -37,6 +37,7 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.MyDatePickerDialog;
 import com.google.gson.reflect.TypeToken;
 
 public class MerchantRoomListActivity extends BaseActivity implements OnClickListener, OnRoomClickListener {
@@ -226,7 +227,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 		final int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 		
 		final String curDate = year + "-" + (month+1) + "-" + dayOfMonth;
-		DatePickerDialog dialog = new DatePickerDialog(
+		MyDatePickerDialog dialog = new MyDatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {

@@ -38,6 +38,7 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.MyDatePickerDialog;
 import com.dailysee.widget.SelectRegionPopupWindow;
 import com.dailysee.widget.SelectRegionPopupWindow.OnSelectListener;
 import com.google.gson.reflect.TypeToken;
@@ -408,7 +409,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 		int month = c.get(Calendar.MONTH);
 		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 		
-		DatePickerDialog dialog = new DatePickerDialog(
+		MyDatePickerDialog dialog = new MyDatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {

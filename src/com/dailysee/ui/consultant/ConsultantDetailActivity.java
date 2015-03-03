@@ -29,6 +29,7 @@ import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.ListViewDialog;
+import com.dailysee.widget.MyDatePickerDialog;
 
 public class ConsultantDetailActivity extends BaseActivity implements OnClickListener {
 
@@ -235,7 +236,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		int month = c.get(Calendar.MONTH);
 		int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 		
-		DatePickerDialog dialog = new DatePickerDialog(
+		MyDatePickerDialog dialog = new MyDatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {

@@ -43,6 +43,7 @@ import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
 import com.dailysee.util.Utils;
+import com.dailysee.widget.MyDatePickerDialog;
 import com.dailysee.widget.SelectPicDialog;
 
 public class EditProfileActivity extends BaseActivity implements OnClickListener, OnFocusChangeListener {
@@ -227,7 +228,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 			}
 		}
 		
-		DatePickerDialog dialog = new DatePickerDialog(
+		MyDatePickerDialog dialog = new MyDatePickerDialog(
                 this,
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker dp, int year,int month, int dayOfMonth) {
