@@ -35,7 +35,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onInit() {
-		setTitle("关于");
+		setTitle("关于我们");
 		setUp();
 	}
 
