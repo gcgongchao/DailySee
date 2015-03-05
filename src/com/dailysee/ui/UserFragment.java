@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +25,6 @@ import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.ui.consultant.ConsultantPriceActivity;
 import com.dailysee.ui.order.OrderActivity;
 import com.dailysee.ui.user.AboutActivity;
-import com.dailysee.ui.user.EditProfileActivity;
 import com.dailysee.ui.user.ProfileActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.UiHelper;
@@ -53,6 +51,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 	private TextView tvUncommentOrder;
 
 	private LinearLayout llConsultantPrice;
+	private LinearLayout llReceipt;
 	private LinearLayout llAbout;
 	
 	private UserReceiver mUserReceiver;
@@ -99,6 +98,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		tvUncommentOrder = (TextView) v.findViewById(R.id.tv_uncomment_order);
 		
 		llConsultantPrice = (LinearLayout) v.findViewById(R.id.ll_consultant_price);
+		llReceipt = (LinearLayout) v.findViewById(R.id.ll_receipt);
 		llAbout = (LinearLayout) v.findViewById(R.id.ll_about);
 	}
 
@@ -127,6 +127,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		llUncommentOrder.setOnClickListener(this);
 		
 		llConsultantPrice.setOnClickListener(this);
+		llReceipt.setOnClickListener(this);
 		llAbout.setOnClickListener(this);
 	}
 
@@ -167,6 +168,13 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		case R.id.ll_consultant_price:
 			toConsultantPrice();
 			break;
+		case R.id.ll_receipt:
+			if (!mSpUtil.isLogin()) {
+				toLogin();
+			} else {
+				toOrder(Constants.OrderFilter.SUCCEED + ";" + Constants.OrderFilter.CLOSE, "receipt");
+			}
+			break;
 		case R.id.ll_about:
 			startActivity(new Intent(mContext, AboutActivity.class));
 			break;
@@ -181,6 +189,14 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), OrderActivity.class);
 		intent.putExtra("filter", filter);
+		startActivity(intent);
+	}
+	
+	private void toOrder(String filter, String from) {
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), OrderActivity.class);
+		intent.putExtra("filter", filter);
+		intent.putExtra("from", from);
 		startActivity(intent);
 	}
 
