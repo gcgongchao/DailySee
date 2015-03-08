@@ -205,6 +205,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					sp.setMaster(data.getString("master"));
 					sp.setStatus(data.getString("status"));
 					sp.setToken(data.getString("token"));
+					sp.setPurpose(data.getString("purpose"));
 					sp.setFirstLogin(isFirstLogin);
 					
 					showToast("登录成功");

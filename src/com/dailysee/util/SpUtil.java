@@ -320,6 +320,14 @@ public class SpUtil {
 		return getSp().getString("bdChannelId", "");
 	}
 
+	public void setPurpose(String purpose) {
+		getEdit().putString("purpose", purpose).commit();
+	}
+	
+	public String getPurpose() {
+		return getSp().getString("purpose", "");
+	}
+
 	public void setNewCommentCount(int count) {
 		getEdit().putInt("newCommentCount", count).commit();
 	}

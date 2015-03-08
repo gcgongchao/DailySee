@@ -1,5 +1,6 @@
 package com.dailysee.ui.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import com.umeng.update.UpdateStatus;
 public class AboutActivity extends BaseActivity implements OnClickListener{
 
     private LinearLayout llFeedback;
+    private LinearLayout llServiceAim;
     private LinearLayout llCheckUpdate;
 	private LinearLayout llCallUs;
 	
@@ -42,6 +44,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onFindViews() {
 		llFeedback = (LinearLayout) findViewById(R.id.ll_feed_back);
+		llServiceAim = (LinearLayout) findViewById(R.id.ll_service_aim);
 		llCheckUpdate = (LinearLayout) findViewById(R.id.ll_check_update);
 		llCallUs = (LinearLayout) findViewById(R.id.ll_call_us);
 		
@@ -64,6 +67,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onBindListener() {
 	    llFeedback.setOnClickListener(this);
+		llServiceAim.setOnClickListener(this);
 	    llCheckUpdate.setOnClickListener(this);
 	    llCallUs.setOnClickListener(this);
 	}
@@ -74,6 +78,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
             case R.id.ll_feed_back: // 帮助与反馈
             	mFeedbackAgent.startFeedbackActivity();
                 break;
+            case R.id.ll_service_aim:
+            	startActivity(new Intent(getActivity(), ServiceAimActivity.class));
+            	break;
             case R.id.ll_check_update:
                 toCheckUpdateVersion();
                 break;
