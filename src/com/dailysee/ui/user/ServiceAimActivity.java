@@ -3,9 +3,8 @@ package com.dailysee.ui.user;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.dailysee.R;
@@ -24,7 +23,7 @@ public class ServiceAimActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_service_aim);
 		
-//		requestServiceAim();
+		requestServiceAim();
 	}
 
 	@Override
@@ -55,19 +54,24 @@ public class ServiceAimActivity extends BaseActivity {
 			@Override
 			public void onSuccess(BaseResponse response) {
 				try {
-					String serviceAim = response.getData().getString("serviceAim");
-					tvServiceAim.setText("serviceAim");
-				} catch (JSONException e) {
+					String serviceAim = response.getData().getString("purpose");
+					if (TextUtils.isEmpty(serviceAim)) {
+						mSpUtil.setPurpose(serviceAim);
+						tvServiceAim.setText(serviceAim);
+					}
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 
 			@Override
 			public void onPreExecute() {
+				toShowProgressMsg("正在加载...");
 			}
 
 			@Override
 			public void onFinished() {
+				toCloseProgressMsg();
 			}
 
 			@Override
@@ -78,7 +82,7 @@ public class ServiceAimActivity extends BaseActivity {
 			@Override
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
+				params.put("mtd", "tty.member.init.get");
 				return params;
 			}
 		}, tag);

@@ -31,13 +31,15 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 	private List<List<OrderItem>> mChildrenList;
 	private LayoutInflater mInflater;
 	private Handler mHandler;
+	private String from;
 
-	public OrderAdapter(Context context, List<Order> mGroupList, List<List<OrderItem>> mChildrenList, Handler mHandler) {
+	public OrderAdapter(Context context, List<Order> mGroupList, List<List<OrderItem>> mChildrenList, Handler mHandler, String from) {
 		this.context = context;
 		this.mGroupList = mGroupList;
 		this.mChildrenList = mChildrenList;
 		mInflater = LayoutInflater.from(context);
 		this.mHandler = mHandler;
+		this.from = from;
 	}
 
 	@Override
@@ -211,7 +213,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 					holder.btnDeal2.setVisibility(View.VISIBLE);
 					holder.llBottom.setVisibility(View.VISIBLE);
 					holder.dividerBottom.setVisibility(View.VISIBLE);
-				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
+				} else if (Constants.OrderFilter.WAIT_COMPLETE.equals(order.orderStatus)) {
 					// 只有顾问订单才可以结束服务，续费服务
 					holder.btnDeal.setText("结束服务");
 					holder.btnDeal.setVisibility(View.VISIBLE);
@@ -219,12 +221,23 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 					holder.btnDeal2.setVisibility(View.VISIBLE);
 					holder.llBottom.setVisibility(View.VISIBLE);
 					holder.dividerBottom.setVisibility(View.VISIBLE);
-				} else if ("SERVICE".equals(order.businessType) && Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+				} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
 					// 只有顾问订单才可以评论订单
 					holder.btnDeal.setText("去评价");
 					holder.btnDeal.setVisibility(View.VISIBLE);
 					holder.llBottom.setVisibility(View.VISIBLE);
 					holder.dividerBottom.setVisibility(View.VISIBLE);
+					if ("receipt".equals(from)) {
+						holder.btnDeal2.setText("索取发票");
+						holder.btnDeal2.setVisibility(View.VISIBLE);
+					}
+				} else if (Constants.OrderFilter.CLOSE.equals(order.orderStatus)) {
+//					if ("receipt".equals(from)) {
+//						holder.btnDeal2.setText("索取发票");
+//						holder.btnDeal2.setVisibility(View.VISIBLE);
+//						holder.llBottom.setVisibility(View.VISIBLE);
+//						holder.dividerBottom.setVisibility(View.VISIBLE);
+//					}
 				}
 			} else if ("CONSUME".equals(order.businessType)) {
 				if (Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)
@@ -233,6 +246,14 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 					holder.btnDeal2.setVisibility(View.VISIBLE);
 					holder.llBottom.setVisibility(View.VISIBLE);
 					holder.dividerBottom.setVisibility(View.VISIBLE);
+				} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+//						|| Constants.OrderFilter.CLOSE.equals(order.orderStatus)) {
+					if ("receipt".equals(from)) {
+						holder.btnDeal2.setText("索取发票");
+						holder.btnDeal2.setVisibility(View.VISIBLE);
+						holder.llBottom.setVisibility(View.VISIBLE);
+						holder.dividerBottom.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 			holder.btnDeal.setOnClickListener(new OnClickListener() {

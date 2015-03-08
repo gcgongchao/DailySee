@@ -1,8 +1,9 @@
 package com.dailysee.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderItem {
+public class OrderItem implements Serializable {
 	public long itemId;//			订单商品项纪录ID	
 	public long orderId;//			订单ID	
 	public String name;//			商品名称	

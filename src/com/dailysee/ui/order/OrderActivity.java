@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +34,7 @@ import com.dailysee.net.Callback;
 import com.dailysee.net.NetRequest;
 import com.dailysee.net.response.OrderResponse;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.user.GetReceiptActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
@@ -64,6 +63,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	private OrderAdapter mAdapter;
 	private int mIndex = 1;
 	private String filter = Constants.OrderFilter.ALL;
+	private String from;
 	
 	private boolean mRefreshDataRequired = true;
 	private Handler mHandler;
@@ -88,12 +88,17 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		Intent intent = getIntent();
 		if (intent != null) {
 			filter = intent.getStringExtra("filter");
+			from = intent.getStringExtra("from");
 			if (TextUtils.isEmpty(filter)) {
 				filter = Constants.OrderFilter.ALL;
 			}
 		}
 		
-		setTitle("订单");
+		if (!TextUtils.isEmpty(filter) && filter.equals("receipt")) {// 索取发票
+			setTitle("选择订单");
+		} else {
+			setTitle("订单");
+		}
 		setUp();
 		
 		mHandler = new OrderHandler();
@@ -112,10 +117,14 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 	@Override
 	public void onInitViewData() {
 		findViewById(R.id.btn_action).setVisibility(View.GONE);
-		btnFilter.setVisibility(View.VISIBLE);
-		btnFilter.setImageResource(R.drawable.ic_filter_order);
+		if (TextUtils.isEmpty(from)) {
+			btnFilter.setVisibility(View.VISIBLE);
+			btnFilter.setImageResource(R.drawable.ic_filter_order);
+		} else {
+			btnFilter.setVisibility(View.INVISIBLE);
+		}
 		
-		mAdapter = new OrderAdapter(getActivity(), mGroupList, mChildrenList, mHandler);
+		mAdapter = new OrderAdapter(getActivity(), mGroupList, mChildrenList, mHandler, from);
 		mExpandableListView.setAdapter(mAdapter);
 		mExpandableListView.setGroupIndicator(null);
 		mExpandableListView.setChildDivider(getResources().getDrawable(R.color.gray));
@@ -317,13 +326,25 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 								showEndServiceDialog(order);
 							}
 						} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
-							// 只有顾问订单才可以评论订单
-							showCommentDialog(order.orderId);
-						} 
+							if (msg.arg1 == 1 && !TextUtils.isEmpty(from) && from.equals("receipt")) {// 索取发票
+								toGetReceipt(order);
+							} else {// 只有顾问订单才可以评论订单
+								showCommentDialog(order.orderId);
+							}
+						} else if (Constants.OrderFilter.CLOSE.equals(order.orderStatus)) {
+//							if (msg.arg1 == 1 && !TextUtils.isEmpty(from) && from.equals("receipt")) {// 索取发票
+//								toGetReceipt(order);
+//							}
+						}
 					}else if ("CONSUME".equals(order.businessType)) {
 						if (Constants.OrderFilter.WAIT_ACCEPT_CONFIRM.equals(order.orderStatus)
 								|| Constants.OrderFilter.WAIT_CONFIRM_GOODS.equals(order.orderStatus)) {
 							showConfirmRefundOrderDialog(order);
+						} else if (Constants.OrderFilter.SUCCEED.equals(order.orderStatus)) {
+//								|| Constants.OrderFilter.CLOSE.equals(order.orderStatus)) {
+							if (msg.arg1 == 1 && !TextUtils.isEmpty(from) && from.equals("receipt")) {// 索取发票
+								toGetReceipt(order);
+							}
 						}
 					}
 				}
@@ -347,6 +368,12 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		dialog.show();
 	}
 	
+	public void toGetReceipt(Order order) {
+		Intent intent = new Intent(this, GetReceiptActivity.class);
+		intent.putExtra("orderId", order.orderId);
+		startActivity(intent);
+	}
+
 	public void requestRefundOrder(final Order order) {
 		// Tag used to cancel the request
 		String tag = "tag_request_refund_order";

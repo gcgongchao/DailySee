@@ -76,6 +76,7 @@
         <activity android:name=".ui.user.EditProfileActivity" />
         <activity android:name=".ui.user.AboutActivity" />
         <activity android:name=".ui.user.ServiceAimActivity" />
+        <activity android:name=".ui.user.GetReceiptActivity" />
         
         <activity android:name=".ui.merchant.MerchantActivity" />
         <activity android:name=".ui.merchant.MerchantRoomListActivity" />

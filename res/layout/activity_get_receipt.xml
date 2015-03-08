@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include layout="@layout/item_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/app_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="发票抬头"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_receipt_title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入发票抬头"
+                    android:inputType="text"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_margin"
+                android:background="@color/app_gray" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="收件人"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入收件人"
+                    android:inputType="text"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="身份证号码"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_id_card"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入身份证号码"
+                    android:inputType="number"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="手机号码"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入手机号码"
+                    android:inputType="number"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="邮寄地址"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入邮寄地址"
+                    android:inputType="text"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_margin"
+                    android:paddingRight="@dimen/space"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:text="电子邮箱"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入电子邮箱"
+                    android:inputType="textEmailAddress"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="@dimen/activity_margin"
+                    android:paddingTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/deep_gray"
+                    android:textColorHint="@color/login_hint"
+                    android:textSize="@dimen/text_input" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_line"
+                android:background="@color/line" />
+
+            <Button
+                android:id="@+id/btn_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginBottom="@dimen/activity_margin"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/btn_orange_selector"
+                android:minWidth="@dimen/edittext_width"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

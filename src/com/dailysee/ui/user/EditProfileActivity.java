@@ -280,7 +280,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 
 		boolean check = false;
 		if (!TextUtils.isEmpty(email) && !Utils.checkEmail(email)) {
-			showToast("邮件格式不正确请重新输入");
+			showToast("邮件格式不正确，请重新输入");
 		} else {
 			check = true;
 		}
