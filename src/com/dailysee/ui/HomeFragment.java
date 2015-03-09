@@ -242,6 +242,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 				params.put("mtd", "com.guocui.tty.api.web.AdController.getAds");
 				params.put("pageNo", "1");
 				params.put("pageSize", "10");
+				params.put("target", "AD_M");
 				return params;
 			}
 		}, tag);
