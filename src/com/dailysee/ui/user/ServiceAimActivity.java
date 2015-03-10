@@ -55,7 +55,7 @@ public class ServiceAimActivity extends BaseActivity {
 			public void onSuccess(BaseResponse response) {
 				try {
 					String serviceAim = response.getData().getString("purpose");
-					if (TextUtils.isEmpty(serviceAim)) {
+					if (!TextUtils.isEmpty(serviceAim)) {
 						mSpUtil.setPurpose(serviceAim);
 						tvServiceAim.setText(serviceAim);
 					}
