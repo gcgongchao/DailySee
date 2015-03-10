@@ -172,7 +172,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 	}
 
 	private void toSale() {
-		showToast("敬请期待");
+//		showToast("敬请期待");
 //		Intent intent = new Intent();
 //		intent.setClass(mContext, SaleActivity.class);
 //		intent.putExtra("from", Constants.From.SALE);
