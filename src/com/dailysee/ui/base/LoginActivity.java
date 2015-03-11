@@ -36,6 +36,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private EditText etCode;
 	private TextView btnToRegister;
 	private TextView btnGetCode;
+	private TextView tvUserRules;
 	protected String mCheckCode;
 	protected String mCheckKey;
 	private String from;
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	public void onFindViews() {
 		etPhone = (EditText) findViewById(R.id.et_phone);
 		etCode = (EditText) findViewById(R.id.et_code);
+		tvUserRules = (TextView) findViewById(R.id.btn_to_register_rules);
 		btnCommit = (Button) findViewById(R.id.btn_commit);
 		btnGetCode = (TextView) findViewById(R.id.btn_get_code);
 		btnToRegister = (TextView) findViewById(R.id.btn_to_register);
@@ -75,6 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btnCommit.setOnClickListener(this);
 		btnGetCode.setOnClickListener(this);
 		btnToRegister.setOnClickListener(this);
+		tvUserRules.setOnClickListener(this);
 	}
 
 	@Override
@@ -95,6 +98,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_to_register:
 			// Intent intent = new Intent(this, RegisterActivity.class);
 			// startActivity(intent);
+			break;
+		case R.id.btn_to_register_rules:
+			Intent intent = new Intent(this, RegisterRulesActivity.class);
+			startActivity(intent);
 			break;
 		}
 	}

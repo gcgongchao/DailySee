@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.dailysee.R;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.base.RegisterRulesActivity;
 import com.dailysee.util.Constants;
 import com.dailysee.util.Utils;
 import com.umeng.fb.FeedbackAgent;
@@ -21,6 +22,7 @@ import com.umeng.update.UpdateStatus;
 public class AboutActivity extends BaseActivity implements OnClickListener{
 
     private LinearLayout llFeedback;
+    private LinearLayout llUserRules;
     private LinearLayout llServiceAim;
     private LinearLayout llCheckUpdate;
 	private LinearLayout llCallUs;
@@ -44,6 +46,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onFindViews() {
 		llFeedback = (LinearLayout) findViewById(R.id.ll_feed_back);
+		llUserRules = (LinearLayout) findViewById(R.id.ll_user_rules);
 		llServiceAim = (LinearLayout) findViewById(R.id.ll_service_aim);
 		llCheckUpdate = (LinearLayout) findViewById(R.id.ll_check_update);
 		llCallUs = (LinearLayout) findViewById(R.id.ll_call_us);
@@ -67,6 +70,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onBindListener() {
 	    llFeedback.setOnClickListener(this);
+	    llUserRules.setOnClickListener(this);
 		llServiceAim.setOnClickListener(this);
 	    llCheckUpdate.setOnClickListener(this);
 	    llCallUs.setOnClickListener(this);
@@ -78,6 +82,9 @@ public class AboutActivity extends BaseActivity implements OnClickListener{
             case R.id.ll_feed_back: // 帮助与反馈
             	mFeedbackAgent.startFeedbackActivity();
                 break;
+            case R.id.ll_user_rules:
+            	startActivity(new Intent(getActivity(), RegisterRulesActivity.class));
+            	break;
             case R.id.ll_service_aim:
             	startActivity(new Intent(getActivity(), ServiceAimActivity.class));
             	break;

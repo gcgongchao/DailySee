@@ -69,6 +69,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.base.LoginActivity" />
+        <activity android:name=".ui.base.RegisterRulesActivity" />
         <activity android:name=".ui.image.BrowseImageActivity" />
         
         <activity android:name=".ui.user.ChangePhoneActivity" />

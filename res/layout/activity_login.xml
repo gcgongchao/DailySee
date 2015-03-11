@@ -85,6 +85,23 @@
                     android:textSize="@dimen/text_input"
                     android:visibility="visible" />
             </LinearLayout>
+            
+            <TextView
+                android:id="@+id/btn_to_register_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:paddingBottom="8dp"
+                android:layout_gravity="right"
+                android:paddingTop="8dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical|right"
+                android:singleLine="true"
+                android:text="用户须知"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/body"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/btn_commit"
@@ -92,7 +109,6 @@
                 android:layout_height="@dimen/edittext_height"
                 android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginRight="@dimen/activity_margin"
-                android:layout_marginTop="@dimen/activity_margin"
                 android:background="@drawable/btn_orange_selector"
                 android:minWidth="@dimen/edittext_width"
                 android:text="登录"
