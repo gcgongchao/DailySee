@@ -8,7 +8,7 @@ public class Constants {
 	
 	public static final String REFRESH_MEMBER_DETAIL = PREFIX + "REFRESH_MEMBER_DETAIL";
 
-	public static final String CUSTOMER_SERVICES_PHONE = "0755 8888 8888";
+	public static final String CUSTOMER_SERVICES_PHONE = "0755 8613 3999";
 
 	public static final int ADD_PICTURE = 10001;
 
