@@ -172,7 +172,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			if (!mSpUtil.isLogin()) {
 				toLogin();
 			} else {
-				toOrder(Constants.OrderFilter.SUCCEED + ";" + Constants.OrderFilter.CLOSE, "receipt");
+				toOrder(Constants.OrderFilter.SUCCEED, "receipt");
 			}
 			break;
 		case R.id.ll_about:
