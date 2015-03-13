@@ -3,9 +3,9 @@ package com.dailysee.bean;
 public class ServiceHour {
 
 	public int hour;
-	public int price;
+	public float price;
 
-	public ServiceHour(int hour, int price) {
+	public ServiceHour(int hour, float price) {
 		this.hour = hour;
 		this.price = price;
 	}

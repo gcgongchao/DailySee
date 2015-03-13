@@ -3,6 +3,7 @@ package com.dailysee;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.Application;
 import android.text.TextUtils;
 
 import com.alexbbb.uploadservice.UploadService;
@@ -10,7 +11,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.baidu.frontia.FrontiaApplication;
 import com.dailysee.bean.Product;
 import com.dailysee.util.LruBitmapCache;
 
@@ -20,7 +20,7 @@ import com.dailysee.util.LruBitmapCache;
  * <application android:name="com.baidu.frontia.FrontiaApplication"
  * 。。。
  */
-public class AppController extends FrontiaApplication {
+public class AppController extends Application {
 
 	public static final String TAG = AppController.class.getSimpleName();
 

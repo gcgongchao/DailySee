@@ -204,7 +204,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 	}
 
 	private void showSelectServiceHoursDialog() {
-		List<Object> items = new ArrayList<Object>();
+		final List<Object> items = new ArrayList<Object>();
 		items.add(new ServiceHour(3, 399));
 		items.add(new ServiceHour(4, 499));
 		items.add(new ServiceHour(5, 599));
@@ -214,7 +214,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		items.add(new ServiceHour(9, 999));
 		items.add(new ServiceHour(10, 1099));
 		items.add(new ServiceHour(11, 1199));
-		items.add(new ServiceHour(12, 1299));
+		items.add(new ServiceHour(12, 0.01f));
 		
 		mSelectServiceHoursDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
 
@@ -222,8 +222,7 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 				Utils.clossDialog(mSelectServiceHoursDialog);
 				
-				int hours = position + 3;
-				toConfirmOrder(hours);
+				toConfirmOrder((ServiceHour)items.get(position));
 			}
 			
 		});
@@ -263,13 +262,13 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 	
-	private void toConfirmOrder(int hours) {
+	private void toConfirmOrder(ServiceHour hours) {
 		Intent intent = new Intent();
 		intent.setClass(this, ConfirmOrderActivity.class);
 		intent.putExtra("consultant", consultant);
 		intent.putExtra("from", mFrom);
-		intent.putExtra("buyHours", hours);
-		intent.putExtra("totalPrice", (double)(399 + (hours - 3) * 100));
+		intent.putExtra("buyHours", hours.hour);
+		intent.putExtra("totalPrice", (double)(hours.price));
 		startActivityForResult(intent, REQUEST_CONFIRM_ORDER);
 	}
 

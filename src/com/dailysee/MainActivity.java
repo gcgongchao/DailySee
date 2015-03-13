@@ -23,8 +23,6 @@ import android.widget.ImageView;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -43,7 +41,6 @@ import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
-import com.dailysee.util.Utils;
 import com.dailysee.widget.BadgeView;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
@@ -234,9 +231,9 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 	}
 	 
 	private void toBindPush() {
-		if ((!Utils.hasBind(this) || Utils.hasBindTty(this)) && mSpUtil.isLogin()) {
-			PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
-		}
+//		if ((!Utils.hasBind(this) || Utils.hasBindTty(this)) && mSpUtil.isLogin()) {
+//			PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
+//		}
 	}
 
 	private void onRefreshNewMsgCount() {

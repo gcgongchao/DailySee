@@ -1,24 +1,20 @@
 package com.dailysee.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.baidu.frontia.api.FrontiaPushMessageReceiver;
 import com.dailysee.MainActivity;
 import com.dailysee.R;
-import com.dailysee.bean.Member;
 import com.dailysee.bean.Push;
 import com.dailysee.net.BaseResponse;
 import com.dailysee.net.Callback;
@@ -30,7 +26,8 @@ import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
+import com.igexin.sdk.PushConsts;
+import com.igexin.sdk.PushManager;
 
 /**
  * Push消息处理receiver。请编写您需要的回调函数， 一般来说： onBind是必须的，用来处理startWork返回值；
@@ -46,45 +43,94 @@ import com.google.gson.reflect.TypeToken;
  * 当您遇到以上返回错误时，如果解释不了您的问题，请用同一请求的返回值requestId和errorCode联系我们追查问题。
  * 
  */
-public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
+public class MyPushMessageReceiver extends BroadcastReceiver {
 	/** TAG to Log */
 	public static final String TAG = MyPushMessageReceiver.class.getSimpleName();
-
-	/**
-	 * 调用PushManager.startWork后，sdk将对push
-	 * server发起绑定请求，这个过程是异步的。绑定请求的结果通过onBind返回。 如果您需要用单播推送，需要把这里获取的channel
-	 * id和user id上传到应用server中，再调用server接口用channel id和user id给单个手机或者用户推送。
-	 * 
-	 * @param context
-	 *            BroadcastReceiver的执行Context
-	 * @param errorCode
-	 *            绑定接口返回值，0 - 成功
-	 * @param appid
-	 *            应用id。errorCode非0时为null
-	 * @param userId
-	 *            应用user id。errorCode非0时为null
-	 * @param channelId
-	 *            应用channel id。errorCode非0时为null
-	 * @param requestId
-	 *            向服务端发起的请求id。在追查问题时有用；
-	 * @return none
-	 */
+	
 	@Override
-	public void onBind(Context context, int errorCode, String appid, String userId, String channelId, String requestId) {
-		String responseString = "onBind errorCode=" + errorCode + " appid=" + appid + " userId=" + userId + " channelId=" + channelId + " requestId=" + requestId;
-		Log.d(TAG, responseString);
+	public void onReceive(Context context, Intent intent) {
+		Bundle bundle = intent.getExtras();
+		Log.d("PushService", "onReceive() action=" + bundle.getInt("action") + ", bundle: " + bundle.toString());
+		switch (bundle.getInt(PushConsts.CMD_ACTION)) {
 
-		// 绑定成功，设置已绑定flag，可以有效的减少不必要的绑定请求
-		if (errorCode == 0) {
-			SpUtil.getInstance(context).setBDUserId(userId);
-			SpUtil.getInstance(context).setBDChannelId(channelId);
-			Utils.setBind(context, userId, channelId, true);
+		case PushConsts.GET_MSG_DATA:
+			// 获取透传数据
+			// String appid = bundle.getString("appid");
+			byte[] payload = bundle.getByteArray("payload");
 			
-			requestBindPush(context, userId, channelId);
+			String taskid = bundle.getString("taskid");
+			String messageid = bundle.getString("messageid");
+
+			// smartPush第三方回执调用接口，actionid范围为90000-90999，可根据业务场景执行
+			boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
+			System.out.println("第三方回执接口调用" + (result ? "成功" : "失败"));
+			
+			if (payload != null) {
+				String data = new String(payload);
+
+				updateContent(context, data);
+				Log.d("GetuiSdkDemo", "Got Payload:" + data);
+			}
+			break;
+		case PushConsts.GET_CLIENTID:
+			// 获取ClientID(CID)
+			// 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
+			String cid = bundle.getString("clientid");
+			requestBindPush(context, cid, cid);
+			break;
+		case PushConsts.THIRDPART_FEEDBACK:
+			/*String appid = bundle.getString("appid");
+			String taskid = bundle.getString("taskid");
+			String actionid = bundle.getString("actionid");
+			String result = bundle.getString("result");
+			long timestamp = bundle.getLong("timestamp");
+
+			Log.d("GetuiSdkDemo", "appid = " + appid);
+			Log.d("GetuiSdkDemo", "taskid = " + taskid);
+			Log.d("GetuiSdkDemo", "actionid = " + actionid);
+			Log.d("GetuiSdkDemo", "result = " + result);
+			Log.d("GetuiSdkDemo", "timestamp = " + timestamp);*/
+			break;
+		default:
+			break;
 		}
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, responseString);
 	}
+
+//	/**
+//	 * 调用PushManager.startWork后，sdk将对push
+//	 * server发起绑定请求，这个过程是异步的。绑定请求的结果通过onBind返回。 如果您需要用单播推送，需要把这里获取的channel
+//	 * id和user id上传到应用server中，再调用server接口用channel id和user id给单个手机或者用户推送。
+//	 * 
+//	 * @param context
+//	 *            BroadcastReceiver的执行Context
+//	 * @param errorCode
+//	 *            绑定接口返回值，0 - 成功
+//	 * @param appid
+//	 *            应用id。errorCode非0时为null
+//	 * @param userId
+//	 *            应用user id。errorCode非0时为null
+//	 * @param channelId
+//	 *            应用channel id。errorCode非0时为null
+//	 * @param requestId
+//	 *            向服务端发起的请求id。在追查问题时有用；
+//	 * @return none
+//	 */
+//	@Override
+//	public void onBind(Context context, int errorCode, String appid, String userId, String channelId, String requestId) {
+//		String responseString = "onBind errorCode=" + errorCode + " appid=" + appid + " userId=" + userId + " channelId=" + channelId + " requestId=" + requestId;
+//		Log.d(TAG, responseString);
+//
+//		// 绑定成功，设置已绑定flag，可以有效的减少不必要的绑定请求
+//		if (errorCode == 0) {
+//			SpUtil.getInstance(context).setBDUserId(userId);
+//			SpUtil.getInstance(context).setBDChannelId(channelId);
+//			Utils.setBind(context, userId, channelId, true);
+//			
+//			requestBindPush(context, userId, channelId);
+//		}
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, responseString);
+//	}
 
 	private void requestBindPush(final Context context, final String userId, final String channelId) {
 		if (!SpUtil.getInstance(context).isLogin()) {
@@ -106,171 +152,171 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
 				params.put("mtd", "tty.member.bind.user");
 				params.put("memberId", SpUtil.getInstance(context).getMemberIdStr());
 				params.put("userId", userId);
-				params.put("channelId", channelId);
+				params.put("channelId", "0");
 				return params;
 			}
 		}, tag, true);
 	}
 
-	/**
-	 * 接收透传消息的函数。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param message
-	 *            推送的消息
-	 * @param customContentString
-	 *            自定义内容,为空或者json字符串
-	 */
-	@Override
-	public void onMessage(Context context, String message, String customContentString) {
-		String messageString = "透传消息 message=\"" + message + "\" customContentString=" + customContentString;
-		Log.d(TAG, messageString);
-
-		// 自定义内容获取方式，mykey和myvalue对应透传消息推送时自定义内容中设置的键和值
-		if (!TextUtils.isEmpty(customContentString)) {
-			JSONObject customJson = null;
-			try {
-				customJson = new JSONObject(customContentString);
-				String myvalue = null;
-				if (customJson.isNull("mykey")) {
-					myvalue = customJson.getString("mykey");
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, message);
-	}
-
-	/**
-	 * 接收通知点击的函数。注：推送通知被用户点击前，应用无法通过接口获取通知的内容。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param title
-	 *            推送的通知的标题
-	 * @param description
-	 *            推送的通知的描述
-	 * @param customContentString
-	 *            自定义内容，为空或者json字符串
-	 */
-	@Override
-	public void onNotificationClicked(Context context, String title, String description, String customContentString) {
-		String notifyString = "通知点击 title=\"" + title + "\" description=\"" + description + "\" customContent=" + customContentString;
-		Log.d(TAG, notifyString);
-
-		// 自定义内容获取方式，mykey和myvalue对应通知推送时自定义内容中设置的键和值
-		if (!TextUtils.isEmpty(customContentString)) {
-			JSONObject customJson = null;
-			try {
-				customJson = new JSONObject(customContentString);
-				String myvalue = null;
-				if (customJson.isNull("mykey")) {
-					myvalue = customJson.getString("mykey");
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, notifyString);
-	}
-
-	/**
-	 * setTags() 的回调函数。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param errorCode
-	 *            错误码。0表示某些tag已经设置成功；非0表示所有tag的设置均失败。
-	 * @param successTags
-	 *            设置成功的tag
-	 * @param failTags
-	 *            设置失败的tag
-	 * @param requestId
-	 *            分配给对云推送的请求的id
-	 */
-	@Override
-	public void onSetTags(Context context, int errorCode, List<String> sucessTags, List<String> failTags, String requestId) {
-		String responseString = "onSetTags errorCode=" + errorCode + " sucessTags=" + sucessTags + " failTags=" + failTags + " requestId=" + requestId;
-		Log.d(TAG, responseString);
-
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, responseString);
-	}
-
-	/**
-	 * delTags() 的回调函数。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param errorCode
-	 *            错误码。0表示某些tag已经删除成功；非0表示所有tag均删除失败。
-	 * @param successTags
-	 *            成功删除的tag
-	 * @param failTags
-	 *            删除失败的tag
-	 * @param requestId
-	 *            分配给对云推送的请求的id
-	 */
-	@Override
-	public void onDelTags(Context context, int errorCode, List<String> sucessTags, List<String> failTags, String requestId) {
-		String responseString = "onDelTags errorCode=" + errorCode + " sucessTags=" + sucessTags + " failTags=" + failTags + " requestId=" + requestId;
-		Log.d(TAG, responseString);
-
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, responseString);
-	}
-
-	/**
-	 * listTags() 的回调函数。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param errorCode
-	 *            错误码。0表示列举tag成功；非0表示失败。
-	 * @param tags
-	 *            当前应用设置的所有tag。
-	 * @param requestId
-	 *            分配给对云推送的请求的id
-	 */
-	@Override
-	public void onListTags(Context context, int errorCode, List<String> tags, String requestId) {
-		String responseString = "onListTags errorCode=" + errorCode + " tags=" + tags;
-		Log.d(TAG, responseString);
-
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, responseString);
-	}
-
-	/**
-	 * PushManager.stopWork() 的回调函数。
-	 * 
-	 * @param context
-	 *            上下文
-	 * @param errorCode
-	 *            错误码。0表示从云推送解绑定成功；非0表示失败。
-	 * @param requestId
-	 *            分配给对云推送的请求的id
-	 */
-	@Override
-	public void onUnbind(Context context, int errorCode, String requestId) {
-		String responseString = "onUnbind errorCode=" + errorCode + " requestId = " + requestId;
-		Log.d(TAG, responseString);
-
-		// 解绑定成功，设置未绑定flag，
-		if (errorCode == 0) {
-			Utils.setBind(context, null, null, false);
-		}
-		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-		updateContent(context, responseString);
-	}
+//	/**
+//	 * 接收透传消息的函数。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param message
+//	 *            推送的消息
+//	 * @param customContentString
+//	 *            自定义内容,为空或者json字符串
+//	 */
+//	@Override
+//	public void onMessage(Context context, String message, String customContentString) {
+//		String messageString = "透传消息 message=\"" + message + "\" customContentString=" + customContentString;
+//		Log.d(TAG, messageString);
+//
+//		// 自定义内容获取方式，mykey和myvalue对应透传消息推送时自定义内容中设置的键和值
+//		if (!TextUtils.isEmpty(customContentString)) {
+//			JSONObject customJson = null;
+//			try {
+//				customJson = new JSONObject(customContentString);
+//				String myvalue = null;
+//				if (customJson.isNull("mykey")) {
+//					myvalue = customJson.getString("mykey");
+//				}
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, message);
+//	}
+//
+//	/**
+//	 * 接收通知点击的函数。注：推送通知被用户点击前，应用无法通过接口获取通知的内容。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param title
+//	 *            推送的通知的标题
+//	 * @param description
+//	 *            推送的通知的描述
+//	 * @param customContentString
+//	 *            自定义内容，为空或者json字符串
+//	 */
+//	@Override
+//	public void onNotificationClicked(Context context, String title, String description, String customContentString) {
+//		String notifyString = "通知点击 title=\"" + title + "\" description=\"" + description + "\" customContent=" + customContentString;
+//		Log.d(TAG, notifyString);
+//
+//		// 自定义内容获取方式，mykey和myvalue对应通知推送时自定义内容中设置的键和值
+//		if (!TextUtils.isEmpty(customContentString)) {
+//			JSONObject customJson = null;
+//			try {
+//				customJson = new JSONObject(customContentString);
+//				String myvalue = null;
+//				if (customJson.isNull("mykey")) {
+//					myvalue = customJson.getString("mykey");
+//				}
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, notifyString);
+//	}
+//
+//	/**
+//	 * setTags() 的回调函数。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param errorCode
+//	 *            错误码。0表示某些tag已经设置成功；非0表示所有tag的设置均失败。
+//	 * @param successTags
+//	 *            设置成功的tag
+//	 * @param failTags
+//	 *            设置失败的tag
+//	 * @param requestId
+//	 *            分配给对云推送的请求的id
+//	 */
+//	@Override
+//	public void onSetTags(Context context, int errorCode, List<String> sucessTags, List<String> failTags, String requestId) {
+//		String responseString = "onSetTags errorCode=" + errorCode + " sucessTags=" + sucessTags + " failTags=" + failTags + " requestId=" + requestId;
+//		Log.d(TAG, responseString);
+//
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, responseString);
+//	}
+//
+//	/**
+//	 * delTags() 的回调函数。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param errorCode
+//	 *            错误码。0表示某些tag已经删除成功；非0表示所有tag均删除失败。
+//	 * @param successTags
+//	 *            成功删除的tag
+//	 * @param failTags
+//	 *            删除失败的tag
+//	 * @param requestId
+//	 *            分配给对云推送的请求的id
+//	 */
+//	@Override
+//	public void onDelTags(Context context, int errorCode, List<String> sucessTags, List<String> failTags, String requestId) {
+//		String responseString = "onDelTags errorCode=" + errorCode + " sucessTags=" + sucessTags + " failTags=" + failTags + " requestId=" + requestId;
+//		Log.d(TAG, responseString);
+//
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, responseString);
+//	}
+//
+//	/**
+//	 * listTags() 的回调函数。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param errorCode
+//	 *            错误码。0表示列举tag成功；非0表示失败。
+//	 * @param tags
+//	 *            当前应用设置的所有tag。
+//	 * @param requestId
+//	 *            分配给对云推送的请求的id
+//	 */
+//	@Override
+//	public void onListTags(Context context, int errorCode, List<String> tags, String requestId) {
+//		String responseString = "onListTags errorCode=" + errorCode + " tags=" + tags;
+//		Log.d(TAG, responseString);
+//
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, responseString);
+//	}
+//
+//	/**
+//	 * PushManager.stopWork() 的回调函数。
+//	 * 
+//	 * @param context
+//	 *            上下文
+//	 * @param errorCode
+//	 *            错误码。0表示从云推送解绑定成功；非0表示失败。
+//	 * @param requestId
+//	 *            分配给对云推送的请求的id
+//	 */
+//	@Override
+//	public void onUnbind(Context context, int errorCode, String requestId) {
+//		String responseString = "onUnbind errorCode=" + errorCode + " requestId = " + requestId;
+//		Log.d(TAG, responseString);
+//
+//		// 解绑定成功，设置未绑定flag，
+//		if (errorCode == 0) {
+//			Utils.setBind(context, null, null, false);
+//		}
+//		// Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
+//		updateContent(context, responseString);
+//	}
 
 	private void updateContent(Context context, String msg) {
 		Log.d(TAG, "updateContent");
