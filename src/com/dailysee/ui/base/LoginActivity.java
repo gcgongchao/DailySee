@@ -37,8 +37,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private TextView btnToRegister;
 	private TextView btnGetCode;
 	private TextView tvUserRules;
-	protected String mCheckCode;
-	protected String mCheckKey;
 	private String from;
 
 	@Override
@@ -116,10 +114,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
-				JSONObject data = response.getData();
-				mCheckKey = data.optString("key");
-				mCheckCode = data.optString("value");
-				Toast.makeText(LoginActivity.this, "验证码已发送到您的手机 " + mCheckCode, Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, "验证码已发送到您的手机", Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
@@ -178,8 +173,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			showToast("验证码不能包含空格");
 		} else if (code.length() != 6) {
 			showToast("验证码由6位数字组成");
-		} else if (!code.equals(mCheckCode)) {
-			showToast("输入的验证码不正确");
 		} else {
 			check = true;
 		}
@@ -244,7 +237,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
-				params.put(mCheckKey, code);
+				params.put("code", code);
 //				params.put("userId", mSpUtil.getBDUserId());
 //				params.put("channelId", mSpUtil.getBDChannelId());
 				params.put("userId", Utils.getBindUserId(getActivity()));
