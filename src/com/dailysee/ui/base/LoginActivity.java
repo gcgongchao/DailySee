@@ -241,7 +241,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
-				params.put(mCheckKey, code);
+				if (!TextUtils.isEmpty(mCheckKey)) {
+					params.put(mCheckKey, code);
+				}
 //				params.put("userId", mSpUtil.getBDUserId());
 //				params.put("channelId", mSpUtil.getBDChannelId());
 				params.put("userId", Utils.getBindUserId(getActivity()));

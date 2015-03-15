@@ -153,7 +153,9 @@ public class NetRequest {
 		}
 		
 		Object[] array = params.keySet().toArray();
-		Arrays.sort(array);// 默认升序排列，array为参数组成的数组
+		if (array != null) {
+			Arrays.sort(array);// 默认升序排列，array为参数组成的数组
+		}
 		StringBuffer sb = new StringBuffer();
 		for (Object k : array) {
 			String k_ = String.valueOf(k);
