@@ -153,6 +153,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
 				params.put("memberId", SpUtil.getInstance(context).getMemberIdStr());
 				params.put("userId", userId);
 				params.put("channelId", "0");
+				params.put("token", SpUtil.getInstance(context).getToken());
 				return params;
 			}
 		}, tag, true);

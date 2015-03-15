@@ -364,6 +364,7 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 				if (!TextUtils.isEmpty(email)) {
 					params.put("email", email);
 				}
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

@@ -349,6 +349,7 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
 				params.put("parentId", Integer.toString(cityId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -425,6 +426,7 @@ public class ConsultantActivity extends BaseActivity implements OnClickListener,
 				}
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 

@@ -115,6 +115,7 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.PhoneChkNumControllor.createPhoneChkNum");
 				params.put("loginId", phone);
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -206,6 +207,7 @@ public class ChangePhoneActivity extends BaseActivity implements OnClickListener
 				params.put(mCheckKey, code);
 				params.put("userId", mSpUtil.getBDUserId());
 				params.put("channelId", mSpUtil.getBDChannelId());
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

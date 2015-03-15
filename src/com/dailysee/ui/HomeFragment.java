@@ -243,6 +243,7 @@ public class HomeFragment extends BaseFragment implements OnClickListener, OnPag
 				params.put("pageNo", "1");
 				params.put("pageSize", "10");
 				params.put("target", "AD_M");
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

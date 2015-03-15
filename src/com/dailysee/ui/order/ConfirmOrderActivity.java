@@ -329,7 +329,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				params.put("memberId", mSpUtil.getMemberIdStr());
 				params.put("orderId", Long.toString(mOrderId));
 				params.put("thirdpayId", payment);
-
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 
@@ -415,6 +415,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 					params.put("remark", getRemark());
 					break;
 				}
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 
@@ -488,6 +489,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 				params.put("amount", Integer.toString(hours * 100));
 				params.put("buyHours", Integer.toString(hours));
 				params.put("mobile", mSpUtil.getLoginId());
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

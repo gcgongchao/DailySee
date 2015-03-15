@@ -297,6 +297,7 @@ public class GetReceiptActivity extends BaseActivity implements OnClickListener,
 				params.put("tel", phone);
 				params.put("addr", name + "@" + address);
 				params.put("email", email);
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

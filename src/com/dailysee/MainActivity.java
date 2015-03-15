@@ -303,6 +303,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "tty.message.list.get");
 				params.put("memberId", mSpUtil.getMemberIdStr());
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag, true);
@@ -341,6 +342,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -482,6 +484,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
 				params.put("parentId", "0");
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag, true);
@@ -519,6 +522,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
 				params.put("parentId", Integer.toString(provinceId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag, true);
@@ -544,6 +548,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
 				params.put("parentId", Integer.toString(cityId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag, true);

@@ -296,6 +296,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.CityController.getCity");
 				params.put("parentId", Integer.toString(cityId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -371,6 +372,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				}
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 

@@ -556,6 +556,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				params.put("merchantId", Long.toString(mMerchant.merchantId));
 				params.put("useStatus", "ENABLE");
 				params.put("parentId", Integer.toString(productTopType));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -682,6 +683,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 				params.put("status", "UP");
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

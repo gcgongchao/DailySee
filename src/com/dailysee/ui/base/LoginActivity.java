@@ -37,6 +37,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private TextView btnToRegister;
 	private TextView btnGetCode;
 	private TextView tvUserRules;
+	
+	protected String mCheckKey;
 	private String from;
 
 	@Override
@@ -114,6 +116,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onSuccess(BaseResponse response) {
+				JSONObject data = response.getData();
+				mCheckKey = data.optString("key");
 				Toast.makeText(LoginActivity.this, "验证码已发送到您的手机", Toast.LENGTH_SHORT).show();
 			}
 
@@ -237,7 +241,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.customerLogin");
 				params.put("loginId", phone);
-				params.put("code", code);
+				params.put(mCheckKey, code);
 //				params.put("userId", mSpUtil.getBDUserId());
 //				params.put("channelId", mSpUtil.getBDChannelId());
 				params.put("userId", Utils.getBindUserId(getActivity()));

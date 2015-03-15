@@ -244,6 +244,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("orderStatus", filter);
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -412,6 +413,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("orderId", Long.toString(order.orderId));
 				params.put("refundFee", Double.toString(order.amount));
 				params.put("refundReason", "");
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -535,6 +537,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("mtd", "com.guocui.tty.api.web.OrderController.completeAOrder");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				params.put("orderId", Long.toString(orderId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -586,6 +589,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("mtd", "tty.order.service.start");
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				params.put("orderId", Long.toString(orderId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -647,6 +651,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 				params.put("orderId", Long.toString(orderId));
 				params.put("rate", Integer.toString(position));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -747,6 +752,7 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("belongObjId", mSpUtil.getBelongObjIdStr());
 //				params.put("orderStatus", filter);
 				params.put("orderId", Long.toString(order.orderId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

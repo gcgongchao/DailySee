@@ -233,6 +233,7 @@ public class MessageFragment extends BaseFragment implements OnClickListener, On
 				params.put("mtd", "com.guocui.tty.api.web.TipController.getTips");
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 

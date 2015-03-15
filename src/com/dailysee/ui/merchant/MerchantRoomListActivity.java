@@ -310,6 +310,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				params.put("roomType", Long.toString(roomType.roomTypeId));
 				params.put("pageNo", "1");
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_LARGE_SIZE));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -391,6 +392,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				params.put("mtd", "com.guocui.tty.api.web.MemberControllor.getMemberDetail");
 				params.put("belongObjId", Long.toString(mMerchantId));
 				params.put("memberType", "MERCHANT");
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
@@ -442,6 +444,7 @@ public class MerchantRoomListActivity extends BaseActivity implements OnClickLis
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "tty.roomtype.list.get");
 				params.put("merchantId", Long.toString(mMerchantId));
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 

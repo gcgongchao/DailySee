@@ -206,6 +206,7 @@ public class TipDetailActivity extends BaseActivity implements OnClickListener {
 				} else {
 					params.put("tipId", Long.toString(mTipId));
 				}
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);

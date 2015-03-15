@@ -83,6 +83,7 @@ public class ServiceAimActivity extends BaseActivity {
 			public Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("mtd", "tty.member.init.get");
+				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 		}, tag);
