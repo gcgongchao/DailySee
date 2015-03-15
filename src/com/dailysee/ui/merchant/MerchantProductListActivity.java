@@ -154,6 +154,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		
 		AppController.getInstance().clearShoppingCart();
 //		onLoadProductType();
+		
+		onClick(mLlDrinkTitle);
 	}
 
 	@Override
@@ -268,7 +270,7 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		}
 		mTvRoomDesc.setText(desc);
 		
-		onGroupItemClick(Constants.Type.ROOM);
+//		onGroupItemClick(Constants.Type.ROOM);
 		
 		mDrinkTypeAdapter = new GroupAdapter(this, mDrinkTypeList);
 		mHlvDrinkTab.setAdapter(mDrinkTypeAdapter);
@@ -410,7 +412,12 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ll_room_title:
-			onGroupItemClick(Constants.Type.ROOM);
+//			onGroupItemClick(Constants.Type.ROOM);
+			boolean isRoomExpanded = mLlRoomContent.getVisibility() == View.GONE;
+			mLlRoomContent.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
+			mTvRoomTitle.setTextColor(isRoomExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+			mLlRoomTitle.setBackgroundColor(isRoomExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+			mIvRoomExpand.setImageResource(isRoomExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 			break;
 		case R.id.ll_drink_title:
 			onGroupItemClick(Constants.Type.DRINKS);
@@ -461,11 +468,11 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 	private void onGroupItemClick(int item) {
 		productTopType = item;
 		
-		boolean isRoomExpanded = item == Constants.Type.ROOM;
-		mLlRoomContent.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
-		mTvRoomTitle.setTextColor(isRoomExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
-		mLlRoomTitle.setBackgroundColor(isRoomExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
-		mIvRoomExpand.setImageResource(isRoomExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
+//		boolean isRoomExpanded = item == Constants.Type.ROOM;
+//		mLlRoomContent.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
+//		mTvRoomTitle.setTextColor(isRoomExpanded ? getResources().getColor(R.color.white) : getResources().getColor(R.color.black));
+//		mLlRoomTitle.setBackgroundColor(isRoomExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
+//		mIvRoomExpand.setImageResource(isRoomExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 		
 		boolean isDrinkExpanded = item == Constants.Type.DRINKS;
 		mLlDrinkContent.setVisibility(isDrinkExpanded ? View.VISIBLE : View.GONE);
@@ -491,7 +498,8 @@ public class MerchantProductListActivity extends BaseActivity implements OnClick
 		mLlRecommendTitle.setBackgroundColor(isRecommendExpanded ? getResources().getColor(R.color.orange) : getResources().getColor(R.color.app_gray));
 		mIvRecommendExpand.setImageResource(isRecommendExpanded ? R.drawable.ic_expand_on : R.drawable.ic_expand_off);
 		
-		mEmptyView.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
+//		mEmptyView.setVisibility(isRoomExpanded ? View.VISIBLE : View.GONE);
+		mEmptyView.setVisibility((!isDrinkExpanded && !isSnackExpanded && !isSmokeTeaExpanded && !isRecommendExpanded) ? View.VISIBLE : View.GONE);
 	}
 	
 	private void onLoadProductType() {
