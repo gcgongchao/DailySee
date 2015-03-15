@@ -34,7 +34,7 @@ public class GroupAdapter extends BaseAdapter {
 
 		params = new AbsListView.LayoutParams(width, AbsListView.LayoutParams.WRAP_CONTENT);
 
-		colorTabNormal = context.getResources().getColor(R.color.app_gray);
+		colorTabNormal = context.getResources().getColor(R.color.light_gray);
 		colorTabPressed = context.getResources().getColor(R.color.white);
 	}
 
