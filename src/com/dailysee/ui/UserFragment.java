@@ -113,7 +113,6 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.REFRESH_MEMBER_DETAIL);
-		filter.addAction(Constants.FORCE_LOGOUT);
 		mContext.registerReceiver(mUserReceiver, filter);
 	}
 
@@ -280,8 +279,6 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				String action = intent.getAction();
 				if (Constants.REFRESH_MEMBER_DETAIL.equals(action)) {
 					onRefreshUserInfo();
-				} else if (Constants.FORCE_LOGOUT.equals(action)) {
-					onForceLogout();
 				}
 			}
 		}
@@ -313,14 +310,4 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 			uncommentOrderBadge.hide();
 		}
 	}
-
-	private void onForceLogout() {
-		SpUtil.getInstance(mContext).logout();
-		Intent intent = new Intent();
-		intent.setClass(mContext, LoginActivity.class);
-		startActivity(intent);
-		
-		getActivity().finish();
-	}
-
 }

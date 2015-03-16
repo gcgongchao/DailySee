@@ -40,7 +40,9 @@ import com.dailysee.ui.HomeFragment;
 import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
 import com.dailysee.ui.base.BaseActivity;
+import com.dailysee.ui.base.LoginActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
 import com.dailysee.widget.BadgeView;
 import com.google.gson.reflect.TypeToken;
@@ -158,6 +160,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 		
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.ACTION_PUSH);
+		filter.addAction(Constants.FORCE_LOGOUT);
 		registerReceiver(mPushReceiver, filter);
 	}
 
@@ -648,6 +651,8 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 						
 						onRefreshNewMsgCount();
 					}
+				} else if (Constants.FORCE_LOGOUT.equals(action)) {
+					onForceLogout();
 				}
 			}
 		}
@@ -665,6 +670,15 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 				tabChanged = true;
 			}
 		}
+	}
+
+	private void onForceLogout() {
+		mSpUtil.logout();
+		Intent intent = new Intent();
+		intent.setClass(this, LoginActivity.class);
+		startActivity(intent);
+		
+		getActivity().finish();
 	}
 
 }
