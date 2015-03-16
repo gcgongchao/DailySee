@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
@@ -139,6 +140,20 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 		// Add an end-of-list listener
 		mPullRefreshListView.setOnLastItemVisibleListener(this);
 		mExpandableListView.setOnGroupClickListener(this);
+		mExpandableListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				if (id == 0) {// group long click
+					Object obj = parent.getItemAtPosition(position);
+					if (obj != null && obj instanceof Order) {
+						Order order = (Order) obj;
+						showDeleteOrderDialog(order);
+					}
+				}
+				return true;
+			}
+		});
 	}
 
 	public void onLoad() {
@@ -413,6 +428,59 @@ public class OrderActivity extends BaseActivity implements OnRefreshListener<Exp
 				params.put("orderId", Long.toString(order.orderId));
 				params.put("refundFee", Double.toString(order.amount));
 				params.put("refundReason", "");
+				params.put("token", mSpUtil.getToken());
+				return params;
+			}
+		}, tag);
+	}
+	
+	public void showDeleteOrderDialog(final Order order) {
+		String msg = "确定删除订单？";
+		ConfirmDialog dialog = new ConfirmDialog(this, msg, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				requestDeleteOrder(order);
+			}
+		});
+		dialog.show();
+	}
+	
+	public void requestDeleteOrder(final Order order) {
+		// Tag used to cancel the request
+		String tag = "tag_request_delete_order";
+		NetRequest.getInstance(getActivity()).post(new Callback() {
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				showToast("删除订单成功");
+				mIndex = 1;
+				
+				mRefreshDataRequired = true;
+				onRefreshData();
+			}
+
+			@Override
+			public void onPreExecute() {
+				toShowProgressMsg("正在提交...");
+			}
+
+			@Override
+			public void onFinished() {
+				toCloseProgressMsg();
+			}
+
+			@Override
+			public void onFailed(String msg) {
+
+			}
+
+			@Override
+			public Map<String, String> getParams() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("mtd", "tty.order.del.req");
+				params.put("belongObjId", mSpUtil.getMemberIdStr());
+				params.put("orderId", Long.toString(order.orderId));
 				params.put("token", mSpUtil.getToken());
 				return params;
 			}

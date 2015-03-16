@@ -30,4 +30,14 @@ public class Order implements Serializable {
 	public String paymentId;
 	
 	public List<OrderItem> items;
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", parentOrderId=" + parentOrderId + ", businessType=" + businessType + ", businessTypeName=" + businessTypeName
+				+ ", subBusinessType=" + subBusinessType + ", subBusinessTypeName=" + subBusinessTypeName + ", merchantId=" + merchantId + ", sellerName=" + sellerName
+				+ ", memberId=" + memberId + ", buyerName=" + buyerName + ", orderStatus=" + orderStatus + ", orderSelStatusName=" + orderSelStatusName + ", orderBuyStatusName="
+				+ orderBuyStatusName + ", amount=" + amount + ", rate=" + rate + ", fee=" + fee + ", roomNo=" + roomNo + ", mobile=" + mobile + ", createDate=" + createDate
+				+ ", bookDate=" + bookDate + ", remark=" + remark + ", buyHours=" + buyHours + ", startDate=" + startDate + ", paymentId=" + paymentId + "]";
+	}
+	
 }

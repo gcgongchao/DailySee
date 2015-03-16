@@ -73,7 +73,7 @@ public class OrderAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public long getGroupId(int groupPosition) {
-		return groupPosition;
+		return 0;
 	}
 
 	@Override

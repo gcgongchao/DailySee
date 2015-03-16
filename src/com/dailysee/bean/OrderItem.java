@@ -13,5 +13,12 @@ public class OrderItem implements Serializable {
 	public int quantity;//			数量	
 	public double price;//			商品单价	元
 	public String remark;//			商品备注	
-	public List<Image> Imgs;//（相册类图片）				
+	public List<Image> Imgs;//（相册类图片）	
+	
+	@Override
+	public String toString() {
+		return "OrderItem [itemId=" + itemId + ", orderId=" + orderId + ", name=" + name + ", proType=" + proType + ", proTypeName=" + proTypeName + ", proObjId=" + proObjId
+				+ ", quantity=" + quantity + ", price=" + price + ", remark=" + remark + ", Imgs=" + Imgs + "]";
+	}
+	
 }
