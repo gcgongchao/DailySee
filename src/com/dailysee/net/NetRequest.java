@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -20,6 +21,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dailysee.AppController;
+import com.dailysee.util.Constants;
 import com.dailysee.util.Md5Utils;
 import com.dailysee.util.SpUtil;
 import com.dailysee.util.Utils;
@@ -199,12 +201,20 @@ public class NetRequest {
 					BaseResponse response = new BaseResponse(json, code, message, jsonObj);
 					onSuccess(callback, response);
 				} else {
+					if ("0013".equals(code)) {
+						sendForceLogoutBroadcast();
+					}
 					onFailed(callback, "(" + code + ") " + message, silent);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				onFailed(callback, "数据格式错误", silent);
 			}
+		}
+
+		private void sendForceLogoutBroadcast() {
+			Intent intent = new Intent(Constants.FORCE_LOGOUT);
+			mContext.sendBroadcast(intent);
 		}
 	}
 

@@ -418,13 +418,13 @@ public class EditProfileActivity extends BaseActivity implements OnClickListener
 		request.addFileToUpload(fileToUploadPath, paramNameString, fileName, ContentType.APPLICATION_OCTET_STREAM);
 //		request.setNotificationConfig(R.drawable.ic_launcher, getString(R.string.app_name), getString(R.string.uploading), getString(R.string.upload_success),
 //				getString(R.string.upload_error), false);
-		request.addParameter("mtd", "com.guocui.tty.api.web.FileController.upFilesSimple");
+//		request.addParameter("mtd", "com.guocui.tty.api.web.FileController.upFilesSimple");
 		request.addParameter("app", NetRequest.APP);
 		request.addParameter("memberId", Long.toString(belongObjId));
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("memberId", Long.toString(belongObjId));
-		params.put("mtd", "com.guocui.tty.api.web.FileController.upFilesSimple");
+//		params.put("mtd", "com.guocui.tty.api.web.FileController.upFilesSimple");
 		params.put("app", NetRequest.APP);
 
 		request.addParameter("sign", NetRequest.genSign(params));

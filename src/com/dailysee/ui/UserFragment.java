@@ -27,6 +27,7 @@ import com.dailysee.ui.order.OrderActivity;
 import com.dailysee.ui.user.AboutActivity;
 import com.dailysee.ui.user.ProfileActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.SpUtil;
 import com.dailysee.util.UiHelper;
 import com.dailysee.widget.BadgeView;
 
@@ -112,6 +113,7 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.REFRESH_MEMBER_DETAIL);
+		filter.addAction(Constants.FORCE_LOGOUT);
 		mContext.registerReceiver(mUserReceiver, filter);
 	}
 
@@ -278,6 +280,8 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 				String action = intent.getAction();
 				if (Constants.REFRESH_MEMBER_DETAIL.equals(action)) {
 					onRefreshUserInfo();
+				} else if (Constants.FORCE_LOGOUT.equals(action)) {
+					onForceLogout();
 				}
 			}
 		}
@@ -308,6 +312,15 @@ public class UserFragment extends BaseFragment implements OnClickListener {
 		} else {
 			uncommentOrderBadge.hide();
 		}
+	}
+
+	private void onForceLogout() {
+		SpUtil.getInstance(mContext).logout();
+		Intent intent = new Intent();
+		intent.setClass(mContext, LoginActivity.class);
+		startActivity(intent);
+		
+		getActivity().finish();
 	}
 
 }

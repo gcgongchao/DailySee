@@ -1,12 +1,12 @@
 package com.dailysee.util;
 
-import android.content.Intent;
 
 public class Constants {
 	
 	private static final String PREFIX = "com.dailysee.";
 	
 	public static final String REFRESH_MEMBER_DETAIL = PREFIX + "REFRESH_MEMBER_DETAIL";
+	public static final String FORCE_LOGOUT = PREFIX + "FORCE_LOGOUT";
 
 	public static final String CUSTOMER_SERVICES_PHONE = "0755 8613 3999";
 
