@@ -241,7 +241,7 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 	}
 	 
 	private void toBindPush() {
-		if (!Utils.hasBind(this)) {
+		if (!Utils.hasBind(this) && mSpUtil.isLogin()) {
 			// Tag used to cancel the request
 			String tag = "tag_request_bind_user";
 			NetRequest.getInstance(this).post(new Callback() {
