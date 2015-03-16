@@ -365,14 +365,18 @@ public class MerchantActivity extends BaseActivity implements OnClickListener, O
 				}
 				params.put("prov", mSpUtil.getProvince());
 				params.put("city", mSpUtil.getCity());
-				params.put("area", mArea);
-				params.put("landmark", mRegion);
+				if (!TextUtils.isEmpty(mArea)) {
+					params.put("area", mArea);
+				}
+				if (!TextUtils.isEmpty(mRegion)) {
+					params.put("landmark", mRegion);
+				}
 				if (!TextUtils.isEmpty(mSearch)) {
 					params.put("name", mSearch);
 				}
 				params.put("pageNo", Integer.toString(mIndex));
 				params.put("pageSize", Integer.toString(NetRequest.PAGE_SIZE));
-				params.put("token", mSpUtil.getToken());
+//				params.put("token", mSpUtil.getToken());
 				return params;
 			}
 

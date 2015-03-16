@@ -161,12 +161,16 @@ public class NetRequest {
 			String k_ = String.valueOf(k);
 			if (!k_.equals("file") && !k_.equals("sign")) {
 				String value = params.get(k);
-				sb.append(k_).append("=").append(value);
+				if (!TextUtils.isEmpty(value)) {
+					sb.append(k_).append("=").append(value);
+				}
 			}
 		}
 		
 		String sign = sb.toString();
+		Log.d(TAG, "sign data: " + sign);
 		String newSign = Md5Utils.encryptMD5(sign, SECRET_KEY);// key为客户端对应私钥
+		Log.d(TAG, "sign result: " + newSign);
 		
 		return newSign;
 	}
