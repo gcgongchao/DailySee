@@ -140,50 +140,26 @@ public class Utils {
 	// 用share preference来实现是否绑定的开关。在ionBind且成功时设置true，unBind且成功时设置false
 	public static boolean hasBind(Context context) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		String flag = sp.getString("bind_flag", "");
-		if ("ok".equalsIgnoreCase(flag)) {
-			return true;
-		}
-		return false;
+		return sp.getBoolean("bind_flag", false);
 	}
 
-	// 用share preference来实现是否绑定的开关。在ionBind且成功时设置true，unBind且成功时设置false
-	public static boolean hasBindTty(Context context) {
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		boolean flag = sp.getBoolean("bind_tty", false);
-		return flag;
-	}
-
-	public static void setBindTty(Context context, boolean flag) {
+	public static void setBind(Context context, boolean flag) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 		Editor editor = sp.edit();
-		if (flag) {
-			editor.putBoolean("bind_tty", flag);
-		}
-		editor.commit();
-	}
-
-	public static void setBind(Context context, String userId, String channelId, boolean flag) {
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		Editor editor = sp.edit();
-		String flagStr = "not";
-		if (flag) {
-			flagStr = "ok";
-			editor.putString("bind_userId", userId);
-			editor.putString("bind_channelId", channelId);
-		}
-		editor.putString("bind_flag", flagStr);
+		editor.putBoolean("bind_flag", flag);
 		editor.commit();
 	}
 	
-	public static String getBindUserId(Context context) {
+	public static void setClientId(Context context, String clientId) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		return sp.getString("bind_userId", "");
+		Editor editor = sp.edit();
+		editor.putString("clientId", clientId);
+		editor.commit();
 	}
 	
-	public static String getBindChannelId(Context context) {
+	public static String getClientId(Context context) {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-		return sp.getString("bind_channelId", "");
+		return sp.getString("clientId", "");
 	}
 
 	public static List<String> getTagsList(String originalText) {

@@ -246,8 +246,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				}
 //				params.put("userId", mSpUtil.getBDUserId());
 //				params.put("channelId", mSpUtil.getBDChannelId());
-				params.put("userId", Utils.getBindUserId(getActivity()));
-				params.put("channelId", Utils.getBindChannelId(getActivity()));
+				params.put("userId", Utils.getClientId(getActivity()));
+				params.put("channelId", "0");
 				params.put("userAgent", "ANDROID");
 				return params;
 			}

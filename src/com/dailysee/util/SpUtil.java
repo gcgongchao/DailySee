@@ -49,7 +49,7 @@ public class SpUtil {
 
 	public void logout(){
 		getEdit().clear().commit();
-		Utils.setBindTty(context, false);
+		Utils.setBind(context, false);
 	}
 
 	public boolean isLogin() {

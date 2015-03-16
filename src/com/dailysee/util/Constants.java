@@ -63,7 +63,7 @@ public class Constants {
 	}
 	
 	public interface OrderFilter {
-		String ALL = "";
+		String ALL = "WAIT_PAY;WAIT_ACCEPT_CONFIRM;WAIT_CONFIRM_GOODS;WAIT_COMPLETE;REFUND_INPROCESS;REFUND;SUCCEED;CLOSE";
 		String WAIT_PAY = "WAIT_PAY";//等待付款; 
 		String WAIT_ACCEPT_CONFIRM = "WAIT_ACCEPT_CONFIRM";//已支付,待接单确认
 		String WAIT_CONFIRM_GOODS = "WAIT_CONFIRM_GOODS";//已接单,待确认消费, 

@@ -41,6 +41,7 @@ import com.dailysee.ui.MessageFragment;
 import com.dailysee.ui.UserFragment;
 import com.dailysee.ui.base.BaseActivity;
 import com.dailysee.util.Constants;
+import com.dailysee.util.Utils;
 import com.dailysee.widget.BadgeView;
 import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
@@ -118,6 +119,12 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 			
 			if (curTab >= 0) {
 				mTabHost.setCurrentTab(curTab);
+				if (curTab == 1) {
+					MessageFragment fragment = getMessageFragment();
+					if (fragment != null) {// 主动刷新tab
+						fragment.onTabDoubleClick();
+					}
+				}
 			}
 		}
 	}
@@ -231,9 +238,28 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 	}
 	 
 	private void toBindPush() {
-//		if ((!Utils.hasBind(this) || Utils.hasBindTty(this)) && mSpUtil.isLogin()) {
-//			PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, Utils.getMetaValue(this, "api_key"));
-//		}
+		if (!Utils.hasBind(this)) {
+			// Tag used to cancel the request
+			String tag = "tag_request_bind_user";
+			NetRequest.getInstance(this).post(new Callback() {
+
+				@Override
+				public void onSuccess(BaseResponse response) {
+					Utils.setBind(getActivity(), true);
+				}
+
+				@Override
+				public Map<String, String> getParams() {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("mtd", "tty.member.bind.user");
+					params.put("memberId", mSpUtil.getMemberIdStr());
+					params.put("userId", Utils.getClientId(getActivity()));
+					params.put("channelId", "0");
+					params.put("token", mSpUtil.getToken());
+					return params;
+				}
+			}, tag, true);
+		}
 	}
 
 	private void onRefreshNewMsgCount() {
@@ -362,6 +388,14 @@ public class MainActivity extends BaseActivity implements OnTabChangeListener {
 		Fragment userFragment = getSupportFragmentManager().findFragmentByTag(TAB_USER);
 		if (userFragment != null && userFragment instanceof UserFragment) {
 			return (UserFragment) userFragment;
+		}
+		return null;
+	}
+
+	private MessageFragment getMessageFragment() {
+		Fragment messageFragment = getSupportFragmentManager().findFragmentByTag(TAB_MESSAGE);
+		if (messageFragment != null && messageFragment instanceof MessageFragment) {
+			return (MessageFragment) messageFragment;
 		}
 		return null;
 	}
