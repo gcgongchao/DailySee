@@ -63,6 +63,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 
 	private LinearLayout mEmptyView;
 
+	private TextView tvDesc;
+
 	private LinearLayout llOrderInfo;
 	private TextView tvRoom;
 	private TextView tvTime;
@@ -142,6 +144,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		mEmptyView = (LinearLayout) findViewById(R.id.ll_no_data);
 		
 		View header = mInflater.inflate(R.layout.item_confirm_order_header, null);
+		tvDesc = (TextView) header.findViewById(R.id.tv_merchant_desc);
+		
 		llOrderInfo = (LinearLayout) header.findViewById(R.id.ll_order_info);
 		tvRoom = (TextView) header.findViewById(R.id.tv_room);
 		tvTime = (TextView) header.findViewById(R.id.tv_time);
@@ -223,8 +227,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			
 			showRemark();
 			if (mFrom == Constants.From.GIFT) {
+				tvDesc.setText("您将赠送给: ");
 				tvRemarkTitle.setText("留言");
 			} else {
+				tvDesc.setText("您将成功预定: ");
 				tvRemarkTitle.setText("叮嘱商家");
 			}
 			break;
