@@ -205,16 +205,16 @@ public class ConsultantDetailActivity extends BaseActivity implements OnClickLis
 
 	private void showSelectServiceHoursDialog() {
 		final List<Object> items = new ArrayList<Object>();
-		items.add(new ServiceHour(3, 399));
-		items.add(new ServiceHour(4, 499));
-		items.add(new ServiceHour(5, 599));
-		items.add(new ServiceHour(6, 699));
-		items.add(new ServiceHour(7, 799));
-		items.add(new ServiceHour(8, 899));
-		items.add(new ServiceHour(9, 999));
-		items.add(new ServiceHour(10, 1099));
-		items.add(new ServiceHour(11, 1199));
-		items.add(new ServiceHour(12, 0.01f));
+		items.add(new ServiceHour(3, 300));
+		items.add(new ServiceHour(4, 400));
+		items.add(new ServiceHour(5, 500));
+		items.add(new ServiceHour(6, 600));
+		items.add(new ServiceHour(7, 700));
+		items.add(new ServiceHour(8, 800));
+		items.add(new ServiceHour(9, 900));
+		items.add(new ServiceHour(10, 1000));
+//		items.add(new ServiceHour(11, 1100));
+//		items.add(new ServiceHour(12, 0.01f));
 		
 		mSelectServiceHoursDialog = new ListViewDialog(getActivity(), "选择服务时长", items, new OnItemClickListener(){
 
