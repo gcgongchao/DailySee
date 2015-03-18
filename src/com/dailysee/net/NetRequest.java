@@ -28,8 +28,11 @@ import com.dailysee.util.Utils;
 
 public class NetRequest {
 
-	public static final String SERVER_URL = "http://120.24.77.231/ebp/cgi/gateway.json";
-	public static final String UPLOAD_SERVER_URL = "http://120.24.77.231/ebp/filemanager/upload.htm";
+	public static final String HOST = "http://120.24.170.204/";// 正式发布上线后地址
+//	public static final String HOST = "http://120.24.77.231/";// 开发环境地址
+	public static final String SERVER_URL = HOST + "ebp/cgi/gateway.json";
+	public static final String UPLOAD_SERVER_URL = HOST + "ebp/filemanager/upload.htm";
+	
 	public static final String SECRET_KEY = "fdsa2324323d";
 	public static final String APP = "MEMBER";
 	

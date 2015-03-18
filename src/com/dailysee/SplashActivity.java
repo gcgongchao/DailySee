@@ -2,6 +2,7 @@ package com.dailysee;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -27,7 +28,6 @@ public class SplashActivity extends Activity {
 				startActivity(mainIntent);
 				finish();
 			}
-
 		}, SPLASH_DISPLAY_LENGHT);
 
 		initPush();

@@ -107,7 +107,7 @@
                     android:paddingRight="4dp"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="¥399"
+                    android:text="¥300"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_input" />
             </LinearLayout>
@@ -150,7 +150,7 @@
                     android:paddingRight="4dp"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="¥499"
+                    android:text="¥400"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_input" />
             </LinearLayout>
@@ -193,7 +193,7 @@
                     android:paddingRight="4dp"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="¥599"
+                    android:text="¥500"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_input" />
             </LinearLayout>
@@ -236,7 +236,7 @@
                     android:paddingRight="4dp"
                     android:paddingTop="5dp"
                     android:singleLine="true"
-                    android:text="¥699"
+                    android:text="¥600"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_input" />
             </LinearLayout>
@@ -295,7 +295,7 @@
                 android:paddingLeft="@dimen/activity_margin"
                 android:paddingRight="@dimen/activity_margin"
                 android:paddingTop="@dimen/activity_margin"
-                android:text="起始服务时间是3小时399元，每增加1小时加收100元。"
+                android:text="起始服务时间是3小时300元，每增加1小时加收100元。"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/caption" />
         </LinearLayout>
